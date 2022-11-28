@@ -6,4 +6,7 @@ class User < ApplicationRecord
 
   has_many :mission_candidates
   has_many :missions, through: :mission_candidates
+
+  validates :first_name, presence: true, format: { without: /[0-9]/ }
+  validates :last_name, presence: true, format: { without: /[0-9]/ }
 end
