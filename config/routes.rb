@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+  get 'mission_candidate/new'
+  get 'mission_candidate/create'
+  get 'mission_candidate/update'
+  get 'mission_candidate/edit'
+  get 'mission_candidate/destroy'
   get 'missions/index'
   get 'missions/show'
   get 'missions/new'
