@@ -11,4 +11,8 @@ class User < ApplicationRecord
   validates :first_name, presence: true, format: { without: /[0-9]/ }
   validates :last_name, presence: true, format: { without: /[0-9]/ }
   # validates :phone_number, phone: { possible: true, allow_blank: true }
+
+  def fullname
+    "#{first_name.capitalize} #{last_name.capitalize}"
+  end
 end

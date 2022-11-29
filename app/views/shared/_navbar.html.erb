@@ -20,6 +20,10 @@
           <li class="nav-item">
             <%= link_to "Messages", "#", class: "nav-link" %>
           </li>
+          <li class="nav-item">
+            <%# juste pour avoir un visuel du user sur lequel on est connecté pendant le developpement%>
+            <p class="nav-link"><%= current_user.first_name %></p>
+          </li>
           <li class="nav-item dropdown">
             <%= image_tag "https://kitt.lewagon.com/placeholder/users/ssaunier", class: "avatar dropdown-toggle", id: "navbarDropdown", data: { bs_toggle: "dropdown" }, 'aria-haspopup': true, 'aria-expanded': false %>
             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
