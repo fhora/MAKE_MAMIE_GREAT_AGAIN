@@ -1,4 +1,8 @@
-<%= "#{current_user.first_name} #{current_user.last_name}" %>
-<% current_user.missions.each do |mission| %>
-<%= mission.title %>
-<% end %>
+<div class="container">
+  <h2 class="text-center"><%= "#{current_user.first_name} #{current_user.last_name}" %></h2>
+  <ul>
+    <% current_user.missions.each do |mission| %>
+      <li><%= mission.title %></li>
+    <% end %>
+  </ul>
+</div>
