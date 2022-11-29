@@ -1,28 +1,34 @@
 <div class="container">
   <h1 class="text-center"><%= @mission.title %></h1>
-  <p><%= @mission.description %></p>
-  <% if current_user != @mission.user %>
-    <h2>hello</h2>
-    <%= link_to "Apply to this mission", mission_mission_candidates_path(@mission), data: { turbo_method: :post } %>
-  <% else %>
-  <h4>Mission Candidates</h4>
-    <% if @mission.mission_candidate_id.nil? %>
-      <% @mission_candidates.each do |mission_candidate| %>
-        <div>
-          <p><%= link_to "Fullname :", userpage_path(mission_candidate.user) %> <%= mission_candidate.user.first_name %> <%= mission_candidate.user.last_name %></p>
-          <%= link_to "Accepter", accepted_mission_candidate_path(mission_candidate), data: {turbo_method: :patch}, class: "btn btn-primary button" %>
-          <%= link_to "Décliner", declined_mission_candidate_path(mission_candidate), data: {turbo_method: :patch}, class: "btn btn-primary button" %>
-        </div>
-      <% end %>
-    <% else %>
-      <% @mission_candidates.each do |mission_candidate| %>
-        <% if mission_candidate.status == "Accepted" %>
-          <div>
-            <p><%= link_to "Fullname :", userpage_path(mission_candidate.user) %> <%= mission_candidate.user.first_name%> <%= mission_candidate.user.last_name %></p>
-            <p>Accepté</p>
-          </div>
+    <div class="card">
+      <p><%= @mission.description %></p>
+      <% if current_user != @mission.user %>
+        <% if current_user.mission_candidates.none?{|candidate| candidate.mission_id == @mission.id} %>
+          <%= link_to "Apply to this mission", mission_mission_candidates_path(@mission), data: { turbo_method: :post }, class: "btn btn-primary" %>
+        <% else %>
+          <p>You already applied for this mission</p>
+        <% end %>
+      <% else %>
+
+        <h4>Mission Candidates</h4>
+        <% if @mission_candidates.none? {|candidate| candidate.status == "Accepted"} %>
+          <% @mission_candidates.select {|candidate| candidate.status == "waiting" }.each do |candidate| %>
+            <div>
+              <p><%= link_to "Fullname :", userpage_path(candidate.user) %> <%= candidate.user.first_name %> <%= candidate.user.last_name %></p>
+              <%= link_to "Accepter", accepted_mission_candidate_path(candidate), data: {turbo_method: :patch}, class: "btn btn-primary button" %>
+              <%= link_to "Décliner", declined_mission_candidate_path(candidate), data: {turbo_method: :patch}, class: "btn btn-primary button" %>
+            </div>
+          <% end %>
+        <% else %>
+          <% @mission_candidates.each do |mission_candidate| %>
+            <% if mission_candidate.status == "Accepted" %>
+              <div>
+                <p><%= link_to "Fullname :", userpage_path(mission_candidate.user) %> <%= mission_candidate.user.first_name%> <%= mission_candidate.user.last_name %></p>
+                <p>Accepté</p>
+              </div>
+            <% end %>
+          <% end %>
         <% end %>
       <% end %>
-    <% end %>
-  <% end %>
+    </div>
 </div>
