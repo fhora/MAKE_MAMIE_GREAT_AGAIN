@@ -9,6 +9,11 @@ class MissionsController < ApplicationController
     @mission = Mission.find(params[:id])
     # @mission_candidates = MissionCandidate.all.select { |mission_candidate| mission_candidate.mission == @mission }
     @mission_candidates = MissionCandidate.where(mission: @mission)
+    @markers =
+      [{
+        lat: @mission.latitude,
+        lng: @mission.longitude
+      }]
   end
 
   def new
