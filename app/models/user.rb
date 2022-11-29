@@ -5,7 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_many :mission_candidates
-  has_many :missions, through: :mission_candidates
+  # has_many :missions, through: :mission_candidates
   has_many :missions
   validates :first_name, presence: true, format: { without: /[0-9]/ }
   validates :last_name, presence: true, format: { without: /[0-9]/ }

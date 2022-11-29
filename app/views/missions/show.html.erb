@@ -6,10 +6,23 @@
     <%= link_to "Apply to this mission", mission_mission_candidates_path(@mission), data: { turbo_method: :post } %>
   <% else %>
   <h4>Mission Candidates</h4>
-    <ul>
+    <% if @mission.mission_candidate_id.nil? %>
       <% @mission_candidates.each do |mission_candidate| %>
-        <li><%= missions_candidate.user %></li>
+        <div>
+          <p>Fullname : <%= mission_candidate.user.first_name%> <%= mission_candidate.user.last_name %></p>
+          <%= link_to "Accepter", accepted_mission_candidate_path(mission_candidate), data: {turbo_method: :patch}, class: "btn btn-primary button" %>
+          <%= link_to "Décliner", declined_mission_candidate_path(mission_candidate), data: {turbo_method: :patch}, class: "btn btn-primary button" %>
+        </div>
       <% end %>
-    </ul>
+    <% else %>
+      <% @mission_candidates.each do |mission_candidate| %>
+        <% if mission_candidate.status == "Accepted" %>
+          <div>
+            <p>Fullname : <%= mission_candidate.user.first_name%> <%= mission_candidate.user.last_name %></p>
+            <p>Accepté</p>
+          </div>
+        <% end %>
+      <% end %>
+    <% end %>
   <% end %>
 </div>
