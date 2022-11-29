@@ -9,5 +9,5 @@ class User < ApplicationRecord
   has_many :missions
   validates :first_name, presence: true, format: { without: /[0-9]/ }
   validates :last_name, presence: true, format: { without: /[0-9]/ }
-  validates :phone_number, phone: { possible: true, allow_blank: true }
+  # validates :phone_number, phone: { possible: true, allow_blank: true }
 end
