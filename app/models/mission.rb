@@ -7,5 +7,4 @@ class Mission < ApplicationRecord
   validates :description, presence: true, length: { minimum: 10 }
   validates :reward_cents, presence: true, numericality: true
   validates :location, presence: true
-  validates :phone_number, phone: { possible: true, allow_blank: true }
 end

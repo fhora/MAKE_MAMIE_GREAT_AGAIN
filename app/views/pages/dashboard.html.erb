@@ -1,0 +1,4 @@
+<%= "#{current_user.first_name} #{current_user.last_name}" %>
+<% current_user.missions.each do |mission| %>
+<%= mission.title %>
+<% end %>
