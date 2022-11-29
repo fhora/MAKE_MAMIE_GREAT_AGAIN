@@ -6,7 +6,6 @@ class MissionsController < ApplicationController
   end
 
   def show
-    @mission = Mission.find(params[:id])
     authorize @mission
     @mission_candidate = MissionCandidate.new(mission: @mission)
     @mission_candidates = MissionCandidate.where(mission: @mission)
@@ -34,12 +33,10 @@ class MissionsController < ApplicationController
   end
 
   def edit
-    @mission = Mission.find(params[:id])
     authorize @mission
   end
 
   def update
-    @mission = Mission.find(params[:id])
     authorize @mission
     if @mission.update(mission_params)
       redirect_to dashboard_path
@@ -49,9 +46,9 @@ class MissionsController < ApplicationController
   end
 
   def destroy
-    @mission = Mission.find(params[:id])
     authorize @mission
-    @mission.delete
+    @mission.destroy
+    redirect_to dashboard_path
   end
 
   private
