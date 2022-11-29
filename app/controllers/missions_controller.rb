@@ -2,11 +2,12 @@ class MissionsController < ApplicationController
   before_action :set_mission, only: %i[show edit update destroy]
 
   def index
-    @missions = Mission.all.where { |mission| mission.mission_candidate == nill }
+    @missions = Mission.all.select { |mission| mission.mission_candidate_id.nil? }
   end
 
   def show
     @mission = Mission.find(params[:id])
+    @mission_candidates = MissionCandidate.all.select { |mission_candidate| mission_candidate.mission == @mission }
   end
 
   def new
@@ -19,7 +20,7 @@ class MissionsController < ApplicationController
     if @mission.save
       redirect_to dashboard_path
     else
-      render :new, status: unprocessable_entity
+      render :new, status: :unprocessable_entity
     end
   end
 

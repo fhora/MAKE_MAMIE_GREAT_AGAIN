@@ -1,2 +1,13 @@
-<h1>Missions#show</h1>
-<p>Find me in app/views/missions/show.html.erb</p>
+<div class="container">
+  <h1 class="text-center"><%= @mission.title %></h1>
+  <p><%= @mission.description %></p>
+  <% if current_user != @mission.user %>
+  <% else %>
+  <h4>Mission Candidates</h4>
+    <ul>
+      <% @mission_candidates.each do |mission_candidate| %>
+        <li><%= missions_candidate.user %></li>
+      <% end %>
+    </ul>
+  <% end %>
+</div>
