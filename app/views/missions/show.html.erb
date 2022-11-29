@@ -2,14 +2,13 @@
   <h1 class="text-center"><%= @mission.title %></h1>
     <div class="card">
       <p><%= @mission.description %></p>
-      <% if current_user != @mission.user %>
-        <% if current_user.mission_candidates.none?{|candidate| candidate.mission_id == @mission.id} %>
+      <% if policy( @mission_candidate).new? %>
+        <% if current_user.mission_candidates.none? {|candidate| candidate.mission_id == @mission.id} %>
           <%= link_to "Apply to this mission", mission_mission_candidates_path(@mission), data: { turbo_method: :post }, class: "btn btn-primary" %>
         <% else %>
           <p>You already applied for this mission</p>
         <% end %>
       <% else %>
-
         <h4>Mission Candidates</h4>
         <% if @mission_candidates.none? {|candidate| candidate.status == "Accepted"} %>
           <% @mission_candidates.select {|candidate| candidate.status == "waiting" }.each do |candidate| %>

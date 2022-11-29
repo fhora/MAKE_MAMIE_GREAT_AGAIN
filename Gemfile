@@ -50,6 +50,8 @@ gem "sassc-rails"
 
 gem 'phonelib'
 
+gem "pundit"
+
 gem "devise"
 gem "autoprefixer-rails"
 gem "font-awesome-sass", "~> 6.1"
