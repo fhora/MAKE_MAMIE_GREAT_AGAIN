@@ -9,7 +9,7 @@
     <% if @mission.mission_candidate_id.nil? %>
       <% @mission_candidates.each do |mission_candidate| %>
         <div>
-          <p>Fullname : <%= mission_candidate.user.first_name%> <%= mission_candidate.user.last_name %></p>
+          <p><%= link_to "Fullname :", userpage_path(mission_candidate.user) %> <%= mission_candidate.user.first_name %> <%= mission_candidate.user.last_name %></p>
           <%= link_to "Accepter", accepted_mission_candidate_path(mission_candidate), data: {turbo_method: :patch}, class: "btn btn-primary button" %>
           <%= link_to "Décliner", declined_mission_candidate_path(mission_candidate), data: {turbo_method: :patch}, class: "btn btn-primary button" %>
         </div>
@@ -18,7 +18,7 @@
       <% @mission_candidates.each do |mission_candidate| %>
         <% if mission_candidate.status == "Accepted" %>
           <div>
-            <p>Fullname : <%= mission_candidate.user.first_name%> <%= mission_candidate.user.last_name %></p>
+            <p><%= link_to "Fullname :", userpage_path(mission_candidate.user) %> <%= mission_candidate.user.first_name%> <%= mission_candidate.user.last_name %></p>
             <p>Accepté</p>
           </div>
         <% end %>
