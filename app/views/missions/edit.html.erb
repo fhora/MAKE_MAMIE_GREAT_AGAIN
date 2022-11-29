@@ -1,2 +1,16 @@
-<h1>Missions#edit</h1>
-<p>Find me in app/views/missions/edit.html.erb</p>
+<div class="m-5">
+  <h2 class="text-center">Créer une mission</h2><br>
+  <div class="justify-content-center d-flex">
+    <div class="p-2 col-4">
+      <%= simple_form_for(@mission) do |f| %>
+        <%= f.input :title, label: "Titre", placeholder:"Titre de la mission..." %>
+        <%= f.input :description, label:"Description", placeholder: "Décrire la mission..." %>
+        <%= f.input :address, label: "Adresse" %>
+        <%= f.input :start_date, label: "Date de début" %>
+        <%= f.input :end_date, label:"Date de fin" %>
+        <%= f.input :reward, label:"Rémunération"  %>
+        <%= f.submit "Créer la mission", class: "btn btn-primary" %>
+      <% end %>
+    </div>
+  </div>
+</div>
