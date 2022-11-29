@@ -7,7 +7,8 @@ class MissionsController < ApplicationController
 
   def show
     @mission = Mission.find(params[:id])
-    @mission_candidates = MissionCandidate.all.select { |mission_candidate| mission_candidate.mission == @mission }
+    # @mission_candidates = MissionCandidate.all.select { |mission_candidate| mission_candidate.mission == @mission }
+    @mission_candidates = MissionCandidate.where(mission: @mission)
   end
 
   def new
