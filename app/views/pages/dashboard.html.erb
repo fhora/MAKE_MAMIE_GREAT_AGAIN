@@ -2,7 +2,7 @@
   <h2 class="text-center"><%= "#{current_user.first_name} #{current_user.last_name}" %></h2>
   <ul>
     <% current_user.missions.each do |mission| %>
-      <li><%= mission.title %></li>
+      <li><%= link_to "#{mission.title}", mission_path(mission) %></li>
     <% end %>
   </ul>
 </div>

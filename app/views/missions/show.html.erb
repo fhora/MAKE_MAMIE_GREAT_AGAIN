@@ -2,6 +2,8 @@
   <h1 class="text-center"><%= @mission.title %></h1>
   <p><%= @mission.description %></p>
   <% if current_user != @mission.user %>
+    <h2>hello</h2>
+    <%= link_to "Apply to this mission", mission_mission_candidates_path(@mission), data: { turbo_method: :post } %>
   <% else %>
   <h4>Mission Candidates</h4>
     <ul>
