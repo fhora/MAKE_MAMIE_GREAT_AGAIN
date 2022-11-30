@@ -30,13 +30,12 @@
 
     <div class="col-4 mission-recap-sidebar">
       <% if @mission.status == true %>
-      <% candidate = MissionCandidate.where(status: "Accepted").where(mission_id: @mission.id).first %>
         <div class="card-info">
-          <p><%= candidate.user.fullname %></p>
-          <p><%= candidate.user.description %></p>
-          <p><%= candidate.user.phone_number %></p>
+          <p><%= @accepted_candidate.user.fullname %></p>
+          <p><%= @accepted_candidate.user.description %></p>
+          <p><%= @accepted_candidate.user.phone_number %></p>
           <p>Ratings</p>
-          <%= link_to 'Details...', userpage_path(candidate.user) %>
+          <%= link_to 'Details...', userpage_path(@accepted_candidate.user) %>
         </div>
       <% else %>
         <div style="width: 100%; height: 400px;"
@@ -54,7 +53,7 @@
           data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>"></div>
   <% elsif policy(@mission).destroy? %>
     <div class="candidates-wrapper row gap-3">
-      <% MissionCandidate.where(status: "waiting").where(mission_id: @mission.id).each do |candidate| %>
+      <% @waiting_candidates.where(mission_id: @mission.id).each do |candidate| %>
         <div class="card-info col-3 border">
           <p><%= candidate.user.fullname %></p>
           <p><%= candidate.user.description %></p>
