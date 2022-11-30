@@ -13,19 +13,11 @@
   }
 }
 
-// .bg-red-dark {
-//   background-color: $bg-red-dark;
-//   color: white;
-//   figure {
-//     height: 140px;
-//     width: 140px;
-//     border: 2px solid white;
-//     i {
-//       font-size: 48px;
-//     }
-//   }
-// }
 #bg-blue-dark {
   background-color: $bg-blue-dark;
   color: white;
+}
+
+.bg-light-gray {
+  background-color: $bg-light-gray;
 }
