@@ -17,4 +17,9 @@ class User < ApplicationRecord
   def fullname
     "#{first_name.capitalize} #{last_name.capitalize}"
   end
+
+  # moyenne des ratings du user
+  def average_rating
+    reviews.average(:rating).round(2)
+  end
 end
