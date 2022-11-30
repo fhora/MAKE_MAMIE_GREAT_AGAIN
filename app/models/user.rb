@@ -7,6 +7,7 @@ class User < ApplicationRecord
   # has_many :missions, through: :mission_candidates, dependent: :destroy
   has_many :mission_candidates, dependent: :destroy
   has_many :missions, dependent: :destroy
+  has_many :reviews, dependent: :destroy
 
   validates :first_name, presence: true, format: { without: /[0-9]/ }
   validates :last_name, presence: true, format: { without: /[0-9]/ }

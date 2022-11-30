@@ -1,0 +1,21 @@
+.review-content-wrapper {
+  height: 364px;
+  overflow: scroll;
+}
+
+.review-content{
+  p,
+  i {
+    margin: 0;
+  }
+
+  i {
+    color: #fdd835;
+  }
+}
+
+.review-form {
+  textarea {
+    height: 150px;
+  }
+}

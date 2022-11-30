@@ -2,4 +2,33 @@
   <h1><%= @user.first_name %> <%= @user.last_name %></h1>
   <h5><%= @user.phone_number %> <%= @user.email %></h5>
   <p><%= @user.description %></p>
+
+  <div class="row div-width-80 align-items-start my-5 review-container">
+    <div class="col-5 review-content-wrapper">
+      <h3>Reviews</h3>
+      <% @user.reviews.each do |review| %>
+        <div class="review-content ps-4">
+
+          <p>
+            <% review.rating.times do %>
+              <i class="fa-solid fa-star"></i>
+            <% end %>
+            <% (5 - review.rating).times do %>
+              <i class="fa-regular fa-star"></i>
+            <% end %>
+             - <%= time_ago_in_words(review.updated_at) %> ago</p>
+          <p><%= review.content %></p>
+        </div>
+      <hr>
+      <% end %>
+    </div>
+    <div class="col-6 offset-1 review-form">
+      <h3>Add your review</h3>
+      <%= simple_form_for [@user, @review] do |f| %>
+        <%= f.input :content, placeholder: 'Add your review here...' %>
+        <%= f.input :rating, collection: (1..5).to_a %>
+        <%= f.submit "Submit review", class: "btn btn-primary" %>
+      <% end %>
+    </div>
+  </div>
 </div>
