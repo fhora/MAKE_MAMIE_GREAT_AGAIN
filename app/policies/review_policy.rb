@@ -7,7 +7,6 @@ class ReviewPolicy < ApplicationPolicy
   end
 
   def create?
-    raise
     record.user_id != user.id
   end
 end
