@@ -3,7 +3,7 @@ class ReviewsController < ApplicationController
     @review = Review.new(reviews_params)
     @user = User.find(params[:user_id])
     @review.user = @user
-
+    authorize @review
     if @review.save
       redirect_to userpage_path(@user)
     else
