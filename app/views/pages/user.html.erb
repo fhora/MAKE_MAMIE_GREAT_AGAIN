@@ -2,4 +2,11 @@
   <h1><%= @user.first_name %> <%= @user.last_name %></h1>
   <h5><%= @user.phone_number %> <%= @user.email %></h5>
   <p><%= @user.description %></p>
+
+  <h1>New review</h1>
+  <%= simple_form_for [@user, @review] do |f| %>
+    <%= f.input :rating %>
+    <%= f.input :content %>
+    <%= f.submit "Submit review", class: "btn btn-primary" %>
+  <% end %>
 </div>

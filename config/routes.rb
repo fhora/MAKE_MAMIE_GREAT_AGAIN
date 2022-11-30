@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
   devise_for :users
+
+  # routes pour reviews dans page user
+  resources :users, only: [] do
+    resources :reviews, only: %i[new create]
+  end
+
   root to: "pages#home"
   get "dashboard", to: "pages#dashboard"
   get "user/:id", to: "pages#user", as: :userpage
@@ -15,6 +21,7 @@ Rails.application.routes.draw do
       patch :declined
     end
   end
+
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")
