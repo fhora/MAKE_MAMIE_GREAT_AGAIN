@@ -9,6 +9,8 @@ class MissionsController < ApplicationController
     authorize @mission
     @mission_candidate = MissionCandidate.new(mission: @mission)
     @mission_candidates = MissionCandidate.where(mission: @mission)
+    @accepted_candidate = @mission.mission_candidates.accepted.first if @mission.status == true
+    @waiting_candidates = @mission.mission_candidates.waiting if policy(@mission).destroy?
     @markers =
       [{
         lat: @mission.latitude,
