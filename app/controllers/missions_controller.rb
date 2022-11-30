@@ -9,6 +9,8 @@ class MissionsController < ApplicationController
     authorize @mission
     @mission_candidate = MissionCandidate.new(mission: @mission)
     @mission_candidates = MissionCandidate.where(mission: @mission)
+    @accepted_candidate = @mission.mission_candidates.accepted.first if @mission.status == true
+    @waiting_candidates = @mission.mission_candidates.waiting if policy(@mission).destroy?
     @markers =
       [{
         lat: @mission.latitude,
@@ -24,6 +26,7 @@ class MissionsController < ApplicationController
   def create
     @mission = Mission.new(mission_params)
     @mission.user = current_user
+    @mission.reward_cents *= 100
     authorize @mission
     if @mission.save
       redirect_to dashboard_path
@@ -58,6 +61,6 @@ class MissionsController < ApplicationController
   end
 
   def mission_params
-    params.require(:mission).permit(:title, :description, :reward_cents, :location, :start_date, :end_date)
+    params.require(:mission).permit(:title, :description, :reward_cents, :location, :start_date)
   end
 end
