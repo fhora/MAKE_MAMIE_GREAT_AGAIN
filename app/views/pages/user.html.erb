@@ -26,7 +26,7 @@
       <h3>Add your review</h3>
       <%= simple_form_for [@user, @review] do |f| %>
         <%= f.input :content, placeholder: 'Add your review here...' %>
-        <%= f.input :rating, collection: (1..5).to_a %>
+        <%= f.input :rating, collection: (1..5).to_a, label: "Rate your experience", input_html: {data: {controller: "star-rating"}}%>
         <%= f.submit "Submit review", class: "btn btn-primary" %>
       <% end %>
     </div>
