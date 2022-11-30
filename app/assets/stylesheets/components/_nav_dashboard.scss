@@ -1,18 +1,19 @@
-a {
+.nav-dashboard {
+  a {
   text-align: left;
   color: inherit;
   font-size: 16px;
   margin-bottom: 14px;
   width: 100%;
   float: left;
-  text-decoration: none;
-}
+  text-decoration: none}
 
-a:hover {
-  color: inherit;
-}
+  a:hover {
+    color: inherit;
+  }
 
-i {
-  display: inline-block;
-  margin: 20px;
+  i {
+    display: inline-block;
+    margin: 20px;
+  }
 }

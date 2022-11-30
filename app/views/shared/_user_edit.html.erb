@@ -25,33 +25,47 @@
       </div>
     </div>
     <div class="col-12 d-block p-2">
+      <%= f.input :photo, label:"Profil picture", as: :file, input_html: { multiple: false } %>
+    </div>
+    <div class="col-12 d-block p-2">
         <%= f.input :description,
                     input_html: { :rows => 10, autocomplete: "description" } %>
     </div>
-
-    <%= f.input :password,
-                label: "New password",
-                hint: "leave it blank if you don't want to change it",
-                required: false,
-                input_html: { autocomplete: "new-password" } %>
-    <%= f.input :password_confirmation,
-                label: "New password confirmation",
-                required: false,
-                input_html: { autocomplete: "new-password" } %>
-    <%= f.input :current_password,
-                hint: "we need your current password to confirm your changes",
-                required: true,
-                input_html: { autocomplete: "current-password" } %>
+    <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+          <p>En attente de confirmation pour: <%= resource.unconfirmed_email %></p>
+    <% end %>
+    <strong><p class="p-2">Change my password :</p></strong>
+    <div class="col-12 d-flex">
+      <div class="col-6 d-block p-2">
+        <%= f.input :password,
+                    label: "New password",
+                    hint: "leave it blank if you don't want to change it",
+                    required: false,
+                    input_html: { autocomplete: "new-password" } %>
+      </div>
+      <div class="col-6 d-block p-2">
+      <%= f.input :password_confirmation,
+                  label: "New password confirmation",
+                  required: false,
+                  input_html: { autocomplete: "new-password" } %>
+      </div>
+    </div>
+    <div class="col-12 d-flex">
+      <div class="col-6 d-block p-2">
+        <%= f.input :current_password,
+                    hint: "we need your current password to confirm your new password",
+                    required: true,
+                    input_html: { autocomplete: "current-password" } %>
+      </div>
+      <div class="col-6 d-flex p-2 align-items-center justify-content-center">
+        <div class="form-actions">
+          <%= f.button :submit, :class => "btn-animate p-2", placeholder: "Update" %>
+        </div>
+      </div>
+    </div>
   </div>
-
-  <div class="form-actions">
-    <%= f.button :submit, "Update" %>
+  <div class="col-12 d-block align-items-around p-2">
+    <div>Unhappy?</div>
+    <div><%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete, class: "btn btn-link" %></div>
   </div>
 <% end %>
-
-<div class="d-flex align-items-around">
-  <div>Unhappy?</div>
-  <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete, class: "btn btn-link" %>
-</div>
-
-<%= link_to "Back", :back %>

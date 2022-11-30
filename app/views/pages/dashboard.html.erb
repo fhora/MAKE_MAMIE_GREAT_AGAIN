@@ -1,16 +1,16 @@
 <div class="container-fluid">
   <div>
     <div class="grid grid-width d-flex">
-      <aside class="col-3 m-3">
+      <aside class="nav-dashboard col-3 m-3">
         <div class="user">
           <div class="user-avatar d-flex flex-column align-items-center justify-content-center mb-5">
-            <%# <% if current_user.photo.key.nil? %>
+            <% if current_user.photo.key.nil? %>
               <img class="avatar-large mb-5" id="navbarDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" src="https://media.istockphoto.com/id/1337144146/fr/vectoriel/vecteur-dic%C3%B4ne-de-profil-davatar-par-d%C3%A9faut.jpg?b=1&s=170667a&w=0&k=20&c=eYsURDWBMsbvhjRxVQ8-pgC0q4b04DSYbCMnY5OlH14=" />
-            <%# <% else %>
-              <%# <div class="avatar-image dropdown-toggle" id="navbarDropdown" aria-hashpopup="true" aria-expanded="false" data-bs-toggle="dropdown"> %>
-                <%# <%= cl_image_tag current_user.photo.key  %>
-              <%# </div> %>
-            <%# <% end %>
+            <% else %>
+              <div class="avatar-large mb-5" id="navbarDropdown" aria-hashpopup="true" aria-expanded="false" data-bs-toggle="dropdown">
+                <%= cl_image_tag current_user.photo.key  %>
+              </div>
+            <% end %>
             <h1><%= "#{current_user.first_name} #{current_user.last_name}" %></h1>
           </div>
         </div>
@@ -34,8 +34,8 @@
         </ul>
       </aside>
       <div class="col-6">
-        <div class="d-flex flex-column align-items-left justify-content-center text-align-center my-5 p-3">
-          <h1>My personnal informations</h1>
+        <div class="d-flex flex-column align-items-left justify-content-center text-align-center my-5 p-2">
+          <h1>My personal informations</h1>
         </div>
         <%= render "shared/user_edit" %>
 

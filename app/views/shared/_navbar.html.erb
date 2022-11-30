@@ -34,7 +34,13 @@
             <p class="nav-link text-primary"><%= current_user.first_name %></p>
           </li>
           <li class="nav-item dropdown">
-            <%= image_tag "https://kitt.lewagon.com/placeholder/users/ssaunier", class: "avatar dropdown-toggle", id: "navbarDropdown", data: { bs_toggle: "dropdown" }, 'aria-haspopup': true, 'aria-expanded': false %>
+             <% if current_user.photo.key.nil? %>
+                <img class="avatar dropdown-toggle" id="navbarDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" src="https://media.istockphoto.com/id/1337144146/fr/vectoriel/vecteur-dic%C3%B4ne-de-profil-davatar-par-d%C3%A9faut.jpg?b=1&s=170667a&w=0&k=20&c=eYsURDWBMsbvhjRxVQ8-pgC0q4b04DSYbCMnY5OlH14=" />
+              <% else %>
+                <div class="avatar dropdown-toggle" id="navbarDropdown" aria-hashpopup="true" aria-expanded="false" data-bs-toggle="dropdown">
+                  <%= cl_image_tag current_user.photo.key  %>
+                </div>
+              <% end %>
             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
               <%= link_to dashboard_path, class: "dropdown-item text-primary p-2" do %>
                 My profile
