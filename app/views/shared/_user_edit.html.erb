@@ -1,0 +1,57 @@
+<%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <div class="col-12 d-flex">
+      <div class="col-6 d-block p-2">
+          <%= f.input :first_name,
+                      autofocus: true,
+                      input_html: { autocomplete: "first_name" }%>
+      </div>
+      <div class="col-6 d-block p-2">
+          <%= f.input :last_name,
+                      class: "col-10",
+                      input_html: { autocomplete: "last_name" }%>
+      </div>
+    </div>
+    <div class="col-12 d-flex">
+      <div class="col-6 d-block p-2">
+        <%= f.input :email,
+                    input_html: { autocomplete: "email" }%>
+      </div>
+      <div class="col-6 d-block p-2">
+        <%= f.input :phone_number,
+                    input_html: { autocomplete: "phone_number" }%>
+      </div>
+    </div>
+    <div class="col-12 d-block p-2">
+        <%= f.input :description,
+                    input_html: { :rows => 10, autocomplete: "description" } %>
+    </div>
+
+    <%= f.input :password,
+                label: "New password",
+                hint: "leave it blank if you don't want to change it",
+                required: false,
+                input_html: { autocomplete: "new-password" } %>
+    <%= f.input :password_confirmation,
+                label: "New password confirmation",
+                required: false,
+                input_html: { autocomplete: "new-password" } %>
+    <%= f.input :current_password,
+                hint: "we need your current password to confirm your changes",
+                required: true,
+                input_html: { autocomplete: "current-password" } %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit, "Update" %>
+  </div>
+<% end %>
+
+<div class="d-flex align-items-around">
+  <div>Unhappy?</div>
+  <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete, class: "btn btn-link" %>
+</div>
+
+<%= link_to "Back", :back %>
