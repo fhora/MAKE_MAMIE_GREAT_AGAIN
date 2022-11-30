@@ -20,6 +20,6 @@ class User < ApplicationRecord
 
   # moyenne des ratings du user
   def average_rating
-    reviews.average(:rating).round(2)
+    reviews.average(:rating).round
   end
 end
