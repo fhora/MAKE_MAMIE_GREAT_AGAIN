@@ -1,28 +1,72 @@
 <div class="container">
   <h1 class="text-center"><%= @mission.title %></h1>
-  <p><%= @mission.description %></p>
-  <% if current_user != @mission.user %>
-    <h2>hello</h2>
-    <%= link_to "Apply to this mission", mission_mission_candidates_path(@mission), data: { turbo_method: :post } %>
-  <% else %>
-  <h4>Mission Candidates</h4>
-    <% if @mission.mission_candidate_id.nil? %>
-      <% @mission_candidates.each do |mission_candidate| %>
-        <div>
-          <p>Fullname : <%= mission_candidate.user.first_name%> <%= mission_candidate.user.last_name %></p>
-          <%= link_to "Accepter", accepted_mission_candidate_path(mission_candidate), data: {turbo_method: :patch}, class: "btn btn-primary button" %>
-          <%= link_to "Décliner", declined_mission_candidate_path(mission_candidate), data: {turbo_method: :patch}, class: "btn btn-primary button" %>
+  <div class="row recap-wrapper">
+    <div class="col-8 recap-content">
+      <p><%= "#{@mission.title} posté par #{@mission.user.fullname}" %></p>
+      <p>date et horaire</p>
+      <p><%= @mission.location %></p>
+      <p><%= @mission.description %></p>
+      <p><%= @mission.reward_cents/100 %>$</p>
+
+      <% if policy(@mission_candidate).new? %>
+        <% if @mission.mission_candidates.none? {|candidate| candidate.user == current_user} %>
+          <%= link_to "Apply to this mission", mission_mission_candidates_path(@mission), data: { turbo_method: :post }, class: "btn btn-primary" %>
+        <% else %>
+          <p style="color:red;font-weight:bolder;font-size:20px;">You already applied for this mission</p>
+        <% end %>
+      <% elsif @mission.status == false %>
+        <div class="d-flex gap-3">
+          <%= link_to edit_mission_path(@mission), class:"btn btn-primary" do %>
+            Edit <i class="fas fa-edit"></i>
+          <% end %>
+          <% if policy(@mission).destroy? %>
+            <%= button_to @mission, method: :delete, class:"btn btn-primary" do %>
+              Supprimer <i class="far fa-trash-alt"></i>
+            <% end %>
+          <% end %>
         </div>
       <% end %>
-    <% else %>
-      <% @mission_candidates.each do |mission_candidate| %>
-        <% if mission_candidate.status == "Accepted" %>
-          <div>
-            <p>Fullname : <%= mission_candidate.user.first_name%> <%= mission_candidate.user.last_name %></p>
-            <p>Accepté</p>
-          </div>
-        <% end %>
+    </div>
+
+    <div class="col-4 mission-recap-sidebar">
+      <% if @mission.status == true %>
+      <% candidate = MissionCandidate.where(status: "Accepted").where(mission_id: @mission.id).first %>
+        <div class="card-info">
+          <p><%= candidate.user.fullname %></p>
+          <p><%= candidate.user.description %></p>
+          <p><%= candidate.user.phone_number %></p>
+          <p>Ratings</p>
+          <%= link_to 'Details...', userpage_path(candidate.user) %>
+        </div>
+      <% else %>
+        <div style="width: 100%; height: 400px;"
+          data-controller="map"
+          data-map-markers-value="<%= @markers.to_json %>"
+          data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>"></div>
       <% end %>
-    <% end %>
+    </div>
+  </div>
+
+  <% if @mission.status == true %>
+    <div style="width: 100%; height: 600px;"
+          data-controller="map"
+          data-map-markers-value="<%= @markers.to_json %>"
+          data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>"></div>
+  <% elsif policy(@mission).destroy? %>
+    <div class="candidates-wrapper row gap-3">
+      <% MissionCandidate.where(status: "waiting").where(mission_id: @mission.id).each do |candidate| %>
+        <div class="card-info col-3 border">
+          <p><%= candidate.user.fullname %></p>
+          <p><%= candidate.user.description %></p>
+          <p><%= candidate.user.phone_number %></p>
+          <p>Ratings</p>
+          <%= link_to 'Details...', userpage_path(candidate.user) %>
+          <div class="d-flex justify-content-around">
+            <%= link_to "Accepter", accepted_mission_candidate_path(candidate), data: {turbo_method: :patch}, class: "btn btn-primary button" %>
+            <%= link_to "Décliner", declined_mission_candidate_path(candidate), data: {turbo_method: :patch}, class: "btn btn-primary button" %>
+          </div>
+        </div>
+      <% end %>
+    </div>
   <% end %>
 </div>
