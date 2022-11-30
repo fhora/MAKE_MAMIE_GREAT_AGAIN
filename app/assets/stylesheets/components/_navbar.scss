@@ -45,3 +45,11 @@
 .navbar-lewagon .navbar-brand img {
   width: 40px;
 }
+
+.navbar-nav.me-auto  {
+  align-items: center;
+
+  p {
+    margin: 0;
+  }
+}
