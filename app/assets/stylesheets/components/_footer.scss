@@ -7,29 +7,29 @@
   height: 100px;
   padding: 0px 50px;
   color: $blue-dark;
-}
-.footer-links {
-  display: flex;
-  align-items: center;
-}
-.footer-links a {
-  color: $blue-dark;
-  text-decoration: none;
-  font-size: 18px;
-  padding: 0px 10px;
-}
-.footer-links a:hover {
-  opacity: 1;
-}
-.footer .fa-heart {
-  color: #D23333;
-}
-.pages-link a {
-  color: $blue-dark;
-  text-decoration: none;
-  font-size: 18px;
-  padding: 0px 10px;
-}
-.pages-link a:hover {
-  border-bottom: 1px solid white;
+
+  .footer-links {
+    display: flex;
+    align-items: center;
+    a {
+      color: $blue-dark;
+      text-decoration: none;
+      padding: 0px 10px;
+      opacity: 0.45;
+      transition: opacity 0.3s ease-in-out;
+      &:hover {
+        opacity: 1 !important;
+      }
+    }
+  }
+  .pages-link {
+    a {
+      color: $blue-dark;
+      text-decoration: none;
+      padding: 0px 10px;
+    }
+    &:hover {
+      border-bottom: 1px solid white;
+    }
+  }
 }
