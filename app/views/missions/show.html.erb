@@ -45,13 +45,7 @@
       <% end %>
     </div>
   </div>
-
-  <% if @mission.status == true %>
-    <div style="width: 100%; height: 600px;"
-          data-controller="map"
-          data-map-markers-value="<%= @markers.to_json %>"
-          data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>"></div>
-  <% elsif policy(@mission).destroy? %>
+  <% if policy(@mission).destroy? && @mission.status == false %>
     <div class="candidates-wrapper row gap-3">
       <% @waiting_candidates.where(mission_id: @mission.id).each do |candidate| %>
         <div class="card-info col-3 border">
