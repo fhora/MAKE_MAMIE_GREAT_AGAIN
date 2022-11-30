@@ -26,6 +26,7 @@ class MissionsController < ApplicationController
   def create
     @mission = Mission.new(mission_params)
     @mission.user = current_user
+    @mission.reward_cents *= 100
     authorize @mission
     if @mission.save
       redirect_to dashboard_path
