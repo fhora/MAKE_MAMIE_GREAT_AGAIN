@@ -1,21 +1,19 @@
-<div class="footer">
+<div id="bg-blue" class="footer">
   <div class="footer-links">
-    <a href="#"><i class="fab fa-github"></i></a>
-    <a href="#"><i class="fab fa-instagram"></i></a>
-    <a href="#"><i class="fab fa-facebook"></i></a>
-    <a href="#"><i class="fab fa-twitter"></i></a>
-    <a href="#"><i class="fab fa-linkedin"></i></a>
+    <a href="#" alt="logo github"><i class="fab fa-github fs-4"></i></a>
+    <a href="#" alt="logo instagram"><i class="fab fa-instagram fs-4"></i></a>
+    <a href="#" alt="logo facebook"><i class="fab fa-facebook fs-4"></i></a>
   </div>
   <div class="pages-link">
     <a><%= link_to "Home", root_path %></a>
     <% if user_signed_in? %>
-      <a><%= link_to "Profile", dashboard_path %></a>
+      <%= link_to "My profile", dashboard_path %>
     <% else %>
-      <a><%= link_to "Login", new_user_session_path %></a>
+      <%= link_to "Login", new_user_session_path %>
     <% end %>
-    <a><%= link_to "Missions", missions_path %></a>
+    <%= link_to "All missions", missions_path %>
   </div>
   <div class="footer-copyright">
-    This footer is made with <i class="fas fa-heart"></i> by my grandma
+    © Make mami great again  2022 - Tous droits réservés
   </div>
 </div>

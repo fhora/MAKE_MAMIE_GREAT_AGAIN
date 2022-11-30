@@ -1,7 +1,7 @@
 <div class="navbar navbar-expand-sm navbar-light navbar-lewagon">
-  <div class="container-fluid">
+  <div class="container">
     <%= link_to root_path, class: "navbar-brand" do %>
-      <%= image_tag "https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/logo.png" %>
+      Logo :-) Mamie Great Again
     <% end %>
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -27,15 +27,23 @@
           <li class="nav-item dropdown">
             <%= image_tag "https://kitt.lewagon.com/placeholder/users/ssaunier", class: "avatar dropdown-toggle", id: "navbarDropdown", data: { bs_toggle: "dropdown" }, 'aria-haspopup': true, 'aria-expanded': false %>
             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-              <%= link_to "Mon profile", dashboard_path, class: "dropdown-item" %>
-              <%= link_to "Crée une mission", new_mission_path, class: "dropdown-item" %>
-              <%= link_to "Voir missions", missions_path, class: "dropdown-item" %>
+              <%= link_to "My profile", dashboard_path, class: "dropdown-item text-uppercase" %>
+              <%= link_to "Publish a mission", new_mission_path, class: "dropdown-item" %>
+              <%= link_to "See all missions", missions_path, class: "dropdown-item" %>
               <%= link_to "Log out", destroy_user_session_path, data: {turbo_method: :delete}, class: "dropdown-item" %>
             </div>
           </li>
         <% else %>
-          <li class="nav-item">
-            <%= link_to "Login", new_user_session_path, class: "nav-link" %>
+          <li class="nav-item me-4">
+            <%= link_to missions_path, class: "nav-link text-primary text-uppercase animate-link" do %>
+              Find a job <i class="fa fa-arrow-right"></i>
+            <% end %>
+          </li>
+          <li class="nav-item me-4">
+            <%= link_to "Register", new_user_registration_path, class: "nav-link text-uppercase btn-animate" %>
+          </li>
+          <li class="nav-item me-4">
+            <%= link_to "Login", new_user_session_path, class: "nav-link text-uppercase btn-animate btn-outline " %>
           </li>
         <% end %>
       </ul>

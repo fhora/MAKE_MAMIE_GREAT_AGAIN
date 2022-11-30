@@ -1,4 +1,97 @@
-<h1>Make Mamie Great Again</h1>
-<p>Garder les meilleurs moments avec vos proches</p>
-<%= link_to "Ajouter une mission", new_mission_path %>
-<%= link_to "Touver une mission", missions_path  %>
+<div class="banner" style="background-image: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)), url(<%= asset_path 'person-helping.jpg' %>)">
+  <div class="container d-flex flex-column align-items-start p-5">
+    <h1>Make Mamie Great Again</h1>
+    <p class="mb-5">Get some help for grandparents</p>
+    <%# <%= link_to "Post a mission", new_mission_path, class: "btn btn-flat btn-lg" %>
+    <%= link_to new_mission_path, class: "btn-animate" do %>
+      <span>Post a mission</span>
+    <% end %>
+    <%# <%= link_to "Touver une mission", missions_path  %>
+  </div>
+</div>
+
+<div class="bg-brown-light py-5">
+  <div class="container">
+    <h2 class="my-4">How does it work ?</h2>
+    <div class="row">
+      <div class="col-lg-4 d-flex flex-column align-items-center justify-content-center">
+        <figure class="d-flex align-items-center justify-content-center rounded-circle overflow-hidden">
+          <i class="fa-brands fa-wpforms"></i>
+        </figure>
+        <h3 class="fw-normal fs-4 my-3">Register here</h3>
+        <p>Some representative placeholder content for the three columns of text below the carousel.</p>
+      </div>
+     <div class="col-lg-4 d-flex flex-column align-items-center justify-content-center">
+        <figure class="d-flex align-items-center justify-content-center rounded-circle overflow-hidden">
+          <i class="fa-regular fa-comments"></i>
+        </figure>
+        <h3 class="fw-normal fs-4 my-3">Exchange with helpers</h3>
+        <p>Another exciting bit of representative placeholder content.</p>
+      </div>
+      <div class="col-lg-4 d-flex flex-column align-items-center justify-content-center">
+        <figure class="d-flex align-items-center justify-content-center rounded-circle overflow-hidden">
+          <i class="fa-regular fa-hand-pointer"></i>
+        </figure>
+        <h3 class="fw-normal fs-4 my-3">Select the helper</h3>
+        <p>for your mission, placeholder content for the three columns of text below the carousel.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Cards helpers -->
+<div class="container my-5">
+  <h2 class="my-4">Some of our best helpers :</h2>
+  <div class="row mb-2">
+    <div class="col-md-6">
+      <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+        <div class="col-3 d-flex justify-content-center align-items-center">
+          <figure class="avatar-xlarge d-flex justify-content-center align-items-center">
+            <img alt="avatar-large" src="https://kitt.lewagon.com/placeholder/users/arthur-littm" />
+          </figure>
+        </div>
+        <div class="col-9 p-4 d-flex flex-column position-static">
+          <div class="d-flex justify-content-between">
+            <h4 class="mb-0">John Doe</h4>
+            <div class="stars-review">
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-regular fa-star"></i>
+            </div>
+          </div>
+          <div class="mb-1 text-muted">25 years old</div>
+          <strong class="d-inline-block mb-2 text-primary">Permis B, Certif SCSP 1 </strong>
+          <p class="card-text mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
+           <%= link_to "See more", dashboard_path, class: "stretched-link" %>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+        <div class="col-3 d-flex justify-content-center align-items-center">
+          <figure class="avatar-xlarge d-flex justify-content-center align-items-center">
+            <img alt="avatar-large" src="https://kitt.lewagon.com/placeholder/users/arthur-littm" />
+          </figure>
+        </div>
+        <div class="col-9 p-4 d-flex flex-column position-static">
+          <div class="d-flex justify-content-between">
+            <h4 class="mb-0">Luke Fitzgerald</h4>
+            <div class="stars-review">
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-regular fa-star"></i>
+            </div>
+          </div>
+          <div class="mb-1 text-muted">22 years old</div>
+          <strong class="d-inline-block mb-2 text-primary">Permis B</strong>
+          <p class="card-text mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
+          <%= link_to "See more", dashboard_path, class: "stretched-link" %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

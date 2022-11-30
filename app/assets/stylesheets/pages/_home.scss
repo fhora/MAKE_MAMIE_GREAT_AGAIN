@@ -1,1 +1,31 @@
 // Specific CSS for your home-page
+
+.bg-brown-light {
+  background-color: $bg-brown-light;
+  color: $blue-dark;
+  figure {
+    height: 140px;
+    width: 140px;
+    border: 2px solid $blue-dark;
+    i {
+      font-size: 48px;
+    }
+  }
+}
+
+// .bg-red-dark {
+//   background-color: $bg-red-dark;
+//   color: white;
+//   figure {
+//     height: 140px;
+//     width: 140px;
+//     border: 2px solid white;
+//     i {
+//       font-size: 48px;
+//     }
+//   }
+// }
+#bg-blue-dark {
+  background-color: $bg-blue-dark;
+  color: white;
+}
