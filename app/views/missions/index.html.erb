@@ -15,13 +15,16 @@
             <div class="col-9 p-4 d-flex flex-column position-static">
               <div class="d-flex justify-content-between align-items-center">
                 <h4 class="mb-0"><%= mission.user.first_name %> <%= mission.user.last_name %></h4>
-                <%# ratings %>
                 <div class="stars-review">
-                  <i class="fa-solid fa-star me-0"></i>
-                  <i class="fa-solid fa-star me-0"></i>
-                  <i class="fa-solid fa-star me-0"></i>
-                  <i class="fa-solid fa-star me-0"></i>
-                  <i class="fa-regular fa-star me-0"></i>
+                <% unless mission.user.reviews.empty? %>
+                  <% mission.user.average_rating.times do %>
+                    <i class="fa-solid fa-star me-0"></i>
+                  <% end %>
+                  <% (5 - mission.user.average_rating).times do %>
+                    <i class="fa-regular fa-star me-0"></i>
+                  <% end %>
+                  - <%= mission.user.reviews.count %> avis
+                <% end %>
                 </div>
               </div>
               <strong class="d-inline-block mb-2 text-primary"><%= mission.title %></strong>
