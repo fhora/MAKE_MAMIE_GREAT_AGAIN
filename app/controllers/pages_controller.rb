@@ -6,5 +6,6 @@ class PagesController < ApplicationController
 
   def user
     @user = User.find(params[:id])
+    @review = Review.new
   end
 end
