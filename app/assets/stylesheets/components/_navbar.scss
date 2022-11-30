@@ -1,6 +1,41 @@
 .navbar-lewagon {
   justify-content: space-between;
   background: white;
+  font-family: $headers-font;
+
+  .animate-link {
+    position: relative;
+    overflow: hidden;
+    transition: padding-right 0.3s ease-in-out;
+    &:after {
+      content: "";
+      position: absolute;
+      left: 8px;
+      bottom: 3px;
+      height: 1px;
+      background-color: $red-dark;
+      width: 30px;
+      transition: width 0.3s ease-in-out;
+    }
+    .fa {
+      position: absolute;
+      top: 50%;
+      right: 10px;
+      opacity: 0;
+      transform: translateY(-50%);
+      transition: all 0.3s ease-in-out;
+    }
+    &:hover {
+      padding-right: 25px;
+      &:after {
+        width: 100%;
+      }
+      .fa {
+        opacity: 1;
+        right: 0;
+      }
+    }
+  }
 }
 
 .navbar-lewagon .navbar-collapse {

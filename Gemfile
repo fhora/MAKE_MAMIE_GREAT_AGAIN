@@ -26,6 +26,7 @@ gem "stimulus-rails"
 
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder"
+gem "geocoder"
 
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"
@@ -49,6 +50,8 @@ gem "sassc-rails"
 # gem "image_processing", "~> 1.2"
 
 gem 'phonelib'
+
+gem "pundit"
 
 gem "devise"
 gem "autoprefixer-rails"

@@ -2,22 +2,29 @@ class MissionsController < ApplicationController
   before_action :set_mission, only: %i[show edit update destroy]
 
   def index
-    @missions = Mission.all.select { |mission| mission.mission_candidate_id.nil? }
+    @missions = policy_scope(Mission)
   end
 
   def show
-    @mission = Mission.find(params[:id])
-    # @mission_candidates = MissionCandidate.all.select { |mission_candidate| mission_candidate.mission == @mission }
+    authorize @mission
+    @mission_candidate = MissionCandidate.new(mission: @mission)
     @mission_candidates = MissionCandidate.where(mission: @mission)
+    @markers =
+      [{
+        lat: @mission.latitude,
+        lng: @mission.longitude
+      }]
   end
 
   def new
     @mission = Mission.new
+    authorize @mission
   end
 
   def create
     @mission = Mission.new(mission_params)
     @mission.user = current_user
+    authorize @mission
     if @mission.save
       redirect_to dashboard_path
     else
@@ -26,11 +33,11 @@ class MissionsController < ApplicationController
   end
 
   def edit
-    @mission = Mission.find(params[:id])
+    authorize @mission
   end
 
   def update
-    @mission = Mission.find(params[:id])
+    authorize @mission
     if @mission.update(mission_params)
       redirect_to dashboard_path
     else
@@ -39,8 +46,9 @@ class MissionsController < ApplicationController
   end
 
   def destroy
-    @mission = Mission.find(params[:id])
-    @mission.delete
+    authorize @mission
+    @mission.destroy
+    redirect_to dashboard_path
   end
 
   private
