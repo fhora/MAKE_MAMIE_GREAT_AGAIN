@@ -5,7 +5,7 @@ class Mission < ApplicationRecord
   validates :title, presence: true, length: { maximum: 20 }
   validates :description, presence: true, length: { minimum: 10 }
   validates :reward_cents, presence: true, numericality: true
-  validates :start_date, :location, presence: true
+  validates :location, presence: true
 
   geocoded_by :location
   after_validation :geocode, if: :will_save_change_to_location?
