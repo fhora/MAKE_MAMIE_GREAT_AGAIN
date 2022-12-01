@@ -30,6 +30,7 @@ class MissionsController < ApplicationController
 
   def new
     @mission = Mission.new
+    # @categories = Mission.categories
     authorize @mission
   end
 
@@ -37,6 +38,7 @@ class MissionsController < ApplicationController
     @mission = Mission.new(mission_params)
     @mission.user = current_user
     @mission.reward_cents *= 100
+    @mission.category_list = params[:mission][:categories]
     authorize @mission
     if @mission.save
       redirect_to dashboard_path
@@ -71,6 +73,6 @@ class MissionsController < ApplicationController
   end
 
   def mission_params
-    params.require(:mission).permit(:title, :description, :reward_cents, :location, :start_date, :tag_list)
+    params.require(:mission).permit(:title, :description, :reward_cents, :location, :start_date, :categories)
   end
 end

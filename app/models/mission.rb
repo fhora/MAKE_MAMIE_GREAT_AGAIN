@@ -10,5 +10,7 @@ class Mission < ApplicationRecord
   geocoded_by :location
   after_validation :geocode, if: :will_save_change_to_location?
 
-  acts_as_taggable_on :tags, :categories
+  acts_as_taggable_on :categories
+  
+  CATEGORIES = %w[shopping walking medical reading playing discussing]
 end
