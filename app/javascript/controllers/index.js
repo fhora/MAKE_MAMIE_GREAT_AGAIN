@@ -16,5 +16,8 @@ application.register("hello", HelloController)
 import MapController from "./map_controller"
 application.register("map", MapController)
 
+import SearchMissionsController from "./search_missions_controller"
+application.register("search-missions", SearchMissionsController)
+
 import StarRatingController from "./star_rating_controller"
 application.register("star-rating", StarRatingController)
