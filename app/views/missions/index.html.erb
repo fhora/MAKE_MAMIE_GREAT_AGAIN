@@ -1,39 +1,41 @@
-<div class="container" id="index-missions">
-  <h1 class="text-center text-uppercase mb-4">All Missions</h1>
+ <div class="py-5 bg-light-gray">
+  <div class="container" id="index-missions">
+    <h1 class="text-center text-uppercase mb-4">All Missions</h1>
 
-  <div data-controller="search-missions">
-    <%= form_with(url: missions_path, method: :get, html: {class:
-      "mb-4", data: {search_missions_target: "form"}}) do |f| %>
-      <%= f.text_field :query,
-                      class: "form-control",
-                      placeholder: "Type a mission title",
-                      value: params[:query],
-                      data: {
-                        search_missions_target: "input",
-                        action: "keyup->search-missions#update"
-                      } %>
-      <div class="d-flex gap-3 align-items-center">
-        <%= link_to missions_path(query: Mission::CATEGORIES[0]) do  %>
-          <h4><i class="fa-solid fa-cart-shopping"></i></h4>
-          <p>Shopping</p>
+    <div class="row justify-content-center" data-controller="search-missions">
+      <%= form_with(url: missions_path, method: :get, html: {class:
+        "mb-4 col-8", data: {search_missions_target: "form"}}) do |f| %>
+        <%= f.text_field :query,
+                        class: "form-control",
+                        placeholder: "Type a mission title",
+                        value: params[:query],
+                        data: {
+                          search_missions_target: "input",
+                          action: "keyup->search-missions#update"
+                        } %>
+        <div class="d-flex gap-3 align-items-center">
+          <%= link_to missions_path(query: Mission::CATEGORIES[0]) do  %>
+            <h4><i class="fa-solid fa-cart-shopping"></i></h4>
+            <p>Shopping</p>
+          <% end %>
+          <%= link_to missions_path(query:Mission::CATEGORIES[1]) do  %>
+            <h4><i class="fa-solid fa-person-walking"></i></h4>
+          <% end %>
+          <%= link_to missions_path(query:Mission::CATEGORIES[2]) do  %>
+            <h4><i class="fa-solid fa-notes-medical"></i></h4>
+          <% end %>
+          <%= link_to missions_path(query:Mission::CATEGORIES[3]) do  %>
+            <h4><i class="fa-solid fa-book-open"></i></h4>
+          <% end %>
+          <%= link_to missions_path(query:Mission::CATEGORIES[4]) do  %>
+            <h4><i class="fa-solid fa-puzzle-piece"></i></h4>
+          <% end %>
+          <%= link_to missions_path(query:Mission::CATEGORIES[5]) do  %>
+            <h4><i class="fa-regular fa-comment"></i></h4>
+          <% end %>
+        </div>
         <% end %>
-        <%= link_to missions_path(query:Mission::CATEGORIES[1]) do  %>
-          <h4><i class="fa-solid fa-person-walking"></i></h4>
-        <% end %>
-        <%= link_to missions_path(query:Mission::CATEGORIES[2]) do  %>
-          <h4><i class="fa-solid fa-notes-medical"></i></h4>
-        <% end %>
-        <%= link_to missions_path(query:Mission::CATEGORIES[3]) do  %>
-          <h4><i class="fa-solid fa-book-open"></i></h4>
-        <% end %>
-        <%= link_to missions_path(query:Mission::CATEGORIES[4]) do  %>
-          <h4><i class="fa-solid fa-puzzle-piece"></i></h4>
-        <% end %>
-        <%= link_to missions_path(query:Mission::CATEGORIES[5]) do  %>
-          <h4><i class="fa-regular fa-comment"></i></h4>
-        <% end %>
-      </div>
-      <% end %>
-    <%= render "list", missions: @missions %>
+      <%= render "list", missions: @missions %>
+    </div>
   </div>
 </div>

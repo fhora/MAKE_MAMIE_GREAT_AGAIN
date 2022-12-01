@@ -1,0 +1,7 @@
+.custom-container {
+  min-height: calc(100vh - #{$navbar-height} - #{$footer-height});
+}
+
+.bg-light-gray {
+  background-color: $light-gray;
+}
