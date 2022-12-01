@@ -12,3 +12,9 @@
 .red-dark {
   color: $red-dark;
 }
+
+.checkbox-inputs {
+  input:checked+label {
+    text-decoration: underline;
+  }
+}
