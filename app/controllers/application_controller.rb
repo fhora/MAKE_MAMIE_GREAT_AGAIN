@@ -20,7 +20,7 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.permit(:sign_up, keys: %i[first_name last_name description phone_number])
 
     # For additional in app/views/devise/registrations/edit.html.erb
-    devise_parameter_sanitizer.permit(:account_update, keys: %i[first_name last_name description phone_number])
+    devise_parameter_sanitizer.permit(:account_update, keys: %i[photo first_name last_name description phone_number])
   end
 
   def skip_pundit?

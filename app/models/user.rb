@@ -7,6 +7,7 @@ class User < ApplicationRecord
   # has_many :missions, through: :mission_candidates, dependent: :destroy
   has_many :mission_candidates, dependent: :destroy
   has_many :missions, dependent: :destroy
+  has_one_attached :photo
   has_many :reviews, dependent: :destroy
   has_many :chatrooms, dependent: :destroy
 
@@ -16,5 +17,10 @@ class User < ApplicationRecord
 
   def fullname
     "#{first_name.capitalize} #{last_name.capitalize}"
+  end
+
+  # moyenne des ratings du user
+  def average_rating
+    reviews.average(:rating).round
   end
 end

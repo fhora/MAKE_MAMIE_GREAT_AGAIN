@@ -1,12 +1,18 @@
 <div class="container">
-  <h1 class="text-center">MISSIONS</h1>
-  <ul>
-    <% if @missions.empty?  %>
-      <p>There is no available missions currently</p>
-    <% else %>
-      <% @missions.each do |mission| %>
-        <li><%= link_to "#{mission.title}", mission_path(mission) %></li>
-      <% end %>
+  <h1 class="text-center text-uppercase mb-4">All Missions</h1>
+
+  <div data-controller="search-missions">
+    <%= form_with(url: missions_path, method: :get, html: {class:
+      "mb-4", data: {search_missions_target: "form"}}) do |f| %>
+      <%= f.text_field :query,
+                      class: "form-control",
+                      placeholder: "Type a mission title",
+                      value: params[:query],
+                      data: {
+                        search_missions_target: "input",
+                        action: "keyup->search-missions#update"
+                      } %>
     <% end %>
-  </ul>
+    <%= render "list", missions: @missions %>
+  </div>
 </div>

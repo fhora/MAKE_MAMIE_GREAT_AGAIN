@@ -7,6 +7,6 @@ class ReviewPolicy < ApplicationPolicy
   end
 
   def create?
-    record.user_id != user.id
+    record.user_id != user.id && record.user.reviews.where(reviewer_id: user).size.zero?
   end
 end

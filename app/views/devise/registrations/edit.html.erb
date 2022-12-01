@@ -20,6 +20,7 @@
                 input_html: { autocomplete: "phone_number" }%>
     <%= f.input :email,
                 input_html: { autocomplete: "email" }%>
+    <%= f.input :photo, label:"Profil picture", as: :file, input_html: { multiple: false } %>
     <%= f.input :password,
                 hint: "leave it blank if you don't want to change it",
                 required: false,
