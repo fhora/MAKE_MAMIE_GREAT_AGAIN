@@ -1,0 +1,11 @@
+<div class="container">
+  <h1>CHATROOMS</h1>
+  <% @chatrooms.each do |chatroom| %>
+    <% if current_user == chatroom.user %>
+        <% name = chatroom.mission_candidate.user.fullname %>
+      <% else %>
+        <% name = chatroom.user.fullname %>
+      <% end %>
+      <%= link_to "#{name}'s chat", chatroom_path(chatroom) %>
+    <% end %>
+</div>

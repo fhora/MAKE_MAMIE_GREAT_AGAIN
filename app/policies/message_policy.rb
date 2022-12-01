@@ -1,4 +1,4 @@
-class ReviewPolicy < ApplicationPolicy
+class MessagePolicy < ApplicationPolicy
   class Scope < Scope
     # NOTE: Be explicit about which records you allow access to!
     # def resolve
@@ -7,6 +7,6 @@ class ReviewPolicy < ApplicationPolicy
   end
 
   def create?
-    record.user_id != user.id && record.user.reviews.where(reviewer_id: user).size.zero?
+    record.user == user
   end
 end

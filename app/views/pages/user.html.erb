@@ -1,14 +1,23 @@
 <div class="container">
-  <h1><%= @user.first_name %> <%= @user.last_name %></h1>
-  <h5><%= @user.phone_number %> <%= @user.email %></h5>
-  <p><%= @user.description %></p>
-
+      <h1><%= @user.first_name %> <%= @user.last_name %></h1>
+      <h5><%= @user.phone_number %> <%= @user.email %></h5>
+      <p><%= @user.description %></p>
+  </div>
+  <% @user.mission_candidates.joins(:mission).where(missions: { user: current_user }).each do |candidate| %>
+    <% if candidate.chatrooms.any? %>
+      <%= link_to "Chat", chatroom_path(candidate.chatrooms.first) %>
+    <% else %>
+      <%= simple_form_for(@chatroom) do |f| %>
+        <%= f.input :mission_candidate_id, input_html: { value: candidate.id }, as: :hidden %>
+        <%= f.submit %>
+      <% end %>
+    <% end %>
+  <% end %>
   <div class="row div-width-80 align-items-start my-5 review-container">
     <div class="col-5 review-content-wrapper">
       <h3>Reviews</h3>
       <% @user.reviews.each do |review| %>
         <div class="review-content ps-4">
-
           <p>
             <% review.rating.times do %>
               <i class="fa-solid fa-star"></i>
@@ -28,7 +37,7 @@
         <%= f.input :content, placeholder: 'Add your review here...' %>
         <%= f.input :reviewer_id, as: :hidden, input_html: { value: current_user.id }%>
         <%= f.input :rating, collection: (1..5).to_a, label: "Rate your experience", input_html: {data: {controller: "star-rating"}}%>
-        <% if @user.reviews.where(reviewer_id: current_user)%>
+        <% unless @user.reviews.where(reviewer_id: current_user).size.zero? %>
           <%= f.submit "Submit review", class: "btn btn-primary disabled" %>
         <% else %>
           <%= f.submit "Submit review", class: "btn btn-primary" %>

@@ -2,17 +2,24 @@
   <h1 class="text-center"><%= @mission.title %></h1>
   <div class="row recap-wrapper">
     <div class="col-8 recap-content">
-      <p><%= "#{@mission.title} posté par #{@mission.user.fullname}" %></p>
+      <p><%= "#{@mission.title} posté par "%><%= link_to @mission.user.fullname, userpage_path(@mission.user.id) %></p>
       <p>date et horaire</p>
       <p><%= @mission.location %></p>
       <p><%= @mission.description %></p>
       <p><%= @mission.reward_cents/100 %>$</p>
-
       <% if policy(@mission_candidate).new? %>
         <% if @mission.mission_candidates.none? {|candidate| candidate.user == current_user} %>
           <%= link_to "Apply to this mission", mission_mission_candidates_path(@mission), data: { turbo_method: :post }, class: "btn btn-primary" %>
         <% else %>
           <p style="color:red;font-weight:bolder;font-size:20px;">You already applied for this mission</p>
+          <% if Chatroom.where(mission_candidate: @mission_candidates.find_by(user: current_user)).where(user: @mission.user).count == 1 %>
+            <%= link_to "Any question? Chat with #{@mission.user.fullname}", chatroom_path(Chatroom.where(mission_candidate: @mission_candidates.find_by(user: current_user)).where(user: @mission.user).first) %>
+          <% else %>
+            <%= simple_form_for(@chatroom) do |f| %>
+              <%= f.input :mission_candidate_id, input_html: { value: @mission.mission_candidates.where(user: current_user).first.id }, as: :hidden %>
+              <%= f.submit %>
+            <% end %>
+          <% end %>
         <% end %>
       <% elsif @mission.status == false %>
         <div class="d-flex gap-3">
