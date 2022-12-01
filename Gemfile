@@ -51,8 +51,11 @@ gem "sassc-rails"
 
 gem 'phonelib'
 
-gem "pundit"
 gem "faker"
+
+gem 'acts-as-taggable-on', '~> 9.0'
+
+gem "pundit"
 gem "devise"
 gem "autoprefixer-rails"
 gem "font-awesome-sass", "~> 6.2.0"
