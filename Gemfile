@@ -51,6 +51,8 @@ gem "sassc-rails"
 
 gem 'phonelib'
 
+gem "faker"
+
 gem 'acts-as-taggable-on', '~> 9.0'
 
 gem "pundit"
