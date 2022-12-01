@@ -9,6 +9,7 @@ class User < ApplicationRecord
   has_many :missions, dependent: :destroy
   has_one_attached :photo
   has_many :reviews, dependent: :destroy
+  has_many :chatrooms, dependent: :destroy
 
   validates :first_name, presence: true, format: { without: /[0-9]/ }
   validates :last_name, presence: true, format: { without: /[0-9]/ }
