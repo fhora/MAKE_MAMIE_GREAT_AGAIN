@@ -3,13 +3,15 @@ class MissionsController < ApplicationController
 
   def index
     if params[:query].present?
-      sql_query = "title ILIKE :query"
-      @missions = policy_scope(Mission).where(sql_query, query: "%#{params[:query]}%")
+
+      # split la query par espace et chaine la requete pour chaque item dans l'array ???
+
+      @missions = policy_scope(Mission).search_by_title(params[:query])
     else
       @missions = policy_scope(Mission)
     end
     respond_to do |format|
-      format.html # Follow regular flow of Rails
+      format.html
       format.text { render partial: "missions/list", locals: { missions: @missions }, formats: [:html] }
     end
   end
@@ -30,7 +32,6 @@ class MissionsController < ApplicationController
 
   def new
     @mission = Mission.new
-    # @categories = Mission.categories
     authorize @mission
   end
 
