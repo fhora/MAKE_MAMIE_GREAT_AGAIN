@@ -2,7 +2,16 @@ class MissionsController < ApplicationController
   before_action :set_mission, only: %i[show edit update destroy]
 
   def index
-    @missions = policy_scope(Mission)
+    if params[:query].present?
+      sql_query = "title ILIKE :query"
+      @missions = policy_scope(Mission).where(sql_query, query: "%#{params[:query]}%")
+    else
+      @missions = policy_scope(Mission)
+    end
+    respond_to do |format|
+      format.html # Follow regular flow of Rails
+      format.text { render partial: "missions/list", locals: { missions: @missions }, formats: [:html] }
+    end
   end
 
   def show
