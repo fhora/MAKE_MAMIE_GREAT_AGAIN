@@ -2,7 +2,7 @@
   <h1 class="text-center"><%= @mission.title %></h1>
   <div class="row recap-wrapper">
     <div class="col-8 recap-content">
-      <p><%= "#{@mission.title} posté par #{@mission.user.fullname}" %></p>
+      <p><%= "#{@mission.title} posté par "%><%= link_to @mission.user.fullname, userpage_path(@mission.user.id) %></p>
       <p>date et horaire</p>
       <p><%= @mission.location %></p>
       <p><%= @mission.description %></p>
