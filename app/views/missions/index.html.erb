@@ -1,41 +1,53 @@
 <div class="container">
   <h1 class="text-center text-uppercase mb-4">All Missions</h1>
+
+  <div data-controller="search-missions">
+  <%= form_with url: missions_path, method: :get, html: {class:
+    "mb-4", data: {search_missions_target: "form"}} do |f| %>
+    <%= f.text_field :query,
+                     class: "form-control",
+                     placeholder: "Type a movie title",
+                     value: params[:query],
+                     data: {search_movies_target: "input"} %>
+
   <% if @missions.empty?  %>
     <p>There is no available missions currently</p>
   <% else %>
-    <% @missions.each do |mission| %>
-      <div class="row justify-content-center">
-        <div class="col-8">
-          <div class="row border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-            <div class="col-3 d-flex justify-content-center align-items-center">
-              <figure class="avatar-xlarge d-flex justify-content-center align-items-center">
-                <i class="fa-solid fa-cart-shopping fs-1"></i>
-              </figure>
-            </div>
-            <div class="col-9 p-4 d-flex flex-column position-static">
-              <div class="d-flex justify-content-between align-items-center">
-                <h4 class="mb-0"><%= mission.user.first_name %> <%= mission.user.last_name %></h4>
-                <div class="stars-review">
-                <% unless mission.user.reviews.empty? %>
-                  <% mission.user.average_rating.times do %>
-                    <i class="fa-solid fa-star me-0"></i>
-                  <% end %>
-                  <% (5 - mission.user.average_rating).times do %>
-                    <i class="fa-regular fa-star me-0"></i>
-                  <% end %>
-                  - <%= mission.user.reviews.count %> avis
-                <% end %>
-                </div>
+    <div data-search-missions-target="list">
+      <% @missions.each do |mission| %>
+        <div class="row justify-content-center">
+          <div class="col-8">
+            <div class="row border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+              <div class="col-3 d-flex justify-content-center align-items-center">
+                <figure class="avatar-xlarge d-flex justify-content-center align-items-center">
+                  <i class="fa-solid fa-cart-shopping fs-1"></i>
+                </figure>
               </div>
-              <strong class="d-inline-block mb-2 text-primary"><%= mission.title %></strong>
-              <p class="card-text mb-auto"><%= mission.description %></p>
-              <%= link_to mission_path(mission) do %>
-                View details <i class="fa fa-arrow-right ms-1"></i>
-              <% end %>
+              <div class="col-9 p-4 d-flex flex-column position-static">
+                <div class="d-flex justify-content-between align-items-center">
+                  <h4 class="mb-0"><%= mission.user.first_name %> <%= mission.user.last_name %></h4>
+                  <div class="stars-review">
+                  <% unless mission.user.reviews.empty? %>
+                    <% mission.user.average_rating.times do %>
+                      <i class="fa-solid fa-star me-0"></i>
+                    <% end %>
+                    <% (5 - mission.user.average_rating).times do %>
+                      <i class="fa-regular fa-star me-0"></i>
+                    <% end %>
+                    - <%= mission.user.reviews.count %> avis
+                  <% end %>
+                  </div>
+                </div>
+                <strong class="d-inline-block mb-2 text-primary"><%= mission.title %></strong>
+                <p class="card-text mb-auto"><%= mission.description %></p>
+                <%= link_to mission_path(mission) do %>
+                  View details <i class="fa fa-arrow-right ms-1"></i>
+                <% end %>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    <% end %>
+      <% end %>
+    </div>
   <% end %>
 </div>
