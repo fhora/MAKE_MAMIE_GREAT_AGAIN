@@ -13,7 +13,9 @@ Rails.application.routes.draw do
   resources :missions do
     resources :mission_candidates, only: %i[create update edit destroy]
   end
-
+  resources :chatrooms, only: %i[create show index] do
+    resources :messages, only: :create
+  end
   # routes pour décliner et accepter candidats à la mission
   resources :mission_candidates, only: [] do
     member do

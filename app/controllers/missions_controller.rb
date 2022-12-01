@@ -6,6 +6,7 @@ class MissionsController < ApplicationController
   end
 
   def show
+    @chatroom = Chatroom.new
     authorize @mission
     @mission_candidate = MissionCandidate.new(mission: @mission)
     @mission_candidates = MissionCandidate.where(mission: @mission)

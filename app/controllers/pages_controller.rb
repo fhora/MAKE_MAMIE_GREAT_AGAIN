@@ -5,6 +5,7 @@ class PagesController < ApplicationController
   end
 
   def user
+    @chatroom = Chatroom.new
     @user = User.find(params[:id])
     @review = Review.new
   end
