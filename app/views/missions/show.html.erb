@@ -1,105 +1,131 @@
 <div class="py-5 bg-light-gray">
   <div class="container">
-    <div class="row recap-wrapper mt-5 border">
-      <div class="col-12 d-flex">
-        <div class="col-4 d-flex recap-content">
-          <div class="d-flex flex-column">
-            <div class="col-12 d-flex flex-row">
-              <div class="col-6 align-items-center justify-content-center m-2 ">
-                <% if @mission.user.photo.key.nil? %>
-                  <img class="avatar-large" src="https://media.istockphoto.com/id/1337144146/fr/vectoriel/vecteur-dic%C3%B4ne-de-profil-davatar-par-d%C3%A9faut.jpg?b=1&s=170667a&w=0&k=20&c=eYsURDWBMsbvhjRxVQ8-pgC0q4b04DSYbCMnY5OlH14=" />
-                <% else %>
-                  <div class="avatar-large">
-                    <%= cl_image_tag @mission.user.photo.key  %>
-                  </div>
-                <% end %>
-              </div>
-              <div class="col-6 d-flex">
-                <p><%= "posted by #{@mission.user.fullname}" %></p>
-              </div>
-            </div>
-            <div>
-              <p><%= @mission.user.first_name%> needs you on <strong><%= @mission.start_date.strftime('%a %d %B %Y')%> at <%= @mission.start_date.strftime('%H:%M') %></strong>.</p>
-              <p>The mission will be located at <strong><%= @mission.location %></strong>.</p>
-              <p>You will be rewarded <strong><%= @mission.reward_cents/100 %>€</strong> for your help.</p>
-            </div>
-            <div>
-              <% if policy(@mission_candidate).new? %>
-                <% if @mission.mission_candidates.none? {|candidate| candidate.user == current_user} %>
-                  <%= link_to "Apply to this mission", mission_mission_candidates_path(@mission), data: { turbo_method: :post }, class: "btn btn-primary" %>
-                <% else %>
-                  <p style="color:red;font-weight:bolder;font-size:20px;">You already applied for this mission</p>
-                <% end %>
-              <% elsif @mission.status == false %>
-                <div class="d-flex gap-3">
-                  <%= link_to edit_mission_path(@mission), class:"btn btn-primary" do %>
-                    Edit <i class="fas fa-edit"></i>
-                  <% end %>
-                  <% if policy(@mission).destroy? %>
-                    <%= button_to @mission, method: :delete, class:"btn btn-primary" do %>
-                      Supprimer <i class="far fa-trash-alt"></i>
-                    <% end %>
-                  <% end %>
-                </div>
-              <% end %>
-            </div>
-          </div>
-        </div>
-        <div class="col-4 d-flex flex-column text-align-center" >
-          <div class="d-flex flex-grow text-align-center">
-            <h1 class="flex-grow"><%= @mission.title %></h1>
-          </div>
-          <%= @mission.description %>
-        </div>
-        <div class="col-4 d-flex">
-          <% if @mission.status == true %>
-            <div class="card-info">
-              <p><%= @accepted_candidate.user.fullname %></p>
-              <p><%= @accepted_candidate.user.description %></p>
-              <p><%= @accepted_candidate.user.phone_number %></p>
-              <p>Ratings</p>
-              <%= link_to 'Details...', userpage_path(@accepted_candidate.user) %>
-            </div>
-          <% else %>
-            <div style="width: 100%; height: 400px;"
+    <div class="row">
+      <div class="left-col col-7 bg-white p-0">
+        <div style="width: 100%; height: 300px;"
               data-controller="map"
               data-map-markers-value="<%= @markers.to_json %>"
-              data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>"></div>
-          <% end %>
+              data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>">
         </div>
-      </div>
-      <div class="col-12 mission-candidates d-flex justify-content-around mt-3">
-        <% if policy(@mission).destroy? && @mission.status == false %>
-          <div class="col-12 candidates-wrapper row align-items-center d-flex flex-row gap-3 horizontal-scroll">
-            <% @waiting_candidates.where(mission_id: @mission.id).each do |candidate| %>
-              <div class="card-info col-4 border d-flex flex-column">
-                <figure class="avatar-large d-flex justify-content-center align-items-center">
-                    <% if candidate.user.photo.key.nil? %>
-                      <img class="avatar-large" src="https://media.istockphoto.com/id/1337144146/fr/vectoriel/vecteur-dic%C3%B4ne-de-profil-davatar-par-d%C3%A9faut.jpg?b=1&s=170667a&w=0&k=20&c=eYsURDWBMsbvhjRxVQ8-pgC0q4b04DSYbCMnY5OlH14=" />
-                    <% else %>
-                      <div class="avatar-large">
-                        <%= cl_image_tag candidate.user.photo.key  %>
-                      </div>
-                    <% end %>
-                </figure>
-                <p><%= candidate.user.fullname %></p>
-                <p>
-                  <% candidate.reviews.rating.times do %>
-                    <i class="fa-solid fa-star"></i>
-                  <% end %>
-                  <% (5 - review.rating).times do %>
-                    <i class="fa-regular fa-star"></i>
-                  <% end %>
-                  - <%= time_ago_in_words(review.updated_at) %> ago</p>
-                <%= link_to 'See the profil', userpage_path(candidate.user) %>
-                <div class="d-flex justify-content-around">
-                  <%= link_to "Accepter", accepted_mission_candidate_path(candidate), data: {turbo_method: :patch}, class: "btn btn-primary button" %>
-                  <%= link_to "Décliner", declined_mission_candidate_path(candidate), data: {turbo_method: :patch}, class: "btn btn-primary button" %>
-                </div>
+        <div class="container p-4">
+          <div class="d-flex align-items-center gap-3">
+            <h2 class="pt-2"><%= @mission.title.capitalize %></h2>
+            <% unless policy(@mission_candidate).new? %>
+              <div class="ms-auto d-flex gap-3">
+                <%= link_to edit_mission_path(@mission), class:"btn btn-primary" do %>
+                  Edit <i class="fas fa-edit"></i>
+                <% end %>
+                <%= button_to @mission, method: :delete do %>
+                  <i class="far fa-trash-alt"></i>
+                <% end %>
               </div>
             <% end %>
           </div>
-        <% end %>
+          <div class="d-flex align-items-center">
+            <figure class="avatar-circle-user">
+              <% if @mission.user.photo.key.nil? %>
+                <img src="https://media.istockphoto.com/id/1337144146/fr/vectoriel/vecteur-dic%C3%B4ne-de-profil-davatar-par-d%C3%A9faut.jpg?b=1&s=170667a&w=0&k=20&c=eYsURDWBMsbvhjRxVQ8-pgC0q4b04DSYbCMnY5OlH14=" />
+              <% else %>
+                  <%= cl_image_tag @mission.user.photo.key  %>
+              <% end %>
+            </figure>
+            <p>
+              Posted by <%= @mission.user.first_name %>
+            </p>
+          </div>
+
+          <p><%= @mission.description %></p>
+          <% unless @mission.start_date.nil? %>
+            <p><%= @mission.start_date.strftime('%a %d %B %Y')%></p>
+          <% end %>
+          <p>The mission will be located at <strong><%= @mission.location %></strong>.</p>
+          <p>You will be rewarded <strong><%= @mission.reward_cents/100 %>€</strong> for your help.</p>
+          <% if policy(@mission_candidate).new? %>
+            <% if @mission.mission_candidates.none? {|candidate| candidate.user == current_user} %>
+              <%= link_to "Apply to this mission", mission_mission_candidates_path(@mission), data: { turbo_method: :post }, class: "btn btn-primary" %>
+            <% else %>
+              <p style="color:red;font-weight:bolder;font-size:20px;">You already applied for this mission</p>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+
+
+      <div class="right-col col-5 bg-light-gray border">
+        <h3 class="pt-3">Candidats</h3>
+        <div class="mission-candidates">
+          <% if @mission.status == true %>
+            <div class="card-container d-flex gap-4 mt-4 border p-3 bg-white">
+              <figure class="avatar-large-square">
+                <% if @accepted_candidate.user.photo.key.nil? %>
+                  <img src="https://media.istockphoto.com/id/1337144146/fr/vectoriel/vecteur-dic%C3%B4ne-de-profil-davatar-par-d%C3%A9faut.jpg?b=1&s=170667a&w=0&k=20&c=eYsURDWBMsbvhjRxVQ8-pgC0q4b04DSYbCMnY5OlH14=" />
+                <% else %>
+                  <div>
+                    <%= cl_image_tag @accepted_candidate.user.photo.key  %>
+                  </div>
+                <% end %>
+              </figure>
+              <div class="candidate-details d-flex flex-column justify-content-around">
+                <div class="d-flex align-items-baseline gap-2">
+                  <h4><%= @accepted_candidate.user.fullname %></h4>
+                  <%= link_to 'details', userpage_path(@accepted_candidate.user), class:"text-decoration-none" %>
+                </div>
+                <p>member since <%= @accepted_candidate.user.created_at.strftime('%B %Y') %> </p>
+                <p>
+                  <% unless @accepted_candidate.user.reviews.empty? %>
+                    <% @accepted_candidate.user.average_rating.times do %>
+                      <i class="fa-solid fa-star"></i>
+                    <% end %>
+                    <% (5 - @accepted_candidate.user.average_rating).times do %>
+                      <i class="fa-regular fa-star"></i>
+                    <% end %>
+                    <%= @accepted_candidate.user.average_rating %>/5
+                  <% else %>
+                  no votes yet
+                  <% end %>
+                </p>
+              </div>
+            <% end %>
+          <% if policy(@mission).destroy? && @mission.status == false %>
+            <% @waiting_candidates.where(mission_id: @mission.id).each do |candidate| %>
+              <div class="card-container d-flex gap-4 mt-4 border p-3 bg-white">
+                <figure class="avatar-large-square">
+                  <% if candidate.user.photo.key.nil? %>
+                    <img src="https://media.istockphoto.com/id/1337144146/fr/vectoriel/vecteur-dic%C3%B4ne-de-profil-davatar-par-d%C3%A9faut.jpg?b=1&s=170667a&w=0&k=20&c=eYsURDWBMsbvhjRxVQ8-pgC0q4b04DSYbCMnY5OlH14=" />
+                  <% else %>
+                    <div>
+                      <%= cl_image_tag candidate.user.photo.key  %>
+                    </div>
+                  <% end %>
+                </figure>
+                <div class="candidate-details d-flex flex-column justify-content-around">
+                  <div class="d-flex align-items-baseline gap-2">
+                    <h4><%= candidate.user.fullname %></h4>
+                    <%= link_to 'details', userpage_path(candidate.user), class:"text-decoration-none" %>
+                  </div>
+                  <p>member since <%= candidate.user.created_at.strftime('%B %Y') %> </p>
+                  <p>
+                    <% unless candidate.user.reviews.empty? %>
+                      <% candidate.user.average_rating.times do %>
+                        <i class="fa-solid fa-star"></i>
+                      <% end %>
+                      <% (5 - candidate.user.average_rating).times do %>
+                        <i class="fa-regular fa-star"></i>
+                      <% end %>
+                      <%= candidate.user.average_rating %>/5
+                    <% else %>
+                    no votes yet
+                    <% end %>
+                  </p>
+                </div>
+                <div class="action-button d-flex flex-column justify-content-around">
+                  <p><%= link_to "Accepter", accepted_mission_candidate_path(candidate), data: {turbo_method: :patch}, class: "btn btn-primary button" %></p>
+                  <p><%= link_to "Décliner", declined_mission_candidate_path(candidate), data: {turbo_method: :patch}, class:"text-decoration-none" %></p>
+                </div>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
       </div>
     </div>
   </div>
