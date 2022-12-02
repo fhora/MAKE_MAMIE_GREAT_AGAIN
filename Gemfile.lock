@@ -74,6 +74,8 @@ GEM
       i18n (>= 1.6, < 2)
       minitest (>= 5.1)
       tzinfo (~> 2.0)
+    acts-as-taggable-on (9.0.1)
+      activerecord (>= 6.0, < 7.1)
     addressable (2.8.1)
       public_suffix (>= 2.0.2, < 6.0)
     autoprefixer-rails (10.4.7.0)
@@ -116,6 +118,8 @@ GEM
       railties (>= 3.2)
     erubi (1.11.0)
     execjs (2.8.1)
+    faker (3.0.0)
+      i18n (>= 1.8.11, < 2)
     ffi (1.15.5)
     font-awesome-sass (6.2.1)
       sassc (~> 2.0)
@@ -169,6 +173,9 @@ GEM
       racc (~> 1.4)
     orm_adapter (0.5.0)
     pg (1.4.5)
+    pg_search (2.3.6)
+      activerecord (>= 5.2)
+      activesupport (>= 5.2)
     phonelib (0.7.5)
     public_suffix (5.0.0)
     puma (5.6.5)
@@ -279,6 +286,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  acts-as-taggable-on (~> 9.0)
   autoprefixer-rails
   bootsnap
   capybara
@@ -286,12 +294,14 @@ DEPENDENCIES
   debug
   devise
   dotenv-rails
+  faker
   font-awesome-sass (~> 6.2.0)
   geocoder
   image_processing (~> 1.2)
   jbuilder
   jsbundling-rails
   pg (~> 1.1)
+  pg_search
   phonelib
   puma (~> 5.0)
   pundit

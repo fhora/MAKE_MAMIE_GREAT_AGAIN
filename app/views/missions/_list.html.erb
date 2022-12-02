@@ -1,0 +1,40 @@
+<div data-search-missions-target="list">
+  <% if missions.empty?  %>
+    <p>There is no available missions currently</p>
+  <% else %>
+    <% missions.each do |mission| %>
+      <%= link_to mission_path(mission), class: "text-decoration-none" do %>
+        <div class="row justify-content-center">
+          <div class="col-8">
+            <div class="row border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+              <div class="col-3 d-flex justify-content-center align-items-center">
+                <figure class="avatar-xlarge d-flex justify-content-center align-items-center">
+                  <i class="fa-solid fa-cart-shopping fs-1"></i>
+                </figure>
+              </div>
+              <div class="col-9 p-4 d-flex flex-column position-static">
+                <div class="d-flex justify-content-between align-items-center">
+                  <h4 class="mb-2 text-capitalize fs-3 red-dark"><%= mission.title %></h4>
+                  <div class="stars-review">
+                    <% unless mission.user.reviews.empty? %>
+                      <% mission.user.average_rating.times do %>
+                        <i class="fa-solid fa-star me-0"></i>
+                      <% end %>
+                      <% (5 - mission.user.average_rating).times do %>
+                        <i class="fa-regular fa-star me-0"></i>
+                      <% end %>
+                      - <%= mission.user.reviews.count %> votes
+                    <% end %>
+                  </div>
+                </div>
+                <span class="d-inline-block mb-2 text-primary fw-ligth"><i class="fa-solid fa-location-dot"></i> <%= mission.location %> <%= mission.start_date.strftime(", on %m/%d/%Y at %H:%M") unless mission.start_date.nil? %></span>
+                <span class="d-inline-block mb-2 text-primary red-dark fst-italic">Mission's price: <%= mission.reward_cents/100 %></span>
+                <p class="card-text mb-auto"><%= mission.description %></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>

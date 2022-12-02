@@ -2,10 +2,22 @@ class MissionsController < ApplicationController
   before_action :set_mission, only: %i[show edit update destroy]
 
   def index
-    @missions = policy_scope(Mission)
+    if params[:query].present?
+
+      # split la query par espace et chaine la requete pour chaque item dans l'array ???
+
+      @missions = policy_scope(Mission).search_by_title(params[:query])
+    else
+      @missions = policy_scope(Mission)
+    end
+    respond_to do |format|
+      format.html
+      format.text { render partial: "missions/list", locals: { missions: @missions }, formats: [:html] }
+    end
   end
 
   def show
+    @chatroom = Chatroom.new
     authorize @mission
     @mission_candidate = MissionCandidate.new(mission: @mission)
     @mission_candidates = MissionCandidate.where(mission: @mission)
@@ -27,6 +39,7 @@ class MissionsController < ApplicationController
     @mission = Mission.new(mission_params)
     @mission.user = current_user
     @mission.reward_cents *= 100
+    @mission.category_list = params[:mission][:categories]
     authorize @mission
     if @mission.save
       redirect_to dashboard_path
@@ -61,6 +74,6 @@ class MissionsController < ApplicationController
   end
 
   def mission_params
-    params.require(:mission).permit(:title, :description, :reward_cents, :location, :start_date)
+    params.require(:mission).permit(:title, :description, :reward_cents, :location, :start_date, :categories)
   end
 end

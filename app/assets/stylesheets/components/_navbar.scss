@@ -2,6 +2,7 @@
   justify-content: space-between;
   background: white;
   font-family: $headers-font;
+  min-height: $navbar-height;
 
   .animate-link {
     position: relative;
@@ -44,4 +45,12 @@
 
 .navbar-lewagon .navbar-brand img {
   width: 40px;
+}
+
+.navbar-nav.me-auto  {
+  align-items: center;
+
+  p {
+    margin: 0;
+  }
 }

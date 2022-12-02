@@ -1,20 +1,5 @@
-<div class="footer mt-5">
-    <div class="footer-links">
-      <a href="#" alt="logo github"><i class="fab fa-github fs-4"></i></a>
-      <a href="#" alt="logo instagram"><i class="fab fa-instagram fs-4"></i></a>
-      <a href="#" alt="logo facebook"><i class="fab fa-facebook fs-4"></i></a>
-    </div>
-    <div class="pages-link">
-      <%= link_to "Home", root_path, class:"fs-6" %>
-      <% if user_signed_in? %>
-        <%= link_to "My profile", dashboard_path, class:"fs-6" %>
-      <% else %>
-        <%= link_to "Login", new_user_session_path, class:"fs-6" %>
-      <% end %>
-      <%= link_to "All missions", missions_path, class:"fs-6" %>
-    </div>
-    <div class="footer-copyright">
-      © Make mami great again  2022 - Tous droits réservés
-
+<div class="footer d-flex justify-content-center align-items-center">
+  <div class="footer-copyright">
+    © Make mami great again  2022 - Tous droits réservés
   </div>
 </div>

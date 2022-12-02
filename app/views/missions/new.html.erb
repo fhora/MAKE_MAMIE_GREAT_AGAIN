@@ -18,6 +18,7 @@
               },
             }
         %>
+        <%= f.input :categories, collection: Mission::CATEGORIES, as: :check_boxes %>
         <%= f.input :reward_cents, label:"Rémunération" %>
         <%= f.submit "Créer la mission", class: "btn btn-primary" %>
       <% end %>
