@@ -3,8 +3,8 @@
   <div class="justify-content-center d-flex">
     <div class="p-2 col-4">
       <%= simple_form_for(@mission, data: { controller: 'flatpickr'}) do |f| %>
-        <%= f.input :title, label:"Titre", placeholder:"Titre de la mission..." %>
-        <%= f.input :description, label:"Description", placeholder: "Décrire la mission..." %>
+        <%= f.input :title, label:"Title", placeholder:"Mission title..." %>
+        <%= f.input :description, label:"Description", placeholder: "Describe the mission..." %>
         <%= f.input :location,
           input_html: {data: {address_autocomplete_target: "location"}, class: "d-none"},
           wrapper_html: {data: {controller: "address-autocomplete",
@@ -18,8 +18,8 @@
               },
             }
         %>
-        <%= f.input :reward_cents, label:"Rémunération" %>
-        <%= f.submit "Créer la mission", class: "btn btn-primary" %>
+        <%= f.input :reward_cents, label:"Compensation (€)" %>
+        <%= f.submit "Submit the mission", class: "btn btn-primary" %>
       <% end %>
     </div>
   </div>
