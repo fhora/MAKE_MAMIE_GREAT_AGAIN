@@ -5,7 +5,6 @@ class MissionsController < ApplicationController
     if params[:query].present?
 
       # split la query par espace et chaine la requete pour chaque item dans l'array ???
-
       @missions = policy_scope(Mission).search_by_title(params[:query])
     else
       @missions = policy_scope(Mission)
@@ -15,6 +14,15 @@ class MissionsController < ApplicationController
       format.text { render partial: "missions/list", locals: { missions: @missions }, formats: [:html] }
     end
   end
+
+def myindex
+  @mymissions = Mission.where("user_id = ?", current_user.id)
+  authorize @mymissions
+  respond_to do |format|
+    format.html
+    format.text { render partial: "missions/list", locals: { missions: @mymissions }, formats: [:html] }
+  end
+end
 
   def show
     @chatroom = Chatroom.new
@@ -42,7 +50,7 @@ class MissionsController < ApplicationController
     @mission.category_list = params[:mission][:categories]
     authorize @mission
     if @mission.save
-      redirect_to dashboard_path
+      redirect_to mymissions_path
     else
       render :new, status: :unprocessable_entity
     end

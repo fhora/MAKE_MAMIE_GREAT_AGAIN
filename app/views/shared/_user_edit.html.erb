@@ -65,7 +65,6 @@
     </div>
   </div>
   <div class="col-12 d-block align-items-around p-2">
-    <div>Unhappy?</div>
-    <div><%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete, class: "btn btn-link" %></div>
+    <div><%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete, class: "btn btn-light" %></div>
   </div>
 <% end %>
