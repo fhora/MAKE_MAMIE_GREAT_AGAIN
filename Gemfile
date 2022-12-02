@@ -52,7 +52,7 @@ gem "image_processing", "~> 1.2"
 gem 'phonelib'
 
 gem "faker"
-
+gem 'pry-byebug'
 gem 'acts-as-taggable-on', '~> 9.0'
 gem "pg_search"
 gem "pundit"

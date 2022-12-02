@@ -1,13 +1,13 @@
- <div class="py-5 bg-light-gray">
+<div class="py-5 bg-light-gray">
   <div class="container" id="index-missions">
     <h1 class="text-center text-uppercase mb-4">All Missions</h1>
     <div class="row justify-content-center" data-controller="search-missions">
       <%= form_with(url: missions_path, method: :get, html: {class:
-        "mb-4 p-0 col-8", data: {search_missions_target: "form"}}) do |f| %>
-        <%= f.text_field :query,
+        "mb-4 col-8", data: {search_missions_target: "form"}}) do |f| %>
+        <%= f.text_field :querysearch,
                         class: "form-control",
-                        placeholder: "Type a mission title or search by categories listed below",
-                        value: params[:query],
+                        placeholder: "Type a mission title",
+                        value: params[:querysearch],
                         data: {
                           search_missions_target: "input",
                           action: "keyup->search-missions#update"
@@ -15,7 +15,7 @@
         <div class="checkbox-inputs d-flex mt-4 justify-content-around">
           <% Mission::CATEGORIES.each do |category| %>
             <div>
-              <%= f.check_box category, data: {
+              <%= f.check_box category, class: "d-none", data: {
                 search_missions_target: "checkbox",
                 action: "change->search-missions#update"
               } %>
