@@ -2,6 +2,7 @@ class MissionsController < ApplicationController
   before_action :set_mission, only: %i[show edit update destroy]
 
   def index
+      # split la query par espace et chaine la requete pour chaque item dans l'array ???
     if params[:querycheck].present? && params[:querysearch].present?
       @missions = policy_scope(Mission).tagged_with(params[:querycheck], any: true).search_by_title(params[:querysearch])
     elsif params[:querycheck].present?
@@ -16,6 +17,15 @@ class MissionsController < ApplicationController
       format.text { render partial: "missions/list", locals: { missions: @missions }, formats: [:html] }
     end
   end
+
+def myindex
+  @mymissions = Mission.where("user_id = ?", current_user.id)
+  authorize @mymissions
+  respond_to do |format|
+    format.html
+    format.text { render partial: "missions/list", locals: { missions: @mymissions }, formats: [:html] }
+  end
+end
 
   def show
     @chatroom = Chatroom.new
@@ -43,7 +53,7 @@ class MissionsController < ApplicationController
     @mission.category_list = params[:mission][:categories]
     authorize @mission
     if @mission.save
-      redirect_to dashboard_path
+      redirect_to mymissions_path
     else
       render :new, status: :unprocessable_entity
     end

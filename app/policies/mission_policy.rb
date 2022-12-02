@@ -22,4 +22,8 @@ class MissionPolicy < ApplicationPolicy
   def destroy?
     record.user == user
   end
+
+  def myindex?
+    record.first.user == user
+  end
 end

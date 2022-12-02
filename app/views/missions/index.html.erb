@@ -12,7 +12,7 @@
                           search_missions_target: "input",
                           action: "keyup->search-missions#update"
                         } %>
-        <div class="checkbox-inputs d-flex gap-3 align-items-center">
+        <div class="checkbox-inputs d-flex mt-4 justify-content-around">
           <% Mission::CATEGORIES.each do |category| %>
             <div>
               <%= f.check_box category, class: "d-none", data: {

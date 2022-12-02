@@ -1,10 +1,10 @@
 <div class="py-5 bg-light-gray">
-  <div class="container">
-    <h2 class="text-center">Créer une mission</h2><br>
-    <div class="justify-content-center d-flex">
-      <div class="p-2 col-4">
+  <div class="col-4 container">
+    <h1 class="text-center">Post a new mission</h1><br>
+    <div class="new-mission justify-content-center d-flex border rounded">
+      <div class="p-2 col-12">
         <%= simple_form_for(@mission, data: { controller: 'flatpickr'}) do |f| %>
-          <%= f.input :title, label:"Title", placeholder:"Title of the mission..." %>
+          <%= f.input :title, label:"Mission title", placeholder:"Title of the mission..." %>
           <%= f.input :description, label:"Description", placeholder: "Describe the mission..." %>
 
           <%= f.input :location,
@@ -20,10 +20,9 @@
                 },
               }
           %>
-
           <%= f.input :categories, collection: Mission::CATEGORIES, as: :check_boxes %>
           <%= f.input :reward_cents, label:"Mission price" %>
-          <%= f.submit "Create the mission", class: "btn btn-primary" %>
+          <%= f.submit "Post the mission", class: "btn btn-primary btn-block" %>
         <% end %>
       </div>
     </div>
