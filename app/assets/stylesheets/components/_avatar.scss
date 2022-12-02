@@ -9,6 +9,17 @@
     border-radius: 50%;
   }
 }
+
+.avatar-circle-user {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  img {
+    width:100%;
+    height:100%;
+    object-fit: cover !important;
+  }
+}
 .avatar-large {
   width: 120px;
   height: 120px;
@@ -21,6 +32,17 @@
     border-radius: 50%;
   }
 }
+
+.avatar-large-square {
+  width: 100px;
+  height: 100px;
+  img {
+    width:100%;
+    height:100%;
+    object-fit: cover !important;
+  }
+}
+
 .avatar-bordered {
   width: 40px;
   border-radius: 50%;
