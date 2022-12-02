@@ -3,13 +3,15 @@ class MissionsController < ApplicationController
 
   def index
     if params[:query].present?
-      sql_query = "title ILIKE :query"
-      @missions = policy_scope(Mission).where(sql_query, query: "%#{params[:query]}%")
+
+      # split la query par espace et chaine la requete pour chaque item dans l'array ???
+
+      @missions = policy_scope(Mission).search_by_title(params[:query])
     else
       @missions = policy_scope(Mission)
     end
     respond_to do |format|
-      format.html # Follow regular flow of Rails
+      format.html
       format.text { render partial: "missions/list", locals: { missions: @missions }, formats: [:html] }
     end
   end
@@ -37,6 +39,7 @@ class MissionsController < ApplicationController
     @mission = Mission.new(mission_params)
     @mission.user = current_user
     @mission.reward_cents *= 100
+    @mission.category_list = params[:mission][:categories]
     authorize @mission
     if @mission.save
       redirect_to dashboard_path
@@ -71,6 +74,6 @@ class MissionsController < ApplicationController
   end
 
   def mission_params
-    params.require(:mission).permit(:title, :description, :reward_cents, :location, :start_date, :tag_list)
+    params.require(:mission).permit(:title, :description, :reward_cents, :location, :start_date, :categories)
   end
 end

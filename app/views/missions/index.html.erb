@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" id="index-missions">
   <h1 class="text-center text-uppercase mb-4">All Missions</h1>
 
   <div data-controller="search-missions">
@@ -12,7 +12,18 @@
                         search_missions_target: "input",
                         action: "keyup->search-missions#update"
                       } %>
-    <% end %>
+      <div class="checkbox-inputs d-flex gap-3 align-items-center">
+        <% Mission::CATEGORIES.each do |category| %>
+          <div>
+            <%= f.check_box category, data: {
+              search_missions_target: "checkbox",
+              action: "change->search-missions#update"
+            } %>
+            <%= f.label category, category.to_s %>
+          </div>
+        <% end %>
+      </div>
+      <% end %>
     <%= render "list", missions: @missions %>
   </div>
 </div>

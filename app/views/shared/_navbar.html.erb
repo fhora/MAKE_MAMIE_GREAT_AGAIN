@@ -1,7 +1,7 @@
 <div class="navbar navbar-expand-sm navbar-light navbar-lewagon">
   <div class="container">
     <%= link_to root_path, class: "navbar-brand" do %>
-      Logo :-) Mamie Great Again
+      HelpDerby
     <% end %>
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -11,23 +11,15 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto">
         <% if user_signed_in? %>
-          <li class="nav-item me-4">
-            <%= link_to root_path, class: "nav-link text-primary text-uppercase animate-link" do %>
-              Home <i class="fa fa-arrow-right"></i>
+          <li class="nav-item me-3">
+            <%= link_to new_mission_path, class: "nav-link text-primary text-uppercase animate-link" do %>
+              Publish a mission <i class="fa fa-arrow-right"></i>
             <% end %>
           </li>
           <li class="nav-item me-3">
-            <%= link_to dashboard_path, class: "nav-link text-primary text-uppercase animate-link" do %>
-              Profile <i class="fa fa-arrow-right"></i>
+            <%= link_to missions_path, class: "nav-link text-primary text-uppercase animate-link" do %>
+              Find a job <i class="fa fa-arrow-right"></i>
             <% end %>
-          </li>
-          <li class="nav-item me-3">
-            <%= link_to "#", class: "nav-link text-primary text-uppercase animate-link" do %>
-              Messages <i class="fa fa-arrow-right"></i>
-            <% end %>
-          </li>
-          <li class="nav-item me-3">
-            <%= link_to "Find a job", missions_path, class: "nav-link text-uppercase btn-animate"%>
           </li>
           <li class="nav-item">
             <%# juste pour avoir un visuel du user sur lequel on est connecté pendant le developpement%>
@@ -42,16 +34,16 @@
                 </div>
               <% end %>
             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-              <%= link_to dashboard_path, class: "dropdown-item text-primary p-2" do %>
+              <%= link_to dashboard_path, class: "dropdown-item text-primary border-bottom p-2" do %>
                 My profile
               <% end %>
-              <%= link_to new_mission_path, class: "dropdown-item text-primary p-2" do %>
-                Publish a mission
+              <%= link_to "#", class: "dropdown-item text-primary border-bottom p-2" do %>
+                See my missions
               <% end %>
-              <%= link_to missions_path, class: "dropdown-item text-primary border-bottom p-2" do %>
-                See all missions
+              <%= link_to chatrooms_path, class: "dropdown-item text-primary border-bottom p-2" do %>
+                Messages
               <% end %>
-              <%= link_to destroy_user_session_path, data: {turbo_method: :delete}, class: "dropdown-item text-primary" do %>
+              <%= link_to destroy_user_session_path, data: {turbo_method: :delete}, class: "dropdown-item text-primary p-2" do %>
                 Log out
               <% end %>
             </div>

@@ -4,32 +4,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 100px;
+  height: $footer-height;
   padding: 0px 50px;
   color: $blue-dark;
-
-  .footer-links {
-    display: flex;
-    align-items: center;
-    a {
-      color: $blue-dark;
-      text-decoration: none;
-      padding: 0px 10px;
-      opacity: 0.45;
-      transition: opacity 0.3s ease-in-out;
-      &:hover {
-        opacity: 1 !important;
-      }
-    }
-  }
-  .pages-link {
-    a {
-      color: $blue-dark;
-      text-decoration: none;
-      padding: 0px 10px;
-      &:hover {
-        //border-bottom: 1px solid white;
-      }
-    }
-  }
 }

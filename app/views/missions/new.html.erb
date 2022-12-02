@@ -18,6 +18,8 @@
               },
             }
         %>
+
+        <%= f.input :categories, collection: Mission::CATEGORIES, as: :check_boxes %>
         <%= f.input :reward_cents, label:"Compensation (€)" %>
         <%= f.submit "Submit the mission", class: "btn btn-primary" %>
       <% end %>

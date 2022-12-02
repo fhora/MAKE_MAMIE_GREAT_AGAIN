@@ -1,4 +1,6 @@
 class Mission < ApplicationRecord
+  include PgSearch::Model
+
   belongs_to :user
   has_many :mission_candidates, dependent: :destroy
 
@@ -10,5 +12,13 @@ class Mission < ApplicationRecord
   geocoded_by :location
   after_validation :geocode, if: :will_save_change_to_location?
 
-  acts_as_taggable_on :tags, :categories
+  acts_as_taggable_on :categories
+
+  pg_search_scope :search_by_title,
+                  against: %i[title],
+                  using: {
+                    tsearch: { prefix: true }
+                  }
+
+  CATEGORIES = %w[shopping walking medical reading playing discussing]
 end
