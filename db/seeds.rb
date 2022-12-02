@@ -6,7 +6,6 @@ arr.each do |letter|
  user.save
 end
 
-
 require "faker"
 categories = ["Grocery shopping", "Walking", "Medical appointment", "Reading", "Playing cards", "Discussing", "Tea time"]
 50.times do

@@ -2,11 +2,12 @@ class MissionsController < ApplicationController
   before_action :set_mission, only: %i[show edit update destroy]
 
   def index
-    if params[:query].present?
-
-      # split la query par espace et chaine la requete pour chaque item dans l'array ???
-
-      @missions = policy_scope(Mission).search_by_title(params[:query])
+    if params[:querycheck].present? && params[:querysearch].present?
+      @missions = policy_scope(Mission).tagged_with(params[:querycheck], any: true).search_by_title(params[:querysearch])
+    elsif params[:querycheck].present?
+      @missions = policy_scope(Mission).tagged_with(params[:querycheck], any: true)
+    elsif params[:querysearch].present?
+      @missions = policy_scope(Mission).search_by_title(params[:querysearch])
     else
       @missions = policy_scope(Mission)
     end
