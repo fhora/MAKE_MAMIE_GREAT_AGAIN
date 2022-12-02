@@ -1,11 +1,12 @@
 <div class="py-5 bg-light-gray">
   <div class="container">
-    <h2 class="text-center">Create a mission</h2><br>
+    <h2 class="text-center">Créer une mission</h2><br>
     <div class="justify-content-center d-flex">
       <div class="p-2 col-4">
         <%= simple_form_for(@mission, data: { controller: 'flatpickr'}) do |f| %>
-          <%= f.input :title, label:"Title ", placeholder:"Title of the mission..." %>
+          <%= f.input :title, label:"Title", placeholder:"Title of the mission..." %>
           <%= f.input :description, label:"Description", placeholder: "Describe the mission..." %>
+
           <%= f.input :location,
             input_html: {data: {address_autocomplete_target: "location"}, class: "d-none"},
             wrapper_html: {data: {controller: "address-autocomplete",
@@ -19,6 +20,7 @@
                 },
               }
           %>
+
           <%= f.input :categories, collection: Mission::CATEGORIES, as: :check_boxes %>
           <%= f.input :reward_cents, label:"Mission price" %>
           <%= f.submit "Create the mission", class: "btn btn-primary" %>

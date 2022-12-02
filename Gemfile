@@ -47,14 +47,14 @@ gem "bootsnap", require: false
 gem "sassc-rails"
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
-# gem "image_processing", "~> 1.2"
+gem "image_processing", "~> 1.2"
 
 gem 'phonelib'
 
 gem "faker"
 
 gem 'acts-as-taggable-on', '~> 9.0'
-
+gem "pg_search"
 gem "pundit"
 gem "devise"
 gem "autoprefixer-rails"

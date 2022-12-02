@@ -1,74 +1,106 @@
 <div class="py-5 bg-light-gray">
   <div class="container">
-    <h1 class="text-center"><%= @mission.title %></h1>
-    <div class="row recap-wrapper">
-      <div class="col-8 recap-content">
-        <p><%= "#{@mission.title} posté par "%><%= link_to @mission.user.fullname, userpage_path(@mission.user.id) %></p>
-        <p>date et horaire</p>
-        <p><%= @mission.location %></p>
-        <p><%= @mission.description %></p>
-        <p><%= @mission.reward_cents/100 %>$</p>
-        <% if policy(@mission_candidate).new? %>
-          <% if @mission.mission_candidates.none? {|candidate| candidate.user == current_user} %>
-            <%= link_to "Apply to this mission", mission_mission_candidates_path(@mission), data: { turbo_method: :post }, class: "btn btn-primary" %>
+    <div class="row recap-wrapper mt-5 border">
+      <div class="col-12 d-flex">
+        <div class="col-4 d-flex recap-content">
+          <div class="d-flex flex-column">
+            <div class="col-12 d-flex flex-row">
+              <div class="col-6 align-items-center justify-content-center m-2 ">
+                <% if @mission.user.photo.key.nil? %>
+                  <img class="avatar-large" src="https://media.istockphoto.com/id/1337144146/fr/vectoriel/vecteur-dic%C3%B4ne-de-profil-davatar-par-d%C3%A9faut.jpg?b=1&s=170667a&w=0&k=20&c=eYsURDWBMsbvhjRxVQ8-pgC0q4b04DSYbCMnY5OlH14=" />
+                <% else %>
+                  <div class="avatar-large">
+                    <%= cl_image_tag @mission.user.photo.key  %>
+                  </div>
+                <% end %>
+              </div>
+              <div class="col-6 d-flex">
+                <p><%= "posted by #{@mission.user.fullname}" %></p>
+              </div>
+            </div>
+            <div>
+              <p><%= @mission.user.first_name%> needs you on <strong><%= @mission.start_date.strftime('%a %d %B %Y')%> at <%= @mission.start_date.strftime('%H:%M') %></strong>.</p>
+              <p>The mission will be located at <strong><%= @mission.location %></strong>.</p>
+              <p>You will be rewarded <strong><%= @mission.reward_cents/100 %>€</strong> for your help.</p>
+            </div>
+            <div>
+              <% if policy(@mission_candidate).new? %>
+                <% if @mission.mission_candidates.none? {|candidate| candidate.user == current_user} %>
+                  <%= link_to "Apply to this mission", mission_mission_candidates_path(@mission), data: { turbo_method: :post }, class: "btn btn-primary" %>
+                <% else %>
+                  <p style="color:red;font-weight:bolder;font-size:20px;">You already applied for this mission</p>
+                <% end %>
+              <% elsif @mission.status == false %>
+                <div class="d-flex gap-3">
+                  <%= link_to edit_mission_path(@mission), class:"btn btn-primary" do %>
+                    Edit <i class="fas fa-edit"></i>
+                  <% end %>
+                  <% if policy(@mission).destroy? %>
+                    <%= button_to @mission, method: :delete, class:"btn btn-primary" do %>
+                      Supprimer <i class="far fa-trash-alt"></i>
+                    <% end %>
+                  <% end %>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+        <div class="col-4 d-flex flex-column text-align-center" >
+          <div class="d-flex flex-grow text-align-center">
+            <h1 class="flex-grow"><%= @mission.title %></h1>
+          </div>
+          <%= @mission.description %>
+        </div>
+        <div class="col-4 d-flex">
+          <% if @mission.status == true %>
+            <div class="card-info">
+              <p><%= @accepted_candidate.user.fullname %></p>
+              <p><%= @accepted_candidate.user.description %></p>
+              <p><%= @accepted_candidate.user.phone_number %></p>
+              <p>Ratings</p>
+              <%= link_to 'Details...', userpage_path(@accepted_candidate.user) %>
+            </div>
           <% else %>
-            <p style="color:red;font-weight:bolder;font-size:20px;">You already applied for this mission</p>
-            <% if Chatroom.where(mission_candidate: @mission_candidates.find_by(user: current_user)).where(user: @mission.user).count == 1 %>
-              <%= link_to "Any question? Chat with #{@mission.user.fullname}", chatroom_path(Chatroom.where(mission_candidate: @mission_candidates.find_by(user: current_user)).where(user: @mission.user).first) %>
-            <% else %>
-              <%= simple_form_for(@chatroom) do |f| %>
-                <%= f.input :mission_candidate_id, input_html: { value: @mission.mission_candidates.where(user: current_user).first.id }, as: :hidden %>
-                <%= f.submit %>
-              <% end %>
-            <% end %>
+            <div style="width: 100%; height: 400px;"
+              data-controller="map"
+              data-map-markers-value="<%= @markers.to_json %>"
+              data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>"></div>
           <% end %>
-        <% elsif @mission.status == false %>
-          <div class="d-flex gap-3">
-            <%= link_to edit_mission_path(@mission), class:"btn btn-primary" do %>
-              Edit <i class="fas fa-edit"></i>
-            <% end %>
-            <% if policy(@mission).destroy? %>
-              <%= button_to @mission, method: :delete, class:"btn btn-primary" do %>
-                Supprimer <i class="far fa-trash-alt"></i>
-              <% end %>
-            <% end %>
-          </div>
-        <% end %>
+        </div>
       </div>
-
-      <div class="col-4 mission-recap-sidebar">
-        <% if @mission.status == true %>
-          <div class="card-info">
-            <p><%= @accepted_candidate.user.fullname %></p>
-            <p><%= @accepted_candidate.user.description %></p>
-            <p><%= @accepted_candidate.user.phone_number %></p>
-            <p>Ratings</p>
-            <%= link_to 'Details...', userpage_path(@accepted_candidate.user) %>
+      <div class="col-12 mission-candidates d-flex justify-content-around mt-3">
+        <% if policy(@mission).destroy? && @mission.status == false %>
+          <div class="col-12 candidates-wrapper row align-items-center d-flex flex-row gap-3 horizontal-scroll">
+            <% @waiting_candidates.where(mission_id: @mission.id).each do |candidate| %>
+              <div class="card-info col-4 border d-flex flex-column">
+                <figure class="avatar-large d-flex justify-content-center align-items-center">
+                    <% if candidate.user.photo.key.nil? %>
+                      <img class="avatar-large" src="https://media.istockphoto.com/id/1337144146/fr/vectoriel/vecteur-dic%C3%B4ne-de-profil-davatar-par-d%C3%A9faut.jpg?b=1&s=170667a&w=0&k=20&c=eYsURDWBMsbvhjRxVQ8-pgC0q4b04DSYbCMnY5OlH14=" />
+                    <% else %>
+                      <div class="avatar-large">
+                        <%= cl_image_tag candidate.user.photo.key  %>
+                      </div>
+                    <% end %>
+                </figure>
+                <p><%= candidate.user.fullname %></p>
+                <p>
+                  <% candidate.reviews.rating.times do %>
+                    <i class="fa-solid fa-star"></i>
+                  <% end %>
+                  <% (5 - review.rating).times do %>
+                    <i class="fa-regular fa-star"></i>
+                  <% end %>
+                  - <%= time_ago_in_words(review.updated_at) %> ago</p>
+                <%= link_to 'See the profil', userpage_path(candidate.user) %>
+                <div class="d-flex justify-content-around">
+                  <%= link_to "Accepter", accepted_mission_candidate_path(candidate), data: {turbo_method: :patch}, class: "btn btn-primary button" %>
+                  <%= link_to "Décliner", declined_mission_candidate_path(candidate), data: {turbo_method: :patch}, class: "btn btn-primary button" %>
+                </div>
+              </div>
+            <% end %>
           </div>
-        <% else %>
-          <div style="width: 100%; height: 400px;"
-            data-controller="map"
-            data-map-markers-value="<%= @markers.to_json %>"
-            data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>"></div>
         <% end %>
       </div>
     </div>
-    <% if policy(@mission).destroy? && @mission.status == false %>
-      <div class="candidates-wrapper row gap-3">
-        <% @waiting_candidates.where(mission_id: @mission.id).each do |candidate| %>
-          <div class="card-info col-3 border">
-            <p><%= candidate.user.fullname %></p>
-            <p><%= candidate.user.description %></p>
-            <p><%= candidate.user.phone_number %></p>
-            <p>Ratings</p>
-            <%= link_to 'Details...', userpage_path(candidate.user) %>
-            <div class="d-flex justify-content-around">
-              <%= link_to "Accepter", accepted_mission_candidate_path(candidate), data: {turbo_method: :patch}, class: "btn btn-primary button" %>
-              <%= link_to "Décliner", declined_mission_candidate_path(candidate), data: {turbo_method: :patch}, class: "btn btn-primary button" %>
-            </div>
-          </div>
-        <% end %>
-      </div>
-    <% end %>
   </div>
 </div>
