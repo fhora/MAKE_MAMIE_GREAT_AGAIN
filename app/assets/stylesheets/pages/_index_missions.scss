@@ -1,17 +1,3 @@
-#index-missions {
-  .card-text {
-    display: -webkit-box;
-    max-width: 600px;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-}
-
-.red-dark {
-  color: $red-dark;
-}
-
 .checkbox-inputs {
   input:checked+label {
     text-decoration: underline;
