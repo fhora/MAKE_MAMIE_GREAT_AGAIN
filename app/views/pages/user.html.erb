@@ -1,8 +1,7 @@
 <div class="container">
-      <h1><%= @user.first_name %> <%= @user.last_name %></h1>
-      <h5><%= @user.phone_number %> <%= @user.email %></h5>
-      <p><%= @user.description %></p>
-  </div>
+  <h1><%= @user.fullname %></h1>
+  <h5><%= @user.phone_number %> <%= @user.email %></h5>
+  <p><%= @user.description %></p>
   <% @user.mission_candidates.joins(:mission).where(missions: { user: current_user }).each do |candidate| %>
     <% if candidate.chatrooms.any? %>
       <%= link_to "Chat", chatroom_path(candidate.chatrooms.first) %>
@@ -16,8 +15,11 @@
   <div class="row div-width-80 align-items-start my-5 review-container">
     <div class="col-5 review-content-wrapper">
       <h3>Reviews</h3>
+      <% if @user.reviews.empty? %>
+        <p>Be the first to post a review on <%= @user.first_name %>!</p>
+      <% end %>
       <% @user.reviews.each do |review| %>
-        <div class="review-content ps-4">
+        <div class="review-content">
           <p>
             <% review.rating.times do %>
               <i class="fa-solid fa-star"></i>
@@ -31,18 +33,21 @@
       <hr>
       <% end %>
     </div>
-    <div class="col-6 offset-1 review-form">
-      <h3>Add your review</h3>
-      <%= simple_form_for [@user, @review] do |f| %>
-        <%= f.input :content, placeholder: 'Add your review here...' %>
-        <%= f.input :reviewer_id, as: :hidden, input_html: { value: current_user.id }%>
-        <%= f.input :rating, collection: (1..5).to_a, label: "Rate your experience", input_html: {data: {controller: "star-rating"}}%>
-        <% unless @user.reviews.where(reviewer_id: current_user).size.zero? %>
-          <%= f.submit "Submit review", class: "btn btn-primary disabled" %>
-        <% else %>
-          <%= f.submit "Submit review", class: "btn btn-primary" %>
+
+    <% if @user != current_user %>
+      <div class="col-6 offset-1 review-form">
+        <h3>Add your review</h3>
+        <%= simple_form_for [@user, @review] do |f| %>
+          <%= f.input :content, placeholder: 'Add your review here...' %>
+          <%= f.input :reviewer_id, as: :hidden, input_html: { value: current_user.id }%>
+          <%= f.input :rating, collection: (1..5).to_a, label: "Rate your experience", input_html: {data: {controller: "star-rating"}}%>
+          <% unless @user.reviews.where(reviewer_id: current_user).size.zero? %>
+            <%= f.submit "Submit review", class: "btn btn-primary disabled" %>
+          <% else %>
+            <%= f.submit "Submit review", class: "btn btn-primary" %>
+          <% end %>
         <% end %>
-      <% end %>
-    </div>
+      </div>
+    <% end %>
   </div>
 </div>
