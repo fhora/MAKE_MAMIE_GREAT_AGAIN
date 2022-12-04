@@ -12,14 +12,19 @@
                           search_missions_target: "input",
                           action: "keyup->search-missions#update"
                         } %>
-        <div class="checkbox-inputs d-flex mt-4 justify-content-around">
-          <% Mission::CATEGORIES.each do |category| %>
-            <div>
+        <div class="d-flex mt-4 justify-content-between">
+          <% Mission::CATEGORIES.each_with_index do |category, index| %>
+            <div class="checkbox-inputs">
               <%= f.check_box category, class: "d-none", data: {
                 search_missions_target: "checkbox",
                 action: "change->search-missions#update"
               } %>
-              <%= f.label category, category.to_s %>
+              <div class="d-flex flex-column align-items-center p-2" data-search-missions-target="label">
+                <%= f.label category do%>
+                  <i class="<%= Mission::ICONS[index] %>"></i>
+                <% end %>
+                <%= f.label category, category.to_s %>
+              </div>
             </div>
           <% end %>
         </div>

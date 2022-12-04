@@ -1,0 +1,12 @@
+.checkbox-inputs label {
+  cursor: pointer;
+}
+
+.checkbox-inputs {
+  padding: 5px;
+
+  .checked {
+    box-shadow: 0 0 0 3px $primary;
+    border-radius: 5px;
+  }
+}
