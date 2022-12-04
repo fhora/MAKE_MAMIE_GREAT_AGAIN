@@ -6,6 +6,7 @@ class ChatroomsController < ApplicationController
   def show
     @chatroom = Chatroom.find(params[:id])
     @message = Message.new
+    @name = current_user == @chatroom.user ? @chatroom.mission_candidate.user.fullname : @chatroom.user.fullname
     authorize @chatroom
   end
 
