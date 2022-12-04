@@ -1,0 +1,13 @@
+<p class="yellow-stars">
+  <% unless instance.user.reviews.empty? %>
+    <% instance.user.average_rating.round.times do %>
+      <i class="fa-solid fa-star"></i>
+    <% end %>
+    <% (5 - instance.user.average_rating.round).times do %>
+      <i class="fa-regular fa-star"></i>
+    <% end %>
+    <%= instance.user.average_rating.round(1) %>/5
+  <% else %>
+    no votes yet
+  <% end %>
+</p>

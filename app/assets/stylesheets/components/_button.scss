@@ -12,7 +12,24 @@
   background-color: #c5688d;
 }
 
+.btn-gray {
+  background-color: $lighter-gray;
+  padding: 8px 14px;
 
+  i {
+    font-size: larger;
+  }
+}
+
+.btn-orange {
+  background-color: $orange;
+  color: white;
+
+  &:hover {
+    background-color: $darker-orange;
+    color: white;
+  }
+}
 
 /**** Button flat and anim ****/
 .btn-flat {
