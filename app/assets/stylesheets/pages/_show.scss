@@ -9,5 +9,18 @@
   button {
     padding: 8px;
     border: none;
+    background-color: $lighter-gray;
   }
+}
+
+.candidate-details,
+.img-wrapper {
+  a {
+    color: $orange;
+    text-decoration: underline;
+  }
+}
+
+.right-col {
+  padding-left: 30px;
 }
