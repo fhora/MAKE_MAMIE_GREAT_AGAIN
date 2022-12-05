@@ -1,18 +1,17 @@
 <div class="py-5 bg-light-gray">
-  <div class="container">
-  <h2 class="text-center">Change my mission</h2><br>
-  <div class="justify-content-center d-flex">
-    <div class="p-2 col-4">
-      <%= simple_form_for(@mission) do |f| %>
-        <%= f.input :title, label: "Title", placeholder:"Titre de la mission..." %>
-        <%= f.input :description, label:"Description", placeholder: "Décrire la mission..." %>
-        <%= f.input :location,
-          input_html: {data: {address_autocomplete_target: "location"}, class: "input-geocode d-none"},
-          wrapper_html: {data: {controller: "address-autocomplete",
-          address_autocomplete_api_key_value: ENV["MAPBOX_API_KEY"],
-          address_autocomplete_address_value: @mission.location}}
-        %>
-       <div class="row">
+  <div class="col-4 container">
+    <h1 class="text-center">Edit a mission</h1><br>
+    <div class="new-mission justify-content-center d-flex border rounded">
+      <div class="p-2 col-12">
+        <%= simple_form_for(@mission, data: { controller: 'flatpickr'}) do |f| %>
+          <%= f.input :title, label:"Mission title", placeholder:"Title of the mission..." %>
+          <%= f.input :description, label:"Description", placeholder: "Describe the mission..." %>
+          <%= f.input :location,
+            input_html: {data: {address_autocomplete_target: "location"}, class: "d-none"},
+            wrapper_html: {data: {controller: "address-autocomplete",
+          address_autocomplete_api_key_value: ENV["MAPBOX_API_KEY"]}}
+          %>
+          <div class="row">
             <%= f.input :start_date, label:"Date",
                 as: :string,
                 wrapper_html: { class: 'col-6' },
@@ -24,16 +23,17 @@
             %>
             <%= f.input :reward_cents, label:"Mission price", wrapper_html: { class: 'col-6' } %>
           </div>
-        <%#= f.input :categories, collection: Mission::CATEGORIES, as: :check_boxes %>
-        <%= f.input :categories,
+          <%#= f.input :categories, collection: Mission::CATEGORIES, as: :check_boxes %>
+          <%= f.input :categories,
             as: :check_boxes,
             collection_wrapper_tag: 'div',
             collection_wrapper_class: 'category-wrapper',
             item_wrapper_class: 'category-item',
             input_html: {class: 'category-selector'},
             collection: Mission::CATEGORIES %>
-        <%= f.submit "Update", class: "btn btn-primary" %>
-      <% end %>
+          <%= f.submit "Update", class: "btn btn-primary btn-block" %>
+        <% end %>
+      </div>
     </div>
   </div>
 </div>

@@ -6,7 +6,6 @@
         <%= simple_form_for(@mission, data: { controller: 'flatpickr'}) do |f| %>
           <%= f.input :title, label:"Mission title", placeholder:"Title of the mission..." %>
           <%= f.input :description, label:"Description", placeholder: "Describe the mission..." %>
-
           <%= f.input :location,
             input_html: {data: {address_autocomplete_target: "location"}, class: "d-none"},
             wrapper_html: {data: {controller: "address-autocomplete",
