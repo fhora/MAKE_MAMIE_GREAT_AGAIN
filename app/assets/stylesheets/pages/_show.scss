@@ -23,6 +23,17 @@
 
 .card-container {
   box-shadow: 0 4px 17px rgba(0, 0, 0, .15);
+  gap: 30px;
+
+  figure {
+    margin: 0;
+    align-self: center;
+  }
+
+  .description-paraph {
+    width: 90%;
+    text-align: justify;
+  }
 
   &:not(:nth-of-type(1)) {
     margin-top: 24px;
