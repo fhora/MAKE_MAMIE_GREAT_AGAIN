@@ -1,14 +1,26 @@
-<div class="banner" style="background-image: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)), url(<%= asset_path 'person-helping.jpg' %>)">
-  <div class="container d-flex flex-column align-items-start p-5">
-    <h1>Make Mamie Great Again</h1>
-    <p class="mb-5">Get some help for your grandparents</p>
-    <%= link_to new_mission_path, class: "btn-animate" do %>
-      <span>Post a mission</span>
-    <% end %>
+<div class="banner">
+  <div class="container d-flex align-items-center">
+    <div class="container d-flex flex-column align-items-start p-5">
+      <div>
+        <h1>Find <mark>support</mark> for your elderly</h1>
+        <p class="mb-5">Help an elderly during your free time</p>
+      </div>
+      <div class="d-flex">
+        <%= link_to new_mission_path, class: "btn-animate me-4" do %>
+          <span>Post a mission</span>
+        <% end %>
+        <%= link_to new_mission_path, class: "btn-orange btn-animate" do %>
+          <span>Find a mission</span>
+        <% end %>
+      </div>
+    </div>
+    <div class="img">
+      <%= image_tag "img_background.png" %>
+    </div>
   </div>
 </div>
 
-<div class="bg-brown-light py-5">
+<div class="bg-brown-light py-5" style="background-color: white">
   <div class="container">
     <h2 class="my-4">How does it work ?</h2>
     <div class="row">
@@ -39,30 +51,30 @@
 
 <!-- Cards helpers -->
 <div class="container my-5">
-  <h2 class="my-4">Some of our best helpers :</h2>
+  <h2 class="text-dark-grey my-4">Some of our best helpers:</h2>
   <div class="row mb-2">
     <div class="col-md-6">
       <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
         <div class="col-3 d-flex justify-content-center align-items-center">
           <figure class="avatar-xlarge d-flex justify-content-center align-items-center">
-            <img alt="avatar-large" src="https://kitt.lewagon.com/placeholder/users/arthur-littm" />
+            <img alt="avatar-large" src="https://www.superprof.fr/images/annonces/professeur-home-etudiante-photographie-sepr-donner-cours-photographie-lyon.jpg" />
           </figure>
         </div>
         <div class="col-9 p-4 d-flex flex-column position-static">
           <div class="d-flex justify-content-between">
-            <h4 class="mb-0">John Doe</h4>
+            <h4 class="text-darker-orange mb-0">Julie Martin</h4>
             <div class="stars-review">
-              <i class="fa-solid fa-star"></i>
-              <i class="fa-solid fa-star"></i>
-              <i class="fa-solid fa-star"></i>
-              <i class="fa-solid fa-star"></i>
-              <i class="fa-regular fa-star"></i>
+              <i class="star-orange fa-solid fa-star"></i>
+              <i class="star-orange fa-solid fa-star"></i>
+              <i class="star-orange fa-solid fa-star"></i>
+              <i class="star-orange fa-solid fa-star"></i>
+              <i class="star-orange fa-solid fa-star"></i>
             </div>
           </div>
-          <div class="mb-1 text-muted">25 years old</div>
-          <strong class="d-inline-block mb-2 text-primary">Permis B, Certif SCSP 1 </strong>
-          <p class="card-text mb-auto">Hello! I'm an architecture student looking to help people to also get extra money</p>
-           <%= link_to "See more", dashboard_path, class: "stretched-link" %>
+          <div class="text-dark-grey mb-1 text-muted">25 years old</div>
+          <strong class="text-dark-grey  d-inline-block mb-2">Permis B, Certif SCSP 1 </strong>
+          <p class="text-dark-grey card-text mb-auto">Hello! I'm an architecture student looking to help people to also get extra money</p>
+           <%= link_to "See more", dashboard_path, class: "stretched-link text-dark-grey" %>
         </div>
       </div>
     </div>
@@ -75,19 +87,19 @@
         </div>
         <div class="col-9 p-4 d-flex flex-column position-static">
           <div class="d-flex justify-content-between">
-            <h4 class="mb-0">Luke Fitzgerald</h4>
+            <h4 class="text-darker-orange mb-0">Lucas Fitzgerald</h4>
             <div class="stars-review">
-              <i class="fa-solid fa-star"></i>
-              <i class="fa-solid fa-star"></i>
-              <i class="fa-solid fa-star"></i>
-              <i class="fa-solid fa-star"></i>
-              <i class="fa-regular fa-star"></i>
+              <i class="star-orange fa-solid fa-star"></i>
+              <i class="star-orange fa-solid fa-star"></i>
+              <i class="star-orange fa-solid fa-star"></i>
+              <i class="star-orange fa-solid fa-star"></i>
+              <i class="star-orange fa-regular fa-star"></i>
             </div>
           </div>
-          <div class="mb-1 text-muted">22 years old</div>
-          <strong class="d-inline-block mb-2 text-primary">Permis B</strong>
-          <p class="card-text mb-auto">Hi! I'm looking forward to spending time with you, I'm fond of playing tarot!</p>
-          <%= link_to "See more", dashboard_path, class: "stretched-link" %>
+          <div class="text-dark-grey mb-1 text-muted">22 years old</div>
+          <strong class="text-dark-grey d-inline-block mb-2">Permis B</strong>
+          <p class="text-dark-grey card-text mb-auto">Hi! I'm looking forward to spending time with you, I'm fond of playing tarot!</p>
+          <%= link_to "See more", dashboard_path, class: "text-dark-grey stretched-link" %>
         </div>
       </div>
     </div>

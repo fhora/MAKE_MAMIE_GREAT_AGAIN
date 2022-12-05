@@ -1,12 +1,11 @@
-<div class="py-5 bg-light-gray">
+<div class="py-5">
   <div class="col-4 container">
     <h1 class="text-center">Post a new mission</h1><br>
-    <div class="new-mission justify-content-center d-flex border rounded">
+    <div class="new-mission justify-content-center d-flex border rounded" style="background-color: white">
       <div class="p-2 col-12">
         <%= simple_form_for(@mission, data: { controller: 'flatpickr'}) do |f| %>
           <%= f.input :title, label:"Mission title", placeholder:"Title of the mission..." %>
           <%= f.input :description, label:"Description", placeholder: "Describe the mission..." %>
-
           <%= f.input :location,
             input_html: {data: {address_autocomplete_target: "location"}, class: "d-none"},
             wrapper_html: {data: {controller: "address-autocomplete",
