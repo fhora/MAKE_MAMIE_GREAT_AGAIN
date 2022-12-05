@@ -11,7 +11,7 @@
           <div class="mission-candidates">
           <%# quand un user est validé %>
             <% if @mission.status == true && policy(@mission).destroy?%>
-              <div class="card-container d-flex justify-content-between mt-4 border p-3 bg-white">
+              <div class="card-container d-flex justify-content-between border p-3 bg-white">
                 <figure class="avatar-large-square">
                   <% if @accepted_candidate.user.photo.key.nil? %>
                     <img src="https://media.istockphoto.com/id/1337144146/fr/vectoriel/vecteur-dic%C3%B4ne-de-profil-davatar-par-d%C3%A9faut.jpg?b=1&s=170667a&w=0&k=20&c=eYsURDWBMsbvhjRxVQ8-pgC0q4b04DSYbCMnY5OlH14=" />
@@ -22,12 +22,12 @@
                   <% end %>
                 </figure>
                 <div class="candidate-details d-flex flex-column justify-content-around">
-                  <div class="d-flex align-items-baseline gap-2">
+                  <div class="d-flex align-items-baseline gap-2 mb-1">
                     <h4><%= @accepted_candidate.user.fullname %></h4>
-                    <%= link_to "send a message", "#" %>
+                    <%= link_to "send a message", "#", class:"btn" %>
                   </div>
-                  <p>member since <%= @accepted_candidate.user.created_at.strftime('%B %Y') %> </p>
-                  <p class="description-paraph"><%= @accepted_candidate.user.description %></p>
+                  <p class="mb-3">member since <%= @accepted_candidate.user.created_at.strftime('%B %Y') %> </p>
+                  <p class="description-paraph mb-3"><%= @accepted_candidate.user.description %></p>
                   <%# partial pour afficher le rating %>
                   <%= render 'user_rating', instance: @accepted_candidate %>
                 </div>
