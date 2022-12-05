@@ -1,6 +1,6 @@
 .btn-ghost {
-  color: $blue-dark;
-  border: 1px solid $red-dark;
+  color: $dark-grey;
+  border: 1px solid $darker-orange;
   padding: 8px 24px;
   border-radius: 4px;
   font-weight: lighter;
@@ -36,7 +36,7 @@
   color: white;
   padding: 8px 24px;
   border-radius: 4px;
-  background: $red-dark;
+  background: $darker-orange;
   transition: background 0.3s ease;
 }
 
@@ -88,15 +88,15 @@
     }
   }
   &.btn-outline {
-    color: $blue-dark;
-    border: 1px solid $red-dark;
+    color: $dark-grey;
+    border: 1px solid $darker-orange;
     background: transparent;
 
     &:after {
-      background: $red-dark;
+      background: $darker-orange;
     }
     &:hover {
-      color: $blue-dark;
+      color: $dark-grey;
     }
   }
 }
