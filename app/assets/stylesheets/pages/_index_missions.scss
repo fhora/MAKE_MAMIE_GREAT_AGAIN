@@ -7,6 +7,7 @@
 #banner-search {
   background-color: $orange;
   color: white;
+  padding-top: 100px;
   .form-control {
     border: 1px solid $orange !important;
     &:focus {
@@ -16,9 +17,14 @@
   .checkbox-inputs
   {
     background-color: transparent;
-    transition: border 0.3s ease;
+    transition: background-color 0.3s ease;
     &:hover {
       background-color: rgba(255, 255, 255, 0.30)!important;
+      border-radius: 5px;
+    }
+    .checked {
+      background-color: rgba(255, 255, 255, 0.30)!important;
+      box-shadow: none;
     }
   }
 }
@@ -36,6 +42,8 @@
     &:hover {
       border: 1px solid $orange;
     }
+    figure {
+      margin-bottom: 0;
+    }
   }
-
 }
