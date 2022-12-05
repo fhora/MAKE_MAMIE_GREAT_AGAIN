@@ -1,4 +1,5 @@
 .nav-dashboard {
+
   a {
   text-align: left;
   color: inherit;
@@ -10,10 +11,30 @@
 
   a:hover {
     color: inherit;
+    background-color: rgb(238, 130, 49);
   }
 
   i {
     display: inline-block;
     margin: 20px;
   }
+}
+
+.current-user-rating {
+  margin: none;
+  padding: none;
+  .yellow-stars {
+    i {
+    margin: none !important;
+    padding: none;
+    }
+  }
+}
+.user-avatar .current-user-rating{
+  position: relative;
+  top: 50px;
+  right:50px;
+
+
+
 }

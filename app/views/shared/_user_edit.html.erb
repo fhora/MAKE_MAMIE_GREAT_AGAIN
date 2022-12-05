@@ -25,12 +25,13 @@
       </div>
     </div>
     <div class="col-12 d-block p-2">
-      <%= f.input :photo, label:"Profil picture", as: :file, input_html: { multiple: false } %>
+        <%= f.input :description,
+                    input_html: { :rows => 8, autocomplete: "description" } %>
     </div>
     <div class="col-12 d-block p-2">
-        <%= f.input :description,
-                    input_html: { :rows => 10, autocomplete: "description" } %>
+      <%= f.input :photo, label:"Profil picture", as: :file, input_html: { multiple: false } %>
     </div>
+
     <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
           <p>En attente de confirmation pour: <%= resource.unconfirmed_email %></p>
     <% end %>
