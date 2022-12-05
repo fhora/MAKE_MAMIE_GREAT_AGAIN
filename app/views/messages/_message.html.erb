@@ -1,7 +1,9 @@
 <div id="message-<%= message.id %>">
   <small>
     <strong><%= message.user.first_name %></strong>
-    <i><%= message.created_at.strftime("%a %b %e at %l:%M %p") %></i>
   </small>
   <p><%= message.content %></p>
+  <small>
+    <p class="text-end mb-0"><%= message.created_at.strftime("%b %e at %l:%M %p") %></p>
+  </small>
 </div>

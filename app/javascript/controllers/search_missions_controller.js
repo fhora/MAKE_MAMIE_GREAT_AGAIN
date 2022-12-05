@@ -2,7 +2,7 @@ import { Controller } from "@hotwired/stimulus"
 
 // Connects to data-controller="search-missions"
 export default class extends Controller {
-  static targets = ["form", "input", "list", "checkbox"]
+  static targets = ["form", "input", "list", "checkbox", "label"]
 
   connect() {
     // console.log(this.formTarget)
@@ -14,8 +14,13 @@ export default class extends Controller {
   update() {
     let url = ""
     const input_checked = []
-    this.checkboxTargets.map(input => {
-      if(input.checked) input_checked.push(input.getAttribute("id"))
+    this.checkboxTargets.map((input, index) => {
+      if(input.checked) {
+        this.labelTargets[index].classList.add("checked")
+        input_checked.push(input.getAttribute("id"))
+      } else {
+        this.labelTargets[index].classList.remove("checked")
+      }
     })
 
     // transformer query en deux => query1=
@@ -41,7 +46,7 @@ export default class extends Controller {
     fetch(url, {headers: {"Accept": "text/plain"}})
       .then(response => response.text())
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         this.listTarget.outerHTML = data
     })
   }
