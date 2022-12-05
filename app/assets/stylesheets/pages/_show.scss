@@ -21,6 +21,26 @@
   }
 }
 
-.right-col {
-  padding-left: 30px;
+.card-container {
+  box-shadow: 0 4px 17px rgba(0, 0, 0, .15);
+
+  &:not(:nth-of-type(1)) {
+    margin-top: 24px;
+  }
+}
+
+.action-button {
+  p {
+    transition: .4s;
+
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+}
+
+.icons-div {
+  i {
+    font-size: 20px;
+  }
 }

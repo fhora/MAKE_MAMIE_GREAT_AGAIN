@@ -1,81 +1,158 @@
 <div class="py-5">
   <div class="container">
-    <%= link_to(missions_path, class:"btn-gray") do  %>
+    <%= link_to(missions_path, class:"btn-gray offset-1") do  %>
       <i class="fa-solid fa-arrow-left-long"></i>
     <% end %>
     <div class="row mt-4">
-      <div class="left-col col-7 bg-white p-0">
-        <div style="width: 100%; height: 300px;"
-              data-controller="map"
-              data-map-markers-value="<%= @markers.to_json %>"
-              data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>">
-        </div>
-        <div class="container p-4">
-          <div class="d-flex align-items-center gap-3">
-            <h1 class="pt-2"><%= @mission.title.capitalize %></h1>
-            <% unless policy(@mission_candidate).new? %>
-              <div class="ms-auto d-flex gap-3">
-                <%= link_to edit_mission_path(@mission), class:"btn btn-orange" do %>
-                  Edit <i class="fas fa-edit ms-2"></i>
-                <% end %>
-                <%= button_to@mission, method: :delete do %>
-                  <i class="far fa-trash-alt"></i>
-                <% end %>
+      <% if policy(@mission).edit? %>
+        <div class="left-col col-6 offset-1 pe-5">
+          <h3>Candidates</h3>
+          <div class="mission-candidates">
+            <% if @mission.status == true && policy(@mission).destroy?%>
+              <div class="card-container d-flex justify-content-between mt-4 border p-3 bg-white">
+                <%# partial %>
+                <%= render 'candidates', mission_candidate: @accepted_candidate %>
               </div>
-            <% end %>
-          </div>
-          <div class="d-flex align-items-center img-wrapper">
-            <figure class="avatar-circle-user">
-              <% if @mission.user.photo.key.nil? %>
-                <img src="https://media.istockphoto.com/id/1337144146/fr/vectoriel/vecteur-dic%C3%B4ne-de-profil-davatar-par-d%C3%A9faut.jpg?b=1&s=170667a&w=0&k=20&c=eYsURDWBMsbvhjRxVQ8-pgC0q4b04DSYbCMnY5OlH14=" />
-              <% else %>
-                  <%= cl_image_tag @mission.user.photo.key  %>
+            <% elsif @mission.status == false && policy(@mission).destroy? %>
+              <% @waiting_candidates.where(mission_id: @mission.id).each do |candidate| %>
+                <div class="card-container d-flex justify-content-between p-3 bg-white">
+                  <%# partial %>
+                  <%= render 'candidates', mission_candidate: candidate %>
+                  <div class="action-button d-flex flex-column justify-content-around align-items-center pe-4">
+                    <p><%= link_to "Accept", accepted_mission_candidate_path(candidate), data: {turbo_method: :patch}, class: "btn btn-orange" %></p>
+                    <p><%= link_to "Decline", declined_mission_candidate_path(candidate), data: {turbo_method: :patch}, class:"text-decoration-none" %></p>
+                  </div>
+                </div>
               <% end %>
-            </figure>
-            <p>
-              Posted by <%= link_to @mission.user.first_name.capitalize, userpage_path(@mission.user) %>
-            </p>
-          </div>
-
-          <p><%= @mission.description %></p>
-          <% unless @mission.start_date.nil? %>
-            <p><i class="fa-regular fa-clock"></i>  <%= @mission.start_date.strftime('%a %d %B %Y')%></p>
-          <% end %>
-          <p><i class="fa-regular fa-map"></i> <%= @mission.location %></p>
-          <p><i class="fa-regular fa-money-bill-1"></i> <strong><%= @mission.reward_cents/100 %></strong> dollars</p>
-          <% if policy(@mission_candidate).new? %>
-            <% if @mission.mission_candidates.none? {|candidate| candidate.user == current_user} %>
-              <%= link_to "Apply to this mission", mission_mission_candidates_path(@mission), data: { turbo_method: :post }, class: "btn btn-orange" %>
-            <% else %>
-              <p style="color:red;font-weight:bolder;font-size:20px;">You already applied for this mission</p>
             <% end %>
-          <% end %>
+          </div>
         </div>
-      </div>
 
-
-      <div class="right-col col-5">
-        <h3>Candidates</h3>
-        <div class="mission-candidates">
-          <% if @mission.status == true && policy(@mission).destroy?%>
-            <div class="card-container d-flex gap-4 mt-4 border p-3 bg-white">
-              <%# partial %>
-              <%= render 'candidates', mission_candidate: @accepted_candidate %>
+        <div class="right-col col-5">
+        <h3>Description</h3>
+          <div class="px-4 py-2 bg-white card-container">
+            <div class="d-flex align-items-center gap-3">
+              <h1 class="pt-2"><%= @mission.title.capitalize %></h1>
+              <% unless policy(@mission_candidate).new? %>
+                <div class="ms-auto d-flex gap-3">
+                  <%= link_to edit_mission_path(@mission), class:"btn btn-orange" do %>
+                    Edit <i class="fas fa-edit ms-2"></i>
+                  <% end %>
+                  <%= button_to @mission, method: :delete do %>
+                    <i class="far fa-trash-alt"></i>
+                  <% end %>
+                </div>
+              <% end %>
             </div>
-          <% elsif @mission.status == false && policy(@mission).destroy? %>
-            <% @waiting_candidates.where(mission_id: @mission.id).each do |candidate| %>
+            <div class="d-flex align-items-center img-wrapper">
+              <figure class="avatar-circle-user">
+                <% if @mission.user.photo.key.nil? %>
+                  <img src="https://media.istockphoto.com/id/1337144146/fr/vectoriel/vecteur-dic%C3%B4ne-de-profil-davatar-par-d%C3%A9faut.jpg?b=1&s=170667a&w=0&k=20&c=eYsURDWBMsbvhjRxVQ8-pgC0q4b04DSYbCMnY5OlH14=" />
+                <% else %>
+                    <%= cl_image_tag @mission.user.photo.key  %>
+                <% end %>
+              </figure>
+              <p>
+                Posted by <%= link_to @mission.user.first_name.capitalize, userpage_path(@mission.user) %>
+              </p>
+            </div>
+            <p><%= @mission.description %></p>
+            <div class="icons-div">
+              <% unless @mission.start_date.nil? %>
+                <p><strong><i class="fa-regular fa-clock"></i></strong>  <%= @mission.start_date.strftime('%a %d %B %Y')%></p>
+              <% end %>
+              <p><strong><i class="fa-regular fa-map"></i></strong> <%= @mission.location %></p>
+              <p><strong><i class="fa-regular fa-money-bill-1"></i> <%= @mission.reward_cents/100 %></strong> dollars</p>
+              <% if policy(@mission_candidate).new? %>
+                <% if @mission.mission_candidates.none? {|candidate| candidate.user == current_user} %>
+                  <%= link_to "Apply to this mission", mission_mission_candidates_path(@mission), data: { turbo_method: :post }, class: "btn btn-orange" %>
+                <% else %>
+                  <p style="color:red;font-weight:bolder;font-size:20px;">You already applied for this mission</p>
+                <% end %>
+              <% end %>
+            </div>
+          </div>
+          <div style="width: 100%; height: 300px;"
+                data-controller="map"
+                data-map-markers-value="<%= @markers.to_json %>"
+                data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>">
+          </div>
+        </div>
+
+
+
+      <% else %>
+        <div class="left-col col-7 pe-5">
+          <h3>Description</h3>
+          <div class="p-4 bg-white">
+            <div class="d-flex align-items-center gap-3">
+              <h1 class="pt-2"><%= @mission.title.capitalize %></h1>
+              <% unless policy(@mission_candidate).new? %>
+                <div class="ms-auto d-flex gap-3">
+                  <%= link_to edit_mission_path(@mission), class:"btn btn-orange" do %>
+                    Edit <i class="fas fa-edit ms-2"></i>
+                  <% end %>
+                  <%= button_to @mission, method: :delete do %>
+                    <i class="far fa-trash-alt"></i>
+                  <% end %>
+                </div>
+              <% end %>
+            </div>
+            <div class="d-flex align-items-center img-wrapper">
+              <figure class="avatar-circle-user">
+                <% if @mission.user.photo.key.nil? %>
+                  <img src="https://media.istockphoto.com/id/1337144146/fr/vectoriel/vecteur-dic%C3%B4ne-de-profil-davatar-par-d%C3%A9faut.jpg?b=1&s=170667a&w=0&k=20&c=eYsURDWBMsbvhjRxVQ8-pgC0q4b04DSYbCMnY5OlH14=" />
+                <% else %>
+                    <%= cl_image_tag @mission.user.photo.key  %>
+                <% end %>
+              </figure>
+              <p>
+                Posted by <%= link_to @mission.user.first_name.capitalize, userpage_path(@mission.user) %>
+              </p>
+            </div>
+            <p><%= @mission.description %></p>
+            <% unless @mission.start_date.nil? %>
+              <p><i class="fa-regular fa-clock"></i>  <%= @mission.start_date.strftime('%a %d %B %Y')%></p>
+            <% end %>
+            <p><i class="fa-regular fa-map"></i> <%= @mission.location %></p>
+            <p><i class="fa-regular fa-money-bill-1"></i> <strong><%= @mission.reward_cents/100 %></strong> dollars</p>
+            <% if policy(@mission_candidate).new? %>
+              <% if @mission.mission_candidates.none? {|candidate| candidate.user == current_user} %>
+                <%= link_to "Apply to this mission", mission_mission_candidates_path(@mission), data: { turbo_method: :post }, class: "btn btn-orange" %>
+              <% else %>
+                <p style="color:red;font-weight:bolder;font-size:20px;">You already applied for this mission</p>
+              <% end %>
+            <% end %>
+          </div>
+          <div style="width: 100%; height: 300px;"
+                data-controller="map"
+                data-map-markers-value="<%= @markers.to_json %>"
+                data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>">
+          </div>
+        </div>
+        <div class="right-col col-5">
+          <h3>Candidates</h3>
+          <div class="mission-candidates">
+            <% if @mission.status == true && policy(@mission).destroy?%>
               <div class="card-container d-flex gap-4 mt-4 border p-3 bg-white">
                 <%# partial %>
-                <%= render 'candidates', mission_candidate: candidate %>
-                <div class="action-button d-flex flex-column justify-content-around align-items-center">
-                  <p><%= link_to "Accepter", accepted_mission_candidate_path(candidate), data: {turbo_method: :patch}, class: "btn btn-orange" %></p>
-                  <p><%= link_to "Décliner", declined_mission_candidate_path(candidate), data: {turbo_method: :patch}, class:"text-decoration-none" %></p>
-                </div>
+                <%= render 'candidates', mission_candidate: @accepted_candidate %>
               </div>
+            <% elsif @mission.status == false && policy(@mission).destroy? %>
+              <% @waiting_candidates.where(mission_id: @mission.id).each do |candidate| %>
+                <div class="card-container d-flex gap-4 mt-4 border p-3 bg-white">
+                  <%# partial %>
+                  <%= render 'candidates', mission_candidate: candidate %>
+                  <div class="action-button d-flex flex-column justify-content-around align-items-center">
+                    <p><%= link_to "Accepter", accepted_mission_candidate_path(candidate), data: {turbo_method: :patch}, class: "btn btn-orange" %></p>
+                    <p><%= link_to "Décliner", declined_mission_candidate_path(candidate), data: {turbo_method: :patch}, class:"text-decoration-none" %></p>
+                  </div>
+                </div>
+              <% end %>
             <% end %>
-          <% end %>
+          </div>
         </div>
-      </div>
+      <% end %>
     </div>
   </div>
 </div>
