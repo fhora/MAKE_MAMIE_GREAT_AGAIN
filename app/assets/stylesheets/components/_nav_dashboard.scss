@@ -1,4 +1,5 @@
 .nav-dashboard {
+  background-color: rgb(243, 226, 219);
 
   a {
   text-align: left;
@@ -13,28 +14,28 @@
     color: inherit;
     background-color: rgb(238, 130, 49);
   }
+}
 
+.nav-selector {
   i {
     display: inline-block;
     margin: 20px;
   }
 }
-
 .current-user-rating {
   margin: none;
   padding: none;
-  .yellow-stars {
-    i {
+  p {
+    margin:none !important;
+  }
+  i {
     margin: none !important;
     padding: none;
-    }
   }
 }
+
 .user-avatar .current-user-rating{
   position: relative;
   top: 50px;
   right:50px;
-
-
-
 }

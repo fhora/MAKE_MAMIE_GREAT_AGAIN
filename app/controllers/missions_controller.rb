@@ -19,7 +19,15 @@ class MissionsController < ApplicationController
   end
 
 def myindex
+  # if params[:query].present?
+  #   if params[:query] == 1
+  #     @mymissions = Mission.where("user_id = ?" AND "status = false" AND "missions.candidates = Nil", current_user.id)
+  #   elsif params[:query] == 2
+  #     @mymissions = Mission.where("user_id = ?" AND "status = false" AND "missions.candidates != Nil")
+  #   end
+  # else
   @mymissions = Mission.where("user_id = ?", current_user.id)
+
   authorize @mymissions
   respond_to do |format|
     format.html
