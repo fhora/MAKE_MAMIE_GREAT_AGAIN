@@ -5,9 +5,9 @@ export default class extends Controller {
   static targets = ["form", "input", "list", "checkbox", "label"]
 
   connect() {
-    // console.log(this.formTarget)
+    console.log(this.formTarget)
     // console.log(this.inputTarget)
-    // console.log(this.listTarget)
+    console.log(this.listTarget)
     // console.log(this.checkboxTargets);
   }
 
