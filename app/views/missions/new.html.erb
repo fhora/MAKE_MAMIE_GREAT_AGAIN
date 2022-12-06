@@ -4,8 +4,8 @@
     <div class="new-mission justify-content-center d-flex border rounded" style="background-color: white">
       <div class="p-4 col-12">
         <%= simple_form_for(@mission, data: { controller: 'flatpickr'}) do |f| %>
-          <%= f.input :title, label:"Mission title", placeholder:"Title of the mission..." %>
-          <%= f.input :description, label:"Description", placeholder: "Describe the mission..." %>
+          <%= f.input :title, label: false, placeholder:"Mission title..." %>
+          <%= f.input :description, label: false, placeholder: "Describe the mission..." %>
           <%= f.input :location,
             input_html: {data: {address_autocomplete_target: "location"}, class: "d-none"},
             wrapper_html: {data: {controller: "address-autocomplete",
@@ -22,15 +22,19 @@
                 }
             %>
             <%= f.input :reward_cents, label:"Mission price", wrapper_html: { class: 'col-6' } %>
+              <div>
+                <%= f.input :categories,
+                  as: :check_boxes,
+                  label: "Choose one or more categories :",
+                  collection_wrapper_tag: 'div',
+                  collection_wrapper_class: 'wrapper-checkboxes',
+                  collection: Mission::CATEGORIES,
+                  input_html: {class: "d-none"},
+                  label_method: lambda {|item| render 'checkboxes', item: item}
+                %>
+              </div>
           </div>
-          <%#= f.input :categories, collection: Mission::CATEGORIES, as: :check_boxes %>
-          <%= f.input :categories,
-            as: :check_boxes,
-            collection_wrapper_tag: 'div',
-            collection_wrapper_class: 'category-wrapper',
-            item_wrapper_class: 'category-item',
-            input_html: {class: 'category-selector'},
-            collection: Mission::CATEGORIES.map.with_index{|cat, index| ["<i class='mb-1 #{Mission::ICONS[index]}'></i><span>#{cat}</span>".html_safe, cat]} %>
+          <hr class="mt-0">
           <%= f.submit "Submit", class: "btn btn-orange btn-block" %>
         <% end %>
       </div>

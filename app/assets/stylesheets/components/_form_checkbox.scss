@@ -1,90 +1,35 @@
-.category-wrapper {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-}
+.wrapper-checkboxes {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 1em;
+  align-items: center;
+  justify-items: center;
+  color: white;
 
-.category-item {
-  flex: 0 0 30%;
-}
+  .form-check {
+    justify-self: center;
+    padding-left: 0;
+    background-color: $orange;
+    transition: background-color 0.3s ease;
+    border-radius: 5px;
 
-.category-selector {
-  position: absolute;
-  transform: scale(0);
-}
+    width: 100%;
+    height: 100%;
 
-.category-selector + label {
-  display: flex;
-  cursor: pointer;
-  box-sizing: border-box;
-  width: 100%;
-  font-size: 12px;
-  text-align: left;
-  padding: 20px 10px;
-  border: 1px solid #EAEAEA;
-  border-radius: 4px;
-  background-color: white;
-  margin: 2px;
-  width: 150px;
-  text-align: center;
-  justify-content: center;
-  flex-direction: column
-}
+    label {
+      cursor: pointer;
+      width: 100%;
+      height: 100%;
+    }
 
-.category-selector:checked + label {
-  color: white !important;
-}
+    .form-check-input:hover+label {
+      background-color: rgba(255, 255, 255, 0.30);
+    }
 
-#mission_categories_shopping + label {
-  color: #e67016;
-}
-
-#mission_categories_shopping:checked + label {
-  background-color: #e67016;
-  opacity: 0.5;
-}
-
-#mission_categories_walking + label {
-  color: #e67016;
-}
-
-#mission_categories_walking:checked + label {
-  background-color: #e67016;
-  opacity: 0.5;
-}
-
-#mission_categories_medical + label {
-  color: #e67016;
-}
-
-#mission_categories_medical:checked + label {
-  background-color: #e67016;
-  opacity: 0.5;
-}
-
-#mission_categories_reading + label {
-  color: #e67016;
-}
-
-#mission_categories_reading:checked + label {
-  background-color: #e67016;
-  opacity: 0.5;
-}
-
-#mission_categories_playing + label {
-  color: #e67016;
-}
-
-#mission_categories_playing:checked + label {
-  background-color: #e67016;
-  opacity: 0.5;
-}
-
-#mission_categories_discussing + label {
-  color: #e67016;
-}
-
-#mission_categories_discussing:checked + label {
-  background-color: #e67016;
-  opacity: 0.5;
+    .form-check-input:checked+label {
+      background-color: rgba(255, 255, 255, 0.30);
+      box-shadow: 0 0 10px rgba(200, 200, 200, 1);
+      color: white;
+    }
+  }
 }
