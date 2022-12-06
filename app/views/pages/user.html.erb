@@ -2,13 +2,13 @@
   <h1><%= @user.fullname %></h1>
   <h5><%= @user.phone_number %> <%= @user.email %></h5>
   <p><%= @user.description %></p>
-  <% if @chat.first.chatrooms.nil? %>
-    <%= simple_form_for(@chatroom) do |f| %>
+  <% if @chat.empty? %>
+    <%= link_to "Chat", chatroom_path(@user.mission_candidates.joins(:mission).where(missions: { user: current_user }).first.chatrooms.first) %>
+  <% else %>
+  <%= simple_form_for(@chatroom) do |f| %>
         <%= f.input :mission_candidate_id, input_html: { value: @chat.first.id }, as: :hidden %>
         <%= f.submit %>
     <% end %>
-  <% else %>
-    <%= link_to "Chat", chatroom_path(@chat.first.chatrooms.first) %>
   <% end %>
   <div class="row div-width-80 align-items-start my-5 review-container">
     <div class="col-5 review-content-wrapper">
