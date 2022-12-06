@@ -1,33 +1,37 @@
-<aside class="nav-dashboard col-3 m-3">
-  <div class="user">
-    <div class="user-avatar d-flex flex-row align-items-center justify-content-center mb-3">
+<aside class="nav-dashboard " style="width: 280px">
+  <div class = "d-flex px-3 justify-content-center align-items-center">
+    <div class="current-user d-flex" style="width: 100%">
       <% if current_user.photo.key.nil? %>
-        <img class="avatar-large p-1" id="navbarDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" src="https://media.istockphoto.com/id/1337144146/fr/vectoriel/vecteur-dic%C3%B4ne-de-profil-davatar-par-d%C3%A9faut.jpg?b=1&s=170667a&w=0&k=20&c=eYsURDWBMsbvhjRxVQ8-pgC0q4b04DSYbCMnY5OlH14=" />
+        <img class="avatar-large p-1 flex-shrink-0 align-items-center justify-content-center" id="navbarDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" src="https://media.istockphoto.com/id/1337144146/fr/vectoriel/vecteur-dic%C3%B4ne-de-profil-davatar-par-d%C3%A9faut.jpg?b=1&s=170667a&w=0&k=20&c=eYsURDWBMsbvhjRxVQ8-pgC0q4b04DSYbCMnY5OlH14=" />
       <% else %>
-        <div class="avatar-large p-1" id="navbarDropdown" aria-hashpopup="true" aria-expanded="false" data-bs-toggle="dropdown">
+        <div class="avatar-large p-1 flex-shrink-0 align-items-center justify-content-center" id="navbarDropdown" aria-hashpopup="true" aria-expanded="false" data-bs-toggle="dropdown">
           <%= cl_image_tag current_user.photo.key  %>
         </div>
       <% end %>
-      <div class= "current-user-rating">
-          <%= render '/missions/user_rating', instance: current_user %>
-        </div>
-
+      <%= render '/missions/user_rating', instance: current_user %>
     </div>
   </div>
-  <ul class="nav flex-column nav-selector">
-    <a href="/dashboard">
-      <i class="fa-solid fa-user"></i>
-      Profil
-    </a>
-    <a href="/mymissions">
-      <i class="fa-solid fa-list"></i>
-      My missions
-    </a>
-    <div>
-      <a href="/chatrooms">
-        <i class="fa-solid fa-message"></i>
-        Messages
-      </a>
-    </div>
-  </ul>
+  <div class="d-flex flex-column flex-shrink-0 px-3">
+    <ul class="nav flex-column mb-auto">
+      <li class="nav-item mb-1">
+        <a class="dashnav-link <%= "active" if action_name == "dashboard" %>"" href="/dashboard">
+          <i class="fa-solid fa-user"></i>
+          Profil
+        </a>
+      </li>
+      <li class="nav-item mb-1">
+          <a class="dashnav-link <%= "active" if action_name == "myindex" %>" href="/mymissions">
+            <i class="fa-solid fa-list"></i>
+            My missions
+          </a>
+      </li>
+      <li class="nav-item mb-1">
+        <a class="dashnav-link <%= "active" if action_name == "chatrooms" %>" href="/chatrooms">
+          <i class="fa-solid fa-message"></i>
+          Messages
+        </a>
+      </li>
+
+    </ul>
+  </div>
 </aside>
