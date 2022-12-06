@@ -29,6 +29,14 @@
               </div>
             <% end %>
           </div>
+          <%= f.date_field :start_date, label:"Pick a Date",
+            as: :string,
+            wrapper_html: { class: 'col-6' },
+            data: {
+              search_missions_target: "date",
+              action: "change->search-missions#update"
+            }
+          %>
         <% end %>
       </div>
     </div>
