@@ -2,12 +2,21 @@
   <h1><%= @user.fullname %></h1>
   <h5><%= @user.phone_number %> <%= @user.email %></h5>
   <p><%= @user.description %></p>
-  <% if @chat.empty? %>
-    <%= link_to "Chat", chatroom_path(@user.mission_candidates.joins(:mission).where(missions: { user: current_user }).first.chatrooms.first) %>
-  <% else %>
-  <%= simple_form_for(@chatroom) do |f| %>
-        <%= f.input :mission_candidate_id, input_html: { value: @chat.first.id }, as: :hidden %>
-        <%= f.submit %>
+  <% if @user.mission_candidates.joins(:mission).where(mission: {user: current_user}).count > 0 || current_user.mission_candidates.joins(:mission).where(mission: {user: @user}).count > 0 %>
+    <% if @chatuser.empty? && @chatcurrentuser.empty? %>
+      <%= link_to "Chat", chatrooms_path %>
+    <% else %>
+      <% if @chatuser.empty? %>
+        <%= simple_form_for(@chatroom) do |f| %>
+          <%= f.input :mission_candidate_id, input_html: { value: @chatcurrentuser.first.id }, as: :hidden %>
+          <%= f.submit %>
+        <% end %>
+      <% else %>
+        <%= simple_form_for(@chatroom) do |f| %>
+          <%= f.input :mission_candidate_id, input_html: { value: @chatuser.first.id }, as: :hidden %>
+          <%= f.submit %>
+        <% end %>
+      <% end %>
     <% end %>
   <% end %>
   <div class="row div-width-80 align-items-start my-5 review-container">
