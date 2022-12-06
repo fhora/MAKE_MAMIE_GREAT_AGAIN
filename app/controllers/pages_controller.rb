@@ -8,6 +8,6 @@ class PagesController < ApplicationController
     @chatroom = Chatroom.new
     @user = User.find(params[:id])
     @review = Review.new
-    @chat = @user.mission_candidates.joins(:mission).where(missions: { user: current_user }).select{ |candidate| candidate.chatrooms.empty? == false }
+    @chat = @user.mission_candidates.joins(:mission).where(missions: { user: current_user }).select{ |candidate| candidate.chatrooms.empty? == true }
   end
 end
