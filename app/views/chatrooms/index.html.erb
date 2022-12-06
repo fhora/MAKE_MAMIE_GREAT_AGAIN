@@ -1,8 +1,8 @@
  <div class="container">
-  <h1 class="pt-4">CHATROOMS</h1>
+  <h1 class="pt-4 text-center">CHATROOMS</h1>
     <% @chatrooms.each do |chatroom| %>
-      <%= link_to chatroom_path(chatroom), style:"text-decoration: none;" do %>
-        <div class="row justify-content-between p-3" style="background-color: white;">
+      <%= link_to chatroom_path(chatroom), style: "text-decoration: none" do %>
+        <div class="row cards-missions p-3">
           <div class="col-6">
             <%= "#{current_user == chatroom.user ? chatroom.mission_candidate.user.fullname : chatroom.user.fullname}'s chat" %>
             <p style="color: red"><%= chatroom.messages.where(seen_date: nil).where.not(user: current_user).count.zero? ? "" : "#{chatroom.messages.where(seen_date: nil).where.not(user: current_user).count} new messages" %>
