@@ -2,7 +2,7 @@
   <div class="col-4 container">
     <h1 class="text-center">Post a new mission</h1><br>
     <div class="new-mission justify-content-center d-flex border rounded" style="background-color: white">
-      <div class="p-2 col-12">
+      <div class="p-4 col-12">
         <%= simple_form_for(@mission, data: { controller: 'flatpickr'}) do |f| %>
           <%= f.input :title, label:"Mission title", placeholder:"Title of the mission..." %>
           <%= f.input :description, label:"Description", placeholder: "Describe the mission..." %>

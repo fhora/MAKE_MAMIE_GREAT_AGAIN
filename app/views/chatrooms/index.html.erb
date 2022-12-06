@@ -1,23 +1,33 @@
  <div class="container">
-  <h1 class="pt-4">CHATROOMS</h1>
+  <h1 class="py-4 text-center">CHATROOMS</h1>
     <% @chatrooms.each do |chatroom| %>
-      <%= link_to chatroom_path(chatroom), style:"text-decoration: none" do %>
-        <div class="row border justify-content-between p-3" style="background-color: white">
-          <div class="col-6">
-            <%= "#{current_user == chatroom.user ? chatroom.mission_candidate.user.fullname : chatroom.user.fullname}'s chat" %>
-            <p style="color: red"><%= chatroom.messages.where(seen_date: nil).where.not(user: current_user).count.zero? ? "" : "#{chatroom.messages.where(seen_date: nil).where.not(user: current_user).count} new messages" %>
-            <% if chatroom.messages.count > 0 %>
-              <p style="color: grey; opacity: 0.3"><%= chatroom.messages.last.user == current_user ? "You" : chatroom.messages.last.user.fullname %>: <%= chatroom.messages.last.content.split.first(3).join(" ") %>...</p>
-              <% if chatroom.messages.where.not(seen_date: nil).count > 0 %>
-                <p>Last seen: <%= time_ago_in_words(chatroom.messages.where.not(seen_date: nil).last.seen_date) %> ago</p>
-              <% end %>
-            <% end %>
-          </div>
-          <div class="col-6">
-            <p><%= chatroom.mission_candidate.mission.title %></p>
-            <p><%= chatroom.mission_candidate.mission.start_date.strftime('%a %d %B %Y') %></p>
-          </div>
+    <div class="row justify-content-center" id="index-missions">
+        <div class="col-8">
+          <%= link_to chatroom_path(chatroom), style: "text-decoration: none" do %>
+            <div class="row cards-missions bg-white p-3 mb-4">
+              <div class="col-4">
+                <h4><%= "#{current_user == chatroom.user ? chatroom.mission_candidate.user.fullname : chatroom.user.fullname}'s chat" %></h4>
+                <% if chatroom.messages.count > 0 %>
+                  <p style="color: grey; opacity: 0.7"><%= chatroom.messages.last.user == current_user ? "You" : chatroom.messages.last.user.fullname %>: <%= chatroom.messages.last.content.split.first(3).join(" ") %>...</p>
+                <% end %>
+              </div>
+              <div class="col-4">
+                <p>Mission : <%= chatroom.mission_candidate.mission.title %></p>
+                <p><%= chatroom.mission_candidate.mission.start_date.strftime('%a %d %B %Y') %></p>
+              </div>
+              <div class="col-4">
+                <% if chatroom.messages.count > 0 && chatroom.messages.where.not(seen_date: nil).count > 0 %>
+                  <p>Last seen: <%= time_ago_in_words(chatroom.messages.where.not(seen_date: nil).last.seen_date) %> ago</p>
+                <% end %>
+                <div style="position: relative; bottom: 71px; left: 105%">
+                  <% if chatroom.messages.where(seen_date: nil).where.not(user: current_user).count != 0 %>
+                    <p class="notif"><%= chatroom.messages.where(seen_date: nil).where.not(user: current_user).count %></p>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          <% end %>
         </div>
-      <% end %>
+      </div>
     <% end %>
 </div>

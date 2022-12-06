@@ -1,18 +1,42 @@
 <div class="py-5">
   <div class="container">
-    <%= link_to(missions_path, class:"btn-gray offset-1") do  %>
+    <%= link_to(missions_path, class:"btn-gray") do  %>
       <i class="fa-solid fa-arrow-left-long"></i>
     <% end %>
     <div class="row mt-4">
+      <%# quand le user est celui qui a posté la mission %>
       <% if policy(@mission).edit? %>
-        <div class="left-col col-6 offset-1 pe-5">
+        <div class="left-col col-7 pe-5">
           <h3>Candidates</h3>
           <div class="mission-candidates">
+          <%# quand un user est validé %>
             <% if @mission.status == true && policy(@mission).destroy?%>
-              <div class="card-container d-flex justify-content-between mt-4 border p-3 bg-white">
-                <%# partial %>
-                <%= render 'candidates', mission_candidate: @accepted_candidate %>
+              <div class="card-container d-flex justify-content-between border p-3 bg-white">
+                <figure class="avatar-large-square">
+                  <% if @accepted_candidate.user.photo.key.nil? %>
+                    <img src="https://media.istockphoto.com/id/1337144146/fr/vectoriel/vecteur-dic%C3%B4ne-de-profil-davatar-par-d%C3%A9faut.jpg?b=1&s=170667a&w=0&k=20&c=eYsURDWBMsbvhjRxVQ8-pgC0q4b04DSYbCMnY5OlH14=" />
+                  <% else %>
+                    <div>
+                      <%= cl_image_tag @accepted_candidate.user.photo.key  %>
+                    </div>
+                  <% end %>
+                </figure>
+                <div class="candidate-details d-flex flex-column justify-content-around">
+                  <div class="d-flex align-items-baseline gap-2 mb-1">
+                    <h4><%= @accepted_candidate.user.fullname %></h4>
+                    <%= link_to "send a message", "#", class:"btn" %>
+                  </div>
+                  <p class="mb-3">member since <%= @accepted_candidate.user.created_at.strftime('%B %Y') %> </p>
+                  <p class="description-paraph mb-3"><%= @accepted_candidate.user.description %></p>
+                  <%# partial pour afficher le rating %>
+                  <%= render 'user_rating', instance: @accepted_candidate %>
+                </div>
+                <div class="align-self-end">
+                  <%= link_to 'details...', userpage_path(@accepted_candidate.user), class:"text-decoration-none" %>
+                </div>
               </div>
+          <%#  %>
+          <%# quand aucun user n'a été validé %>
             <% elsif @mission.status == false && policy(@mission).destroy? %>
               <% @waiting_candidates.where(mission_id: @mission.id).each do |candidate| %>
                 <div class="card-container d-flex justify-content-between p-3 bg-white">
@@ -25,6 +49,7 @@
                 </div>
               <% end %>
             <% end %>
+          <%#  %>
           </div>
         </div>
 
@@ -33,10 +58,11 @@
           <div class="px-4 py-2 bg-white card-container">
             <div class="d-flex align-items-center gap-3">
               <h1 class="pt-2"><%= @mission.title.capitalize %></h1>
+            <%# peut retiré la condition ? %>
               <% unless policy(@mission_candidate).new? %>
                 <div class="ms-auto d-flex gap-3">
                   <%= link_to edit_mission_path(@mission), class:"btn btn-orange" do %>
-                    Edit <i class="fas fa-edit ms-2"></i>
+                    <i class="fas fa-edit"></i>
                   <% end %>
                   <%= button_to @mission, method: :delete do %>
                     <i class="far fa-trash-alt"></i>
@@ -52,7 +78,7 @@
                     <%= cl_image_tag @mission.user.photo.key  %>
                 <% end %>
               </figure>
-              <p>
+              <p class="mb-0">
                 Posted by <%= link_to @mission.user.first_name.capitalize, userpage_path(@mission.user) %>
               </p>
             </div>
@@ -63,6 +89,7 @@
               <% end %>
               <p><strong><i class="fa-regular fa-map"></i></strong> <%= @mission.location %></p>
               <p><strong><i class="fa-regular fa-money-bill-1"></i> <%= @mission.reward_cents/100 %></strong> dollars</p>
+            <%# peut être retiré ? %>
               <% if policy(@mission_candidate).new? %>
                 <% if @mission.mission_candidates.none? {|candidate| candidate.user == current_user} %>
                   <%= link_to "Apply to this mission", mission_mission_candidates_path(@mission), data: { turbo_method: :post }, class: "btn btn-orange" %>
@@ -70,6 +97,7 @@
                   <p style="color:red;font-weight:bolder;font-size:20px;">You already applied for this mission</p>
                 <% end %>
               <% end %>
+            <%#  %>
             </div>
           </div>
           <div style="width: 100%; height: 300px;"
@@ -80,23 +108,25 @@
         </div>
 
 
-
+    <%# quand user n'est pas le poster de la mission %>
       <% else %>
         <div class="left-col col-7 pe-5">
           <h3>Description</h3>
           <div class="p-4 bg-white">
             <div class="d-flex align-items-center gap-3">
               <h1 class="pt-2"><%= @mission.title.capitalize %></h1>
+            <%# peut être retiré ? %>
               <% unless policy(@mission_candidate).new? %>
                 <div class="ms-auto d-flex gap-3">
                   <%= link_to edit_mission_path(@mission), class:"btn btn-orange" do %>
-                    Edit <i class="fas fa-edit ms-2"></i>
+                    <i class="fas fa-edit"></i>
                   <% end %>
                   <%= button_to @mission, method: :delete do %>
                     <i class="far fa-trash-alt"></i>
                   <% end %>
                 </div>
               <% end %>
+            <%#  %>
             </div>
             <div class="d-flex align-items-center img-wrapper">
               <figure class="avatar-circle-user">
@@ -116,6 +146,7 @@
             <% end %>
             <p><i class="fa-regular fa-map"></i> <%= @mission.location %></p>
             <p><i class="fa-regular fa-money-bill-1"></i> <strong><%= @mission.reward_cents/100 %></strong> dollars</p>
+          <%# si user n'a pas encore postulé %>
             <% if policy(@mission_candidate).new? %>
               <% if @mission.mission_candidates.none? {|candidate| candidate.user == current_user} %>
                 <%= link_to "Apply to this mission", mission_mission_candidates_path(@mission), data: { turbo_method: :post }, class: "btn btn-orange" %>
@@ -123,6 +154,7 @@
                 <p style="color:red;font-weight:bolder;font-size:20px;">You already applied for this mission</p>
               <% end %>
             <% end %>
+          <%#  %>
           </div>
           <div style="width: 100%; height: 300px;"
                 data-controller="map"
@@ -133,6 +165,7 @@
         <div class="right-col col-5">
           <h3>Candidates</h3>
           <div class="mission-candidates">
+          <%# peut être retiré ? %>
             <% if @mission.status == true && policy(@mission).destroy?%>
               <div class="card-container d-flex gap-4 mt-4 border p-3 bg-white">
                 <%# partial %>
@@ -150,6 +183,7 @@
                 </div>
               <% end %>
             <% end %>
+          <%#  %>
           </div>
         </div>
       <% end %>
