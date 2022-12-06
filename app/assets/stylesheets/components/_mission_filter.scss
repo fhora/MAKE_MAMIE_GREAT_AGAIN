@@ -1,0 +1,14 @@
+.mission-filter{
+  vertical-align: middle;
+  font-style: bold;
+  background-color: rgb(243, 226, 219);
+  border-style:solid;
+  border-width: thin;
+  border-color: white;
+  transition: padding-right 0.3s ease-in-out;
+  &:hover{
+    background-color:rgb(238,130,49);
+    color: white;
+
+  }
+}

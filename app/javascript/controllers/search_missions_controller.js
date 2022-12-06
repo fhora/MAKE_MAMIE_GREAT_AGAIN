@@ -1,15 +1,22 @@
 import { Controller } from "@hotwired/stimulus"
+import flatpickr from "flatpickr"
 
-// Connects to data-controller="search-missions"
 export default class extends Controller {
-  static targets = ["form", "input", "list", "checkbox", "label"]
+  static targets = ["form", "input", "list", "checkbox", "label", "date"]
 
   connect() {
-    
+    flatpickr(this.dateTarget, {
+      mode: "multiple",
+      dateFormat: "Y-m-d",
+      minDate: "today",
+      })
   }
 
   update() {
     let url = ""
+
+    const dates = this.dateTarget.value.split(', ')
+
     const input_checked = []
     this.checkboxTargets.map((input, index) => {
       if(input.checked) {
@@ -20,20 +27,12 @@ export default class extends Controller {
       }
     })
 
-    // transformer query en deux => query1=
-    if(this.inputTarget.value != "") {
-      let queryString = ""
-      // si il y a un input dans la search bar
-      // chaine des query pour chaque checkbox.checked
-      input_checked.forEach((value) => {
-        queryString += `&querycheck=${value}`
-      })
-      url = `${this.formTarget.action}?querysearch=${this.inputTarget.value}${queryString}`
-    } else {
-      // si il n'y a pas d'input dans search bar
-      // créer une query en chainant checkbox.checked
-      url = `${this.formTarget.action}?querycheck=${input_checked.join('&querycheck=')}`
-    }
+    let queryString = "?"
+    if(this.inputTarget.value != "") queryString += `&querysearch=${this.inputTarget.value}`;
+    if(input_checked.length != 0) queryString += `&querychecks[]=${input_checked.join('&querychecks[]=')}`;
+    if(this.dateTarget.value != "") queryString += `&querydates[]=${dates.join('&querydates[]=')}`
+
+    url = queryString
 
     fetch(url, {headers: {"Accept": "text/plain"}})
       .then(response => response.text())

@@ -1,68 +1,44 @@
- <div>
-  <div class="grid grid-width d-flex">
-    <aside class="nav-dashboard col-3 m-3">
-      <div class="user">
-        <div class="user-avatar d-flex flex-column align-items-center justify-content-center mb-5">
-          <% if current_user.photo.key.nil? %>
-            <img class="avatar-large mb-5" id="navbarDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" src="https://media.istockphoto.com/id/1337144146/fr/vectoriel/vecteur-dic%C3%B4ne-de-profil-davatar-par-d%C3%A9faut.jpg?b=1&s=170667a&w=0&k=20&c=eYsURDWBMsbvhjRxVQ8-pgC0q4b04DSYbCMnY5OlH14=" />
-          <% else %>
-            <div class="avatar-large mb-5" id="navbarDropdown" aria-hashpopup="true" aria-expanded="false" data-bs-toggle="dropdown">
-              <%= cl_image_tag current_user.photo.key  %>
-            </div>
-          <% end %>
-          <h1><%= "#{current_user.first_name} #{current_user.last_name}" %></h1>
-        </div>
+<div>
+  <div class="d-flex grid grid-width">
+    <%= render "shared/navbar_dashboard" %>
+    <div class="col-8 grid-width m-auto p-3">
+      <h2 class="my-missions-title text-left mt-3">My missions</h1>
+      <div class="d-flex inline justify-items-around my-2">
+        <ul class="mission-filter col-3 p-0 m-0 align-items-center text-center">Waiting for helpers</ul>
+        <ul class="mission-filter col-3 p-0 m-0 align-middle text-center">Helper(s) are waiting for your validation</ul>
+        <ul class="mission-filter col-3 p-0 m-0 align-middle text-center">Helpers found, missions to be done</ul>
+        <ul class="mission-filter col-3 p-0 m-0 align-middle text-center">Done</ul>
       </div>
-      <ul class="nav flex-column">
-        <a href="/dashboard">
-          <i class="fa-solid fa-user"></i>
-          Profil
-        </a>
-        <a href="/mymissions">
-          <i class="fa-solid fa-list"></i>
-          My missions
-        </a>
-        <div>
-          <a href="/chatrooms">
-            <i class="fa-solid fa-message"></i>
-            Messages
-          </a>
-        </div>
-      </ul>
-    </aside>
-    <div class="col-6">
-
- <div class="py-5 bg-light-gray my-5">
-  <div class="container" id="index-missions">
-    <h1 class="text-center text-uppercase mb-4">All my Missions</h1>
-    <div class="row justify-content-center" data-controller="search-missions">
-      <%= form_with(url: missions_path, method: :get, html: {class:
-        "mb-4 p-0 col-8", data: {search_missions_target: "form"}}) do |f| %>
-        <%= f.text_field :query,
-                        class: "form-control",
-                        placeholder: "Type a mission title or search by categories listed below",
-                        value: params[:query],
-                        data: {
-                          search_missions_target: "input",
-                          action: "keyup->search-missions#update"
-                        } %>
-        <div class="checkbox-inputs d-flex mt-4 justify-content-around">
-          <% Mission::CATEGORIES.each do |category| %>
-            <div>
-              <%= f.check_box category, data: {
-                search_missions_target: "checkbox",
-                action: "change->search-missions#update"
-              } %>
-              <%= f.label category, category.to_s %>
+      <div class="d-flex flex-column justify-items-around" id="index-missions">
+        <% @all_mymissions.each do |mission| %>
+          <%= link_to mission_path(mission), class: "text-decoration-none", style:"width:100%" do %>
+            <div class="col-12 flex-shrink-0 p-0">
+              <div class="d-flex flex-column cards-missions rounded overflow-hidden flex-md-row mb-4 h-md-250 position-relative">
+                <div class="col-3 d-flex justify-content-center align-items-center">
+                  <figure class="d-flex justify-content-center align-items-center">
+                    <i class="fa-solid fa-book-open fs-1"></i>
+                  </figure>
+                </div>
+                <div class="col-9 p-4 d-flex flex-column position-static">
+                  <div class="d-flex justify-content-between align-items-center">
+                    <h4 class="mb-2 text-capitalize fs-4 "><%= mission.title %></h4>
+                    <div class="stars-review">
+                    <%# partial %>
+                      <%= render 'user_rating', instance: mission %>
+                    </div>
+                  </div>
+                  <p class="card-text mb-auto"><%= mission.description %></p>
+                  <div class="d-flex justify-content-between align-items-center pt-3">
+                    <span class="d-inline-block"><i class="fa-solid fa-calendar-day"></i> <%= mission.start_date.strftime("%m/%d/%Y at %H:%M") unless mission.start_date.nil? %></span>
+                    <span class="d-inline-block"><i class="fa-solid fa-location-dot"></i> <%= mission.location %></span>
+                    <span class="d-inline-block"><i class="fa-solid fa-tag"></i> <%= mission.reward_cents/100 %></span>
+                  </div>
+                </div>
+              </div>
             </div>
           <% end %>
-        </div>
-      <% end %>
-      <%= render "list", missions: @mymissions %>
-    </div>
-  </div>
-</div>
-
+        <% end %>
+      </div>
     </div>
   </div>
 </div>
