@@ -2,35 +2,37 @@ class MissionsController < ApplicationController
   before_action :set_mission, only: %i[show edit update destroy]
 
   def index
-      # split la query par espace et chaine la requete pour chaque item dans l'array ???
-    if params[:querycheck].present? && params[:querysearch].present?
-      @missions = policy_scope(Mission).tagged_with(params[:querycheck], any: true).search_by_title(params[:querysearch])
-    elsif params[:querycheck].present?
-      @missions = policy_scope(Mission).tagged_with(params[:querycheck], any: true)
-    elsif params[:querysearch].present?
-      @missions = policy_scope(Mission).search_by_title(params[:querysearch])
-    else
-      @missions = policy_scope(Mission)
+    @missions = policy_scope(Mission).order(:start_date)
+    @missions = @missions.tagged_with(params[:querychecks], any: true) if params[:querychecks].present?
+    @missions = @missions.search_by_title(params[:querysearch]) if params[:querysearch].present?
+    if params[:querydates].present? && params[:querydates].length == 1
+      @missions = @missions.where("start_date >= ?", params[:querydates].first)
+    elsif params[:querydates].present? && params[:querydates]
+      dates = params[:querydates].map { |d| d.to_datetime.strftime("%B %d, %Y") }
+      @missions = @missions.select do |mission|
+        dates.include?(mission.start_date.strftime("%B %d, %Y")) unless mission.start_date.nil?
+      end
     end
+
     respond_to do |format|
       format.html
       format.text { render partial: "missions/list", locals: { missions: @missions }, formats: [:html] }
     end
   end
 
-def myindex
+  def myindex
 
   @mymissions = Mission.where("user_id = ?", current_user.id)
   @mymissions_candidates = current_user.mission_candidates.where(status: "waiting").map(&:mission)
   @mymissions_accepted = current_user.mission_candidates.where(status: "Accepted").map(&:mission)
   @all_mymissions = @mymissions_candidates + @mymissions_accepted + @mymissions
-  
+
   authorize @mymissions
   respond_to do |format|
     format.html
     format.text { render partial: "missions/list", locals: { missions: @mymissions }, formats: [:html] }
+    end
   end
-end
 
   def show
     @chatroom = Chatroom.new
