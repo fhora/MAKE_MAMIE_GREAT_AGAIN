@@ -30,8 +30,8 @@
             collection_wrapper_class: 'category-wrapper',
             item_wrapper_class: 'category-item',
             input_html: {class: 'category-selector'},
-            collection: Mission::CATEGORIES %>
-          <%= f.submit "Submit", class: "btn btn-primary btn-block" %>
+            collection: Mission::CATEGORIES.map.with_index{|cat, index| ["<i class='mb-1 #{Mission::ICONS[index]}'></i><span>#{cat}</span>".html_safe, cat]} %>
+          <%= f.submit "Submit", class: "btn btn-orange btn-block" %>
         <% end %>
       </div>
     </div>
