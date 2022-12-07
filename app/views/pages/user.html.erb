@@ -1,5 +1,5 @@
 
-<div class="container">
+<div class="container py-5">
   <h1><%= @user.fullname %></h1>
   <h5><%= @user.phone_number %> <span class="fs-5"><i class="fa-regular fa-envelope"></i> E-mail: <%= @user.email %></span><%= @user.email %></h5>
   <p><%= @user.description %></p>
@@ -23,38 +23,26 @@
     <% end %>
   <% end %>
   <div class="row div-width-80 align-items-start my-5 review-container">
-    <div class="col-5 review-content-wrapper">
+    <div class="col-6 review-content-wrapper">
       <h3>Reviews</h3>
       <% if @user.reviews.empty? %>
         <p>Be the first to post a review on <%= @user.first_name %>!</p>
       <% end %>
-    <% else %>
-    <%= simple_form_for(@chatroom) do |f| %>
-          <%= f.input :mission_candidate_id, input_html: { value: @chat.first.id }, as: :hidden %>
-          <%= f.submit "Send a message", class: "btn btn-ghost" %>
+      <% @user.reviews.each do |review| %>
+        <div class="review-content py-4">
+          <p>
+            <% review.rating.times do %>
+              <i class="fa-solid fa-star"></i>
+            <% end %>
+            <% (5 - review.rating).times do %>
+              <i class="fa-regular fa-star"></i>
+            <% end %>
+            - <%= time_ago_in_words(review.updated_at) %> ago</p>
+          <p><%= review.content %></p>
+        </div>
+      <%# <hr> %>
       <% end %>
-    <% end %>
-    <div class="row div-width-80 align-items-start my-5 review-container">
-      <div class="col-6 review-content-wrapper">
-        <h3>Reviews</h3>
-        <% if @user.reviews.empty? %>
-          <p>Be the first to post a review on <%= @user.first_name %>!</p>
-        <% end %>
-        <% @user.reviews.each do |review| %>
-          <div class="review-content py-4">
-            <p>
-              <% review.rating.times do %>
-                <i class="fa-solid fa-star"></i>
-              <% end %>
-              <% (5 - review.rating).times do %>
-                <i class="fa-regular fa-star"></i>
-              <% end %>
-              - <%= time_ago_in_words(review.updated_at) %> ago</p>
-            <p><%= review.content %></p>
-          </div>
-        <%# <hr> %>
-        <% end %>
-      </div>
+    </div>
 
       <% if @user != current_user %>
         <div class="col-6">
