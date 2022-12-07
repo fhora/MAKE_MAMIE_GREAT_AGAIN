@@ -6,9 +6,9 @@
         <p class="mb-5">Help an elderly during your free time</p>
       </div>
       <div class="d-flex">
-        <%= link_to new_mission_path, class: "btn-animate me-4" do %>
-          <span>Publish a mission</span>
-        <% end %>
+        <button type="button" style="border:none;" class="btn-animate me-4" data-bs-toggle="modal" data-bs-target="#new_mission_modal" style="color: black;">
+          Publish a mission</i>
+        </button>
         <%= link_to missions_path, class: "btn-orange btn-animate btn-outline" do %>
           <span>Find a mission</span>
         <% end %>
@@ -47,7 +47,7 @@
       </div>
     </div>
   </div>
-</div> 
+</div>
 
 <!-- Cards helpers -->
 <div class="container  mt-5">
