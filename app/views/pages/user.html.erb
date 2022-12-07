@@ -29,7 +29,7 @@
         <p>Be the first to post a review on <%= @user.first_name %>!</p>
       <% end %>
       <% @user.reviews.each do |review| %>
-        <div class="review-content py-4">
+        <div class="review-content p-3 bg-white">
           <p>
             <% review.rating.times do %>
               <i class="fa-solid fa-star"></i>
@@ -37,8 +37,10 @@
             <% (5 - review.rating).times do %>
               <i class="fa-regular fa-star"></i>
             <% end %>
-            - <%= time_ago_in_words(review.updated_at) %> ago</p>
+            - <%= time_ago_in_words(review.updated_at) %> ago
+          </p>
           <p><%= review.content %></p>
+          <%= link_to "Posted by #{User.find(review.reviewer_id).fullname}", userpage_path(User.find(review.reviewer_id)), style: "text-decoration: none" %>
         </div>
       <%# <hr> %>
       <% end %>
