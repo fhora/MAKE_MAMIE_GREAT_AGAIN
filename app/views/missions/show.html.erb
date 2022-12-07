@@ -16,8 +16,8 @@
                   <% if @accepted_candidate.user.photo.key.nil? %>
                     <img src="https://media.istockphoto.com/id/1337144146/fr/vectoriel/vecteur-dic%C3%B4ne-de-profil-davatar-par-d%C3%A9faut.jpg?b=1&s=170667a&w=0&k=20&c=eYsURDWBMsbvhjRxVQ8-pgC0q4b04DSYbCMnY5OlH14=" />
                   <% else %>
-                    <div>
-                      <%= cl_image_tag @accepted_candidate.user.photo.key  %>
+                    <div class="w-100 h-100">
+                      <%= cl_image_tag @accepted_candidate.user.photo.key,  class: "h-100" %>
                     </div>
                   <% end %>
                 </figure>
@@ -88,7 +88,7 @@
                 <p><strong><i class="fa-regular fa-clock"></i></strong>  <%= @mission.start_date.strftime('%a %d %B %Y')%></p>
               <% end %>
               <p><strong><i class="fa-regular fa-map"></i></strong> <%= @mission.location %></p>
-              <p><strong><i class="fa-regular fa-money-bill-1"></i> <%= @mission.reward_cents/100 %></strong> dollars</p>
+              <p><strong><i class="fa-regular fa-money-bill-1"></i> <%= @mission.reward_cents/100 %></strong> €</p>
             <%# peut être retiré ? %>
               <% if policy(@mission_candidate).new? %>
                 <% if @mission.mission_candidates.none? {|candidate| candidate.user == current_user} %>
@@ -145,7 +145,7 @@
               <p><i class="fa-regular fa-clock"></i>  <%= @mission.start_date.strftime('%a %d %B %Y')%></p>
             <% end %>
             <p><i class="fa-regular fa-map"></i> <%= @mission.location %></p>
-            <p><i class="fa-regular fa-money-bill-1"></i> <strong><%= @mission.reward_cents/100 %></strong> dollars</p>
+            <p><i class="fa-regular fa-money-bill-1"></i> <strong><%= @mission.reward_cents/100 %></strong> €</p>
           <%# si user n'a pas encore postulé %>
             <% if policy(@mission_candidate).new? %>
               <% if @mission.mission_candidates.none? {|candidate| candidate.user == current_user} %>
