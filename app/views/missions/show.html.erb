@@ -1,7 +1,13 @@
 <div class="py-5">
   <div class="container">
-    <%= link_to(missions_path, class:"btn-gray") do  %>
-      <i class="fa-solid fa-arrow-left-long"></i>
+    <% if @mission.user == current_user %>
+      <%= link_to(mymissions_path, class:"btn btn-orange") do  %>
+        <i class="fa-solid fa-arrow-left-long"></i>
+      <% end %>
+    <% else %>
+      <%= link_to(missions_path, class:"btn btn-orange") do  %>
+        <i class="fa-solid fa-arrow-left-long"></i>
+      <% end %>
     <% end %>
     <div class="row mt-4">
       <%# quand le user est celui qui a posté la mission %>
