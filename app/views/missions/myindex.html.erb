@@ -1,43 +1,13 @@
-<div class="vh-100">
+<div class="vh-100%">
   <div class="d-flex grid grid-width">
     <%= render "shared/navbar_dashboard" %>
-    <div class="col-8 grid-width mx-auto mt-3 p-3">
-      <h2 class="my-missions-title text-left">My missions</h1>
-      <div class="d-flex inline justify-items-around my-2">
-        <ul class="mission-filter col-3 p-0 m-0 align-items-center text-center">Waiting for helpers</ul>
-        <ul class="mission-filter col-3 p-0 m-0 align-middle text-center">Helper(s) are waiting for your validation</ul>
-        <ul class="mission-filter col-3 p-0 m-0 align-middle text-center">Helpers found, missions to be done</ul>
-        <ul class="mission-filter col-3 p-0 m-0 align-middle text-center">Done</ul>
-      </div>
-      <div class="d-flex flex-column justify-items-around" id="index-missions">
-        <% @all_mymissions.each do |mission| %>
-          <%= link_to mission_path(mission), class: "text-decoration-none", style:"width:100%" do %>
-            <div class="col-12 flex-shrink-0 p-0">
-              <div class="d-flex flex-column cards-missions rounded overflow-hidden flex-md-row mb-4 h-md-250 position-relative">
-                <div class="col-3 d-flex justify-content-center align-items-center">
-                  <figure class="d-flex justify-content-center align-items-center">
-                    <i class="fa-solid fa-book-open fs-1"></i>
-                  </figure>
-                </div>
-                <div class="col-9 p-4 d-flex flex-column position-static">
-                  <div class="d-flex justify-content-between align-items-center">
-                    <h4 class="mb-2 text-capitalize fs-4 "><%= mission.title %></h4>
-                    <div class="stars-review">
-                    <%# partial %>
-                      <%= render 'user_rating', instance: mission %>
-                    </div>
-                  </div>
-                  <p class="card-text mb-auto"><%= mission.description %></p>
-                  <div class="d-flex justify-content-between align-items-center pt-3">
-                    <span class="d-inline-block"><i class="fa-solid fa-calendar-day"></i> <%= mission.start_date.strftime("%m/%d/%Y at %H:%M") unless mission.start_date.nil? %></span>
-                    <span class="d-inline-block"><i class="fa-solid fa-location-dot"></i> <%= mission.location %></span>
-                    <span class="d-inline-block"><i class="fa-solid fa-tag"></i> <%= mission.reward_cents/100 %></span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          <% end %>
-        <% end %>
+    <div class="col-8 grid-width m-auto p-3">
+      <h1 class="my-missions-title text-left py-5"><strong>My missions</strong></h1>
+      <%# <div class="d-flex justify-content-around my-2">
+        <%= render "shared/nav_pills" %>
+      <%# </div> %>
+      <div class="d-flex flex-column justify-items-around">
+        <%= render 'missions_recap', instance: @all_mymissions %>
       </div>
     </div>
   </div>

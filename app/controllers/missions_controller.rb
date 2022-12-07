@@ -26,8 +26,8 @@ class MissionsController < ApplicationController
     @mymissions_accepted = current_user.mission_candidates.where(status: "Accepted").map(&:mission)
     @all_mymissions = @mymissions_candidates + @mymissions_accepted + @mymissions
 
-    authorize @mymissions_accepted
-    authorize @mymissions_candidates
+    # authorize @mymissions_accepted
+    # authorize @mymissions_candidates
     authorize @mymissions
     # authorize @all_mymissions
     respond_to do |format|
