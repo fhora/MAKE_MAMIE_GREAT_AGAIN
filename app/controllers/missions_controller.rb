@@ -56,7 +56,7 @@ class MissionsController < ApplicationController
   def create
     @mission = Mission.new(mission_params)
     @mission.user = current_user
-    @mission.reward_cents *= 100
+    @mission.reward_cents *= 100 if @mission.reward_cents
     @mission.category_list = params[:mission][:categories]
     authorize @mission
     if @mission.save
