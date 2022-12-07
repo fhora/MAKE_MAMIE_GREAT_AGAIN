@@ -33,8 +33,9 @@ class MissionsController < ApplicationController
   end
 
   def myindex_candidate
-    @mymissions_candidates = current_user.mission_candidates.map(&:mission)
+    @mymissions_candidates = current_user.mission_candidates
     authorize @mymissions_candidates
+    @my_missions_candidates = @mymissions_candidates.map(&:mission)
     respond_to do |format|
       format.html
       format.text { render partial: "missions/list", locals: { missions: @mymissions_candidates }, formats: [:html] }
