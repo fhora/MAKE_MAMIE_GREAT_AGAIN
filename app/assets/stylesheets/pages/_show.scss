@@ -13,6 +13,10 @@
   }
 }
 
+.border-description {
+  border-radius: 4px;
+}
+
 .candidate-details,
 .img-wrapper {
   a {
@@ -24,6 +28,7 @@
 .card-container {
   box-shadow: 0 4px 17px rgba(0, 0, 0, .15);
   gap: 30px;
+  border-radius: 4px;
 
   &.trash-candidate {
     opacity: 0.6;
