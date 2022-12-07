@@ -14,8 +14,8 @@
       <% if policy(@mission).edit? %>
         <div class="left-col col-7 pe-5">
           <h3>Candidates</h3>
-          <div class="mission-candidates">
-          <%# quand un user est validé %>
+          <div class="mission-candidates border-description">
+            <%# quand un user est validé %>
             <% if @mission.status == true %>
               <% @mission.mission_candidates.where(mission_id: @mission.id).order(:status).each do |candidate| %>
                 <div class="card-container d-flex gap-4 border p-3 <%= candidate.status == "Declined" ? "trash-candidate" : "bg-white" %>">
@@ -24,8 +24,8 @@
                 </div>
               <% end %>
 
-          <%#  %>
-          <%# quand aucun user n'a été validé %>
+            <%#  %>
+            <%# quand aucun user n'a été validé %>
             <% elsif @mission.status == false %>
               <% @waiting_candidates.where(mission_id: @mission.id).each do |candidate| %>
                 <div class="card-container d-flex justify-content-between p-3 bg-white">
@@ -101,7 +101,7 @@
       <% else %>
         <div class="left-col col-7 pe-5">
           <h3>Description</h3>
-          <div class="p-4 bg-white">
+          <div class="p-4 bg-white border-description">
             <div class="d-flex align-items-center gap-3">
               <h1 class="pt-2"><%= @mission.title.capitalize %></h1>
             <%# peut être retiré ? %>
