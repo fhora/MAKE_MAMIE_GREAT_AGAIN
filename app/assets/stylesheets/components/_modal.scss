@@ -1,0 +1,50 @@
+#new_mission_modal {
+  .modal-content-wrapper {
+    border-radius: 12px;
+    background-color: white;
+  }
+
+  .form-control {
+    border: none;
+    outline: 1px solid rgb(206, 212, 218);
+  }
+
+  textarea {
+    height: 115px;
+  }
+
+  .form-control:hover,
+  .form-control:focus {
+    outline: none;
+    box-shadow: 0 0 0 0.4rem rgba(238, 130, 49, .5);
+  }
+
+  .mapboxgl-ctrl-geocoder.mapboxgl-ctrl {
+    border: none;
+    outline: 1px solid rgb(206, 212, 218);
+  }
+
+  .mapboxgl-ctrl-geocoder.mapboxgl-ctrl:hover {
+    box-shadow: 0 0 0 0.4rem rgba(238, 130, 49, .5);
+    border: none;
+    outline: none;
+
+    .mapboxgl-ctrl-geocoder--input {
+      border: none;
+      outline: none;
+    }
+  }
+
+  .mapboxgl-ctrl-geocoder.mapboxgl-ctrl:has(.mapboxgl-ctrl-geocoder--input:focus)  {
+    box-shadow: 0 0 0 0.4rem rgba(238, 130, 49, .5);
+    border: none;
+    outline: none;
+    // border-color: rgba(238, 130, 49, .5);
+
+    .mapboxgl-ctrl-geocoder--input:focus,
+    .mapboxgl-ctrl-geocoder--input {
+      outline: none;
+      border: none;
+    }
+  }
+}

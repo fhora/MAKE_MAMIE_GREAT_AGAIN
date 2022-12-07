@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   root to: "pages#home"
   get "dashboard", to: "pages#dashboard"
   get "mymissions", to: "missions#myindex"
+  get "mymissions_candidates", to: "missions#myindex_candidate"
   get "user/:id", to: "pages#user", as: :userpage
 
   resources :missions do
