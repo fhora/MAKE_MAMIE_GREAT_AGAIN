@@ -36,6 +36,7 @@
             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
               <%= link_to "My profile", dashboard_path, class: "dropdown-item text-dark-grey border-bottom p-2" %>
               <%= link_to "See my missions", mymissions_path, class: "dropdown-item text-dark-grey border-bottom p-2" %>
+              <%= link_to "See my applications", mymissions_candidates_path, class: "dropdown-item text-dark-grey border-bottom p-2" %>
               <% if current_user.chatrooms.joins(:messages).where(messages: {seen_date: nil}).count > 0 %>
                 <%= link_to chatrooms_path, class: "dropdown-item text-dark-grey border-bottom p-2", style:"display: flex; align-items: center; gap: 30px" do %>
                   Messages <span class="notif"><%= current_user.chatrooms.joins(:messages).where(messages: {seen_date: nil}).count %></span>
@@ -48,7 +49,7 @@
           </li>
         <% else %>
           <li class="nav-item me-3">
-            <%= link_to missions_path, class: "nav-link text-primary text-uppercase animate-link" do %>
+            <%= link_to missions_path, class: "nav-link text-dark-grey text-uppercase animate-link" do %>
               Find a mission <i class="fa fa-arrow-right"></i>
             <% end %>
           </li>
