@@ -25,6 +25,10 @@
   box-shadow: 0 4px 17px rgba(0, 0, 0, .15);
   gap: 30px;
 
+  &.trash-candidate {
+    opacity: 0.6;
+  }
+
   figure {
     margin: 0;
     align-self: center;

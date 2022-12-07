@@ -16,34 +16,17 @@
           <h3>Candidates</h3>
           <div class="mission-candidates">
           <%# quand un user est validé %>
-            <% if @mission.status == true && policy(@mission).destroy?%>
-              <div class="card-container d-flex justify-content-between border p-3 bg-white">
-                <figure class="avatar-large-square">
-                  <% if @accepted_candidate.user.photo.key.nil? %>
-                    <img src="https://media.istockphoto.com/id/1337144146/fr/vectoriel/vecteur-dic%C3%B4ne-de-profil-davatar-par-d%C3%A9faut.jpg?b=1&s=170667a&w=0&k=20&c=eYsURDWBMsbvhjRxVQ8-pgC0q4b04DSYbCMnY5OlH14=" />
-                  <% else %>
-                    <div class="w-100 h-100">
-                      <%= cl_image_tag @accepted_candidate.user.photo.key,  class: "h-100" %>
-                    </div>
-                  <% end %>
-                </figure>
-                <div class="candidate-details d-flex flex-column justify-content-around">
-                  <div class="d-flex align-items-baseline gap-2 mb-1">
-                    <h4><%= @accepted_candidate.user.fullname %></h4>
-                    <%= link_to "send a message", "#", class:"btn" %>
-                  </div>
-                  <p class="mb-3">member since <%= @accepted_candidate.user.created_at.strftime('%B %Y') %> </p>
-                  <p class="description-paraph mb-3"><%= @accepted_candidate.user.description %></p>
-                  <%# partial pour afficher le rating %>
-                  <%= render 'user_rating', instance: @accepted_candidate %>
+            <% if @mission.status == true %>
+              <% @mission.mission_candidates.where(mission_id: @mission.id).order(:status).each do |candidate| %>
+                <div class="card-container d-flex gap-4 border p-3 <%= candidate.status == "Declined" ? "trash-candidate" : "bg-white" %>">
+                  <%# partial %>
+                  <%= render 'candidates', mission_candidate: candidate %>
                 </div>
-                <div class="align-self-end">
-                  <%= link_to 'details...', userpage_path(@accepted_candidate.user), class:"text-decoration-none" %>
-                </div>
-              </div>
+              <% end %>
+
           <%#  %>
           <%# quand aucun user n'a été validé %>
-            <% elsif @mission.status == false && policy(@mission).destroy? %>
+            <% elsif @mission.status == false %>
               <% @waiting_candidates.where(mission_id: @mission.id).each do |candidate| %>
                 <div class="card-container d-flex justify-content-between p-3 bg-white">
                   <%# partial %>
@@ -171,25 +154,27 @@
         <div class="right-col col-5">
           <h3>Candidates</h3>
           <div class="mission-candidates">
-          <%# peut être retiré ? %>
-            <% if @mission.status == true && policy(@mission).destroy?%>
-              <div class="card-container d-flex gap-4 mt-4 border p-3 bg-white">
-                <%# partial %>
-                <%= render 'candidates', mission_candidate: @accepted_candidate %>
-              </div>
-            <% elsif @mission.status == false && policy(@mission).destroy? %>
-              <% @waiting_candidates.where(mission_id: @mission.id).each do |candidate| %>
-                <div class="card-container d-flex gap-4 mt-4 border p-3 bg-white">
+            <% if @mission.status == true %>
+              <% @mission.mission_candidates.where(mission_id: @mission.id).order(:status).each do |candidate| %>
+                <div class="card-container d-flex gap-4 border p-3 <%= candidate.status == "Declined" ? "trash-candidate" : "bg-white" %>">
                   <%# partial %>
                   <%= render 'candidates', mission_candidate: candidate %>
-                  <div class="action-button d-flex flex-column justify-content-around align-items-center">
-                    <p><%= link_to "Accepter", accepted_mission_candidate_path(candidate), data: {turbo_method: :patch}, class: "btn btn-orange" %></p>
-                    <p><%= link_to "Décliner", declined_mission_candidate_path(candidate), data: {turbo_method: :patch}, class:"text-decoration-none" %></p>
-                  </div>
+                </div>
+              <% end %>
+            <% else %>
+              <% @mission.mission_candidates.where(mission_id: @mission.id, user_id: current_user.id).each do |candidate| %>
+                <div class="card-container d-flex gap-4 border p-3 bg-white">
+                  <%# partial %>
+                  <%= render 'candidates', mission_candidate: candidate %>
+                </div>
+              <% end %>
+              <% @mission.mission_candidates.where(mission_id: @mission.id).where.not(user_id: current_user.id).each do |candidate| %>
+                <div class="card-container pe-none d-flex gap-4 border p-3 trash-candidate">
+                  <%# partial %>
+                  <%= render 'candidates', mission_candidate: candidate %>
                 </div>
               <% end %>
             <% end %>
-          <%#  %>
           </div>
         </div>
       <% end %>
