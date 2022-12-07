@@ -1,21 +1,42 @@
 .review-content-wrapper {
-  height: 364px;
-  overflow-y: scroll;
+  min-height: 364px;
+  // overflow-y: scroll;
+}
+
+.review_rating {
+  align-items: center;
+  margin-bottom: 0 !important;
+
+  span {
+    color: $orange;
+  }
 }
 
 .review-content{
+  border-bottom: 1px solid $orange;
   p,
   i {
     margin: 0;
   }
 
   i {
-    color: #fdd835;
+    color: $orange;
   }
 }
 
 .review-form {
   textarea {
     height: 150px;
+  }
+  .form-control{
+    &:disabled {
+      background-color: rgba(243, 226, 219,0.4);
+      border-color: $orange;
+    }
+  }
+  .btn.disabled {
+    background-color:$light-orange;
+    border: 1px solid $darker-orange;
+    color: $dark-grey;
   }
 }

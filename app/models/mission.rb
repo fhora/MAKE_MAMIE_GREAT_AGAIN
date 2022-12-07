@@ -22,12 +22,4 @@ class Mission < ApplicationRecord
                   }
 
   CATEGORIES = %w[shopping walking medical reading playing discussing]
-  ICONS = [
-    "fa-solid fa-cart-shopping",
-    "fa-solid fa-person-walking",
-    "fa-solid fa-notes-medical",
-    "fa-solid fa-book-open",
-    "fa-solid fa-puzzle-piece",
-    "fa-regular fa-comment"
-  ]
 end

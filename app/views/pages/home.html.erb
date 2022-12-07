@@ -7,9 +7,9 @@
       </div>
       <div class="d-flex">
         <%= link_to new_mission_path, class: "btn-animate me-4" do %>
-          <span>Post a mission</span>
+          <span>Publish a mission</span>
         <% end %>
-        <%= link_to new_mission_path, class: "btn-orange btn-animate" do %>
+        <%= link_to missions_path, class: "btn-orange btn-animate btn-outline" do %>
           <span>Find a mission</span>
         <% end %>
       </div>
@@ -28,8 +28,8 @@
         <figure class="d-flex align-items-center justify-content-center rounded-circle overflow-hidden">
           <i class="fa-brands fa-wpforms"></i>
         </figure>
-        <h3 class="fw-normal fs-4 my-3"><%= link_to "Register here",new_user_registration_path, class:"text-decoration-none" %></h3>
-        <p>In only 1 minute, it's that easy.</p>
+        <h3 class="fw-normal fs-4 my-3">Register</h3>
+        <p>In 1min only.</p>
       </div>
      <div class="col-lg-4 d-flex flex-column align-items-center justify-content-center">
         <figure class="d-flex align-items-center justify-content-center rounded-circle overflow-hidden">
@@ -47,7 +47,7 @@
       </div>
     </div>
   </div>
-</div>
+</div> 
 
 <!-- Cards helpers -->
 <div class="container  mt-5">

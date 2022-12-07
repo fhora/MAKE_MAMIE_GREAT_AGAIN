@@ -1,6 +1,7 @@
 class ChatroomsController < ApplicationController
   def index
     @chatrooms = policy_scope(Chatroom)
+    @message = Message.new
   end
 
   def show
@@ -17,6 +18,6 @@ class ChatroomsController < ApplicationController
     @chatroom.user = mission_candidate.mission.user
     authorize @chatroom
     @chatroom.save!
-    redirect_to chatroom_path(@chatroom)
+    redirect_to chatrooms_path
   end
 end
