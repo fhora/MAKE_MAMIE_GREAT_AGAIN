@@ -1,85 +1,35 @@
-.category-wrapper {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-}
+.wrapper-checkboxes {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 1em;
+  align-items: center;
+  justify-items: center;
+  color: white;
 
-.category-item {
-  flex: 0 0 30%;
-}
+  .form-check {
+    justify-self: center;
+    padding-left: 0;
+    background-color: $orange;
+    transition: background-color 0.3s ease;
+    border-radius: 5px;
 
-.category-selector {
-  position: absolute;
-  transform: scale(0);
-}
+    width: 100%;
+    height: 100%;
 
-.category-selector + label {
-  display: block;
-  cursor: pointer;
-  box-sizing: border-box;
-  width: 100%;
-  font-size: 12px;
-  text-align: left;
-  padding: 10px 10px 30px 10px;
-  border: 1px solid #EAEAEA;
-  border-radius: 4px;
-  background-color: white;
-}
+    label {
+      cursor: pointer;
+      width: 100%;
+      height: 100%;
+    }
 
-.category-selector:checked + label {
-  color: white !important;
-}
+    .form-check-input:hover+label {
+      background-color: rgba(255, 255, 255, 0.30);
+    }
 
-#mission_categories_shopping + label {
-  color: #FFC65A;
-}
-
-#mission_categories_shopping:checked + label {
-  background-color: #FFC65A;
-  border-color: #FFC65A;
-}
-
-#mission_categories_walking + label {
-  color: #FD1015;
-}
-
-#mission_categories_walking:checked + label {
-  background-color: #FD1015;
-  border-color: #FD1015;
-}
-
-#mission_categories_medical + label {
-  color: #62DDF5;
-}
-
-#mission_categories_medical:checked + label {
-  background-color: #62DDF5;
-  border-color: #62DDF5;
-}
-
-#mission_categories_reading + label {
-  color: #62DDF5;
-}
-
-#mission_categories_reading:checked + label {
-  background-color: #62DDF5;
-  border-color: #62DDF5;
-}
-
-#mission_categories_playing + label {
-  color: #FFC65A;
-}
-
-#mission_categories_playing:checked + label {
-  background-color: #FFC65A;
-  border-color: #FFC65A;
-}
-
-#mission_categories_discussing + label {
-  color: #FD1015;
-}
-
-#mission_categories_discussing:checked + label {
-  background-color: #FD1015;
-  border-color: #FD1015;
+    .form-check-input:checked+label {
+      background-color: rgba(255, 255, 255, 0.30);
+      box-shadow: 0 0 10px rgba(200, 200, 200, 1);
+      color: white;
+    }
+  }
 }

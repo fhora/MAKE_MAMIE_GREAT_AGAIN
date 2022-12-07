@@ -23,7 +23,7 @@
             <% if chatroom.messages.count > 0 && chatroom.messages.where.not(seen_date: nil).count > 0 %>
               <p>Last seen: <%= time_ago_in_words(chatroom.messages.where.not(seen_date: nil).last.seen_date) %> ago</p>
             <% end %>
-            <div style="position: relative; bottom: 71px; left: 105%">
+            <div style="position: relative; bottom: 80%; left: 105%">
               <% if chatroom.messages.where(seen_date: nil).where.not(user: current_user).count != 0 %>
                 <p class="notif"><%= chatroom.messages.where(seen_date: nil).where.not(user: current_user).count %></p>
               <% end %>

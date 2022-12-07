@@ -1,11 +1,32 @@
-<div class="py-5">
-  <div class="container">
-    <h1><%= @user.fullname %></h1>
-    <p class="fs-5"><i class="fa-regular fa-envelope"></i> E-mail: <%= @user.email %></p>
-    <p><%= @user.description %></p>
-    <% if @chat.empty? %>
-      <%= link_to chatroom_path(@user.mission_candidates.joins(:mission).where(missions: { user: current_user }).first.chatrooms.first), class: "btn-orange btn-animate d-inline-block" do %>
+
+<div class="container">
+  <h1><%= @user.fullname %></h1>
+  <h5><%= @user.phone_number %> <span class="fs-5"><i class="fa-regular fa-envelope"></i> E-mail: <%= @user.email %></span><%= @user.email %></h5>
+  <p><%= @user.description %></p>
+  <% if @user.mission_candidates.joins(:mission).where(mission: {user: current_user}).count > 0 || current_user.mission_candidates.joins(:mission).where(mission: {user: @user}).count > 0 %>
+    <% if @chatuser.empty? && @chatcurrentuser.empty? %>
+      <%= link_to chatrooms_path, class: "btn-orange btn-animate d-inline-block" do %>
         See Chat <i class="fa-regular fa-comments"></i>
+      <% end %>
+    <% else %>
+      <% if @chatuser.empty? %>
+        <%= simple_form_for(@chatroom) do |f| %>
+          <%= f.input :mission_candidate_id, input_html: { value: @chatcurrentuser.first.id }, as: :hidden %>
+          <%= f.submit %>
+        <% end %>
+      <% else %>
+        <%= simple_form_for(@chatroom) do |f| %>
+          <%= f.input :mission_candidate_id, input_html: { value: @chatuser.first.id }, as: :hidden %>
+          <%= f.submit %>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>
+  <div class="row div-width-80 align-items-start my-5 review-container">
+    <div class="col-5 review-content-wrapper">
+      <h3>Reviews</h3>
+      <% if @user.reviews.empty? %>
+        <p>Be the first to post a review on <%= @user.first_name %>!</p>
       <% end %>
     <% else %>
     <%= simple_form_for(@chatroom) do |f| %>
