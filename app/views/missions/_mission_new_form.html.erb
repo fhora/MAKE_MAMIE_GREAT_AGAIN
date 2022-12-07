@@ -1,0 +1,35 @@
+<%= simple_form_for(Mission.new, data: { controller: 'flatpickr'}) do |f| %>
+  <%= f.input :title, label: false, placeholder:"Mission title" %>
+  <%= f.input :description, label: false, placeholder: "Mission description" %>
+  <%= f.input :location, label: false,
+    input_html: {data: {address_autocomplete_target: "location"}, class: "d-none"},
+    wrapper_html: {data: {controller: "address-autocomplete",
+    address_autocomplete_api_key_value: ENV["MAPBOX_API_KEY"]}}
+  %>
+  <div class="row">
+    <%= f.input :start_date, label:"Date",
+        placeholder: "Pick a date",
+        as: :string,
+        wrapper_html: { class: 'col-6' },
+        input_html: {
+          data: {
+            flatpickr_target: 'startDateInput',
+          },
+        }
+    %>
+    <%= f.input :reward_cents, label:"Mission price", wrapper_html: { class: 'col-6' } %>
+  </div>
+  <div>
+    <%= f.input :categories,
+      as: :check_boxes,
+      label: "Choose one or more categories :",
+      collection_wrapper_tag: 'div',
+      collection_wrapper_class: 'wrapper-checkboxes',
+      collection: Mission::CATEGORIES,
+      input_html: {class: "d-none"},
+      label_method: lambda {|item| render 'missions/checkboxes', item: item}
+    %>
+  </div>
+  <hr class="mt-0">
+  <%= f.submit "SUBMIT", class: "btn btn-orange btn-block" %>
+<% end %>

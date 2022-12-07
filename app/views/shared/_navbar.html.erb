@@ -65,4 +65,4 @@
   </div>
 </div>
 
-<%= render 'missions/mission_modal' %>
+<%= render 'missions/mission_modal' unless controller_name == "missions" && action_name == "new" %>
