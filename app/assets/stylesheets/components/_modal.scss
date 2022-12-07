@@ -1,5 +1,7 @@
-#new_mission_modal {
-  .modal-content-wrapper {
+#new_mission_modal,
+#new_form {
+  .modal-content-wrapper,
+  .new-mission {
     border-radius: 12px;
     background-color: white;
   }
@@ -39,7 +41,6 @@
     box-shadow: 0 0 0 0.4rem rgba(238, 130, 49, .5);
     border: none;
     outline: none;
-    // border-color: rgba(238, 130, 49, .5);
 
     .mapboxgl-ctrl-geocoder--input:focus,
     .mapboxgl-ctrl-geocoder--input {

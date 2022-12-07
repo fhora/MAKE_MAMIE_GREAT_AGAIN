@@ -7,40 +7,7 @@
             <h2>Post a new mission</h2>
             <button type="button" class="btn-close ms-auto" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
-          <%= simple_form_for(Mission.new, data: { controller: 'flatpickr'}) do |f| %>
-            <%= f.input :title, label: "Title", placeholder:"Ex: Playing cards at the cafe" %>
-            <%= f.input :description, label: "Description", placeholder: "Ex: Looking for company to play tarot" %>
-            <%= f.input :location,
-              input_html: {data: {address_autocomplete_target: "location"}, class: "d-none"},
-              wrapper_html: {data: {controller: "address-autocomplete",
-            address_autocomplete_api_key_value: ENV["MAPBOX_API_KEY"]}}
-            %>
-            <div class="row">
-              <%= f.input :start_date, label:"Date",
-                  as: :string,
-                  wrapper_html: { class: 'col-6' },
-                  input_html: {
-                    data: {
-                      flatpickr_target: 'startDateInput',
-                    },
-                  }
-              %>
-              <%= f.input :reward_cents, label:"Mission price", wrapper_html: { class: 'col-6' } %>
-                <div>
-                  <%= f.input :categories,
-                    as: :check_boxes,
-                    label: "Choose one or more categories :",
-                    collection_wrapper_tag: 'div',
-                    collection_wrapper_class: 'wrapper-checkboxes',
-                    collection: Mission::CATEGORIES,
-                    input_html: {class: "d-none"},
-                    label_method: lambda {|item| render 'missions/checkboxes', item: item}
-                  %>
-                </div>
-            </div>
-            <hr class="mt-0">
-            <%= f.submit "SUBMIT", class: "btn btn-orange btn-block" %>
-          <% end %>
+          <%= render 'missions/mission_new_form' %>
         </div>
       </div>
     </div>
