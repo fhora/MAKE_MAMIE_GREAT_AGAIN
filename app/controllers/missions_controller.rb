@@ -21,16 +21,18 @@ class MissionsController < ApplicationController
   end
 
   def myindex
+    @mymissions = Mission.where("user_id = ?", current_user.id)
+    @mymissions_candidates = current_user.mission_candidates.where(status: "waiting").map(&:mission)
+    @mymissions_accepted = current_user.mission_candidates.where(status: "Accepted").map(&:mission)
+    @all_mymissions = @mymissions_candidates + @mymissions_accepted + @mymissions
 
-  @mymissions = Mission.where("user_id = ?", current_user.id)
-  @mymissions_candidates = current_user.mission_candidates.where(status: "waiting").map(&:mission)
-  @mymissions_accepted = current_user.mission_candidates.where(status: "Accepted").map(&:mission)
-  @all_mymissions = @mymissions_candidates + @mymissions_accepted + @mymissions
-
-  authorize @mymissions
-  respond_to do |format|
-    format.html
-    format.text { render partial: "missions/list", locals: { missions: @mymissions }, formats: [:html] }
+    authorize @mymissions_accepted
+    authorize @mymissions_candidates
+    authorize @mymissions
+    # authorize @all_mymissions
+    respond_to do |format|
+      format.html
+      format.text { render partial: "missions/missions_recap", locals: { missions: @all_mymissions }, formats: [:html] }
     end
   end
 
