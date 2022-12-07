@@ -4,12 +4,12 @@
       <div style="background-color: white">
         <div class="p-4 col-12  pe-auto">
           <div class="d-flex justify-content-center">
-            <h1>Post a new mission</h1>
+            <h1>Publish a mission</h1>
             <button type="button" class="btn-close ms-auto" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <%= simple_form_for(Mission.new, data: { controller: 'flatpickr'}) do |f| %>
-            <%= f.input :title, label: false, placeholder:"Mission title..." %>
-            <%= f.input :description, label: false, placeholder: "Describe the mission..." %>
+            <%= f.input :title, label: "Title", placeholder:"Ex: Playing cards at the cafe" %>
+            <%= f.input :description, label: "Description", placeholder: "Ex: Looking for company to play tarot" %>
             <%= f.input :location,
               input_html: {data: {address_autocomplete_target: "location"}, class: "d-none"},
               wrapper_html: {data: {controller: "address-autocomplete",
