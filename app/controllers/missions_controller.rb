@@ -4,7 +4,7 @@ class MissionsController < ApplicationController
   def index
     @missions = policy_scope(Mission).order(:start_date)
     @missions = @missions.tagged_with(params[:querychecks], any: true) if params[:querychecks].present?
-    @missions = @missions.search_by_title(params[:querysearch]) if params[:querysearch].present?
+    @missions = @missions.search_by_title_and_location(params[:querysearch]) if params[:querysearch].present?
     if params[:querydates].present? && params[:querydates].length == 1
       @missions = @missions.where("start_date >= ?", params[:querydates].first)
     elsif params[:querydates].present? && params[:querydates]
