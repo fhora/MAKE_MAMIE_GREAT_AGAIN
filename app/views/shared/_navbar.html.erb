@@ -12,9 +12,9 @@
       <ul class="navbar-nav me-auto">
         <% if user_signed_in? %>
           <li class="nav-item me-3">
-            <%= link_to new_mission_path, class: "nav-link text-uppercase text-dark-grey animate-link" do %>
+            <button type="button" style="background-color:white; border:none;" class="nav-link text-uppercase text-dark-grey animate-link" data-bs-toggle="modal" data-bs-target="#new_mission_modal" style="color: black;">
               Publish a mission <i class="fa fa-arrow-right"></i>
-            <% end %>
+            </button>
           </li>
           <li class="nav-item me-3">
             <%= link_to missions_path, class: "nav-link text-uppercase text-dark-grey animate-link" do %>
@@ -63,3 +63,5 @@
     </div>
   </div>
 </div>
+
+<%= render 'missions/mission_modal' %>
