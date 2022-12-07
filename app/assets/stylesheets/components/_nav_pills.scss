@@ -1,0 +1,26 @@
+.nav-pills{
+  background-color: white;
+
+  a {
+  border-style: solid!important;
+  border-bottom: 1px!important;
+  border-color: rgba(238, 130, 49, 0.5)!important;
+  color: inherit;
+  background-color: white;
+  text-align: left;
+  font-size: 16px;
+  width: 100%;
+  float: left;
+  text-decoration: none
+  }
+
+  a:hover {
+    color: inherit;
+    background-color: rgba(238, 130, 49, 0.5)!important;
+  }
+
+  a.active {
+    color: inherit!important;
+    background-color: rgba(238, 130, 49, 0.5)!important;
+  }
+}

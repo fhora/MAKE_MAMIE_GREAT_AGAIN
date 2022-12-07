@@ -24,6 +24,6 @@ class MissionPolicy < ApplicationPolicy
   end
 
   def myindex?
-    record.first.user == user
+    true
   end
 end
