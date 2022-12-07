@@ -67,6 +67,7 @@ class MissionsController < ApplicationController
   end
 
   def edit
+    @mission.reward_cents = @mission.reward_cents/100
     authorize @mission
   end
 
