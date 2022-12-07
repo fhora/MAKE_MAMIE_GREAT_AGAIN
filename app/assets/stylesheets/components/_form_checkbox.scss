@@ -9,8 +9,9 @@
   .form-check {
     justify-self: center;
     padding-left: 0;
-    background-color: $orange;
-    transition: background-color 0.3s ease;
+    color: rgba(20, 20, 20, .7);
+    outline: 2px solid $orange;
+    transition: background-color 0.5s ease;
     border-radius: 5px;
 
     width: 100%;
@@ -23,13 +24,17 @@
     }
 
     .form-check-input:hover+label {
-      background-color: rgba(255, 255, 255, 0.30);
+      box-shadow: 0 0 0 0.4rem rgba(238, 130, 49, .5);
+      border-radius: 5px;
+      border: none;
     }
 
-    .form-check-input:checked+label {
-      background-color: rgba(255, 255, 255, 0.30);
-      box-shadow: 0 0 10px rgba(200, 200, 200, 1);
+    .form-check-input:checked+label, .form-check-input:checked {
+      // background-color: rgba(255, 255, 255, 0.30);
+      background-color: $orange;
+      border-radius: 5px;
       color: white;
     }
+
   }
 }
