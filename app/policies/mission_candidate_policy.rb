@@ -6,6 +6,10 @@ class MissionCandidatePolicy < ApplicationPolicy
     # end
   end
 
+  def myindex_candidate?
+    true
+  end
+
   def new?
     record.mission.user != user
   end
