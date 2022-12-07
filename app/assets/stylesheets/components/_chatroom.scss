@@ -19,10 +19,17 @@
 
   #new_message {
     border-top: 1px solid $gray-200;
-    padding: 1rem;
+    padding-block: 1rem;
 
     .form-group {
       margin-bottom: 0;
     }
+  }
+  .form-control {
+    border: none;
+  }
+  .form-control:focus {
+    outline: none;
+    box-shadow: 0 0 0 0.4rem rgba(238, 130, 49, .5);
   }
 }
