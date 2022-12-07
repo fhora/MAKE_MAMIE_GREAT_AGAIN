@@ -22,10 +22,7 @@ class MissionsController < ApplicationController
 
   def myindex
     @mymissions = Mission.where("user_id = ?", current_user.id)
-    # authorize @mymissions_accepted
-    # authorize @mymissions_candidates
     authorize @mymissions
-    # authorize @all_mymissions
     respond_to do |format|
       format.html
       format.text { render partial: "missions/missions_recap", locals: { missions: @mymissions }, formats: [:html] }
