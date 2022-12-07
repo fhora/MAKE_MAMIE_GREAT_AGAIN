@@ -26,4 +26,8 @@ class MissionPolicy < ApplicationPolicy
   def myindex?
     true
   end
+
+  def myindex_candidate?
+    true
+  end
 end
