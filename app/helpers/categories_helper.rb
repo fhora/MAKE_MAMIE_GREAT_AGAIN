@@ -8,6 +8,19 @@ module CategoriesHelper
     "discussing" => "fa-regular fa-comment"
   }
 
+  TITLES = {
+    "shopping" => "Grocery shopping",
+    "walking" => "Walking",
+    "medical" => "Medical appointment",
+    "reading" => "Reading",
+    "playing" => "Playing cards",
+    "discussing" => "Discussing"
+  }
+
+  def find_title(category)
+    TITLES[category]
+  end
+
   def find_icon(category)
     ICONS[category]
   end
