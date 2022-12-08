@@ -6,7 +6,7 @@ class MissionCandidatesController < ApplicationController
     @mission_candidate.user = current_user
     authorize @mission_candidate
     if @mission_candidate.save
-      redirect_to mission_path(@mission), notice: 'Vous avez apply'
+      redirect_to mission_path(@mission), notice: "You've successfully applied, #{current_user.first_name}!"
     else
       redirect_to mission_path(@mission), alert: 'Erreur'
     end

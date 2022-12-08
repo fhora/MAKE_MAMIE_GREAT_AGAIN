@@ -38,6 +38,18 @@
       }
     }
   }
+  .dropdown-item:hover {
+    color: inherit;
+    background-color: rgba(238, 130, 49, 0.5);
+  }
+
+  .dropdown-menu {
+    z-index: 2000;
+  }
+
+  .cursor {
+    cursor: pointer;
+  }
 }
 
 .navbar-lewagon .navbar-collapse {
