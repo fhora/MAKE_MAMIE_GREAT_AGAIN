@@ -44,7 +44,8 @@
     }
 
     .default-error-page .content-wrap {
-      width: 960px;
+      display: grid;
+      grid-template-columns: 1fr;
       margin: 0 auto;
       padding-top: 20px;
     }
@@ -69,6 +70,17 @@
     .default-error-page .content-wrap .content-404 a {
       margin-top: 30px;
       font-family: 'Nunito', sans-serif;
+    }
+    @media(max-width: 992px) {
+      .content-wrap {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media(max-width: 768px) {
+      .content-wrap {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
