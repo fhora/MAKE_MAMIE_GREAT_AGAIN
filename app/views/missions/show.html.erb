@@ -18,7 +18,7 @@
             <%# quand un user est validé %>
             <% if @mission.status == true %>
               <% @mission.mission_candidates.where(mission_id: @mission.id).order(:status).each do |candidate| %>
-                <div class="card-container d-flex gap-4 border p-3 <%= candidate.status == "Declined" ? "trash-candidate" : "bg-white" %>">
+                <div class="card-container d-flex gap-4 border p-3 <%= candidate.status == "Declined" ? "trash-candidate pe-none" : "bg-white" %>">
                   <%# partial %>
                   <%= render 'candidates', mission_candidate: candidate %>
                 </div>
@@ -140,7 +140,7 @@
           <div class="mission-candidates">
             <% if @mission.status == true %>
               <% @mission.mission_candidates.where(mission_id: @mission.id).order(:status).each do |candidate| %>
-                <div class="card-container d-flex gap-4 border p-3 <%= candidate.status == "Declined" ? "trash-candidate" : "bg-white" %>">
+                <div class="card-container d-flex gap-4 border p-3 <%= candidate.status == "Declined" ? "trash-candidate pe-none" : "bg-white" %>">
                   <%# partial %>
                   <%= render 'candidates', mission_candidate: candidate %>
                 </div>
