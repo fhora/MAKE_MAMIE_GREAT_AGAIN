@@ -125,8 +125,6 @@
             <% if policy(@mission_candidate).new? %>
               <% if @mission.mission_candidates.none? {|candidate| candidate.user == current_user} %>
                 <%= link_to "Apply to this mission", mission_mission_candidates_path(@mission), data: { turbo_method: :post }, class: "btn btn-orange" %>
-              <% else %>
-                <p style="color:red;font-weight:bolder;font-size:20px;">You already applied for this mission</p>
               <% end %>
             <% end %>
           <%#  %>
