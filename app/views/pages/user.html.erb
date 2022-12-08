@@ -13,8 +13,10 @@
               <%= cl_image_tag @user.photo.key %>
             </div>
           <% end %>
-          <p class="text-center"><i class="fa-solid fa-phone"></i> <%= @user.phone_number %></p>
-          <p class="text-center"><i class="fa-regular fa-envelope"></i><%= @user.email %></p>
+          <% if @user.phone_number.nil? == false %>
+            <p class="text-center"><i class="fa-solid fa-phone" style="color: rgb(238, 130, 49)"></i> <%= @user.phone_number %></p>
+          <% end %>
+          <p class="text-center"><i class="fa-regular fa-envelope" style="color: rgb(238, 130, 49)"></i> <%= @user.email %></p>
         </div>
         <div>
           <h1 class="mt-4"><%= @user.fullname %></h1>
