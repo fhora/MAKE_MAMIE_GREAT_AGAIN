@@ -3,59 +3,58 @@
     <p>There is no available missions currently</p>
   <% else %>
     <% missions.each do |mission| %>
-      <%= link_to mission_path(mission), class: "text-decoration-none" do %>
-        <div class="row justify-content-center mb-5"  id="index-missions">
-          <div class="col-md-12 col-xl-12">
-            <div class="card shadow-0 cards-missions my">
-              <div class="card-body ">
-                <div class="row">
-                  <div class="col-md-6 col-lg-6 col-xl-6">
-                    <div class="bg-image hover-zoom ripple rounded ripple-surface">
-                      <figure class="d-flex justify-content-beetwen align-items-center  m-auto" >
-                        <h4 style="width: 100%"><strong><%= mission.title %></strong></h4>
-                        <i class="fa-solid fa-book-open fs-1" style= "align-self: self-start"></i>
-                      </figure>
+      <% unless mission.start_date < Time.now %>
+        <%= link_to mission_path(mission), class: "text-decoration-none" do %>
+          <div class="row justify-content-center mb-5"  id="index-missions">
+            <div class="col-md-12 col-xl-12">
+              <div class="card shadow-0 cards-missions my">
+                <div class="card-body ">
+                  <div class="row">
+                    <div class="col-md-6 col-lg-6 col-xl-6">
+                      <div class="bg-image hover-zoom ripple rounded ripple-surface">
+                        <figure class="d-flex justify-content-beetwen align-items-center  m-auto" >
+                          <h4 style="width: 100%"><strong><%= mission.title %></strong></h4>
+                          <i class="fa-solid fa-book-open fs-1" style= "align-self: self-start"></i>
+                        </figure>
+                      </div>
+                      <div class="mt-1 mb-0 text-muted small">
+                        <p><strong><i class="fa-regular fa-map"></i></strong> <%= mission.location %></p>
+                      </div>
+                      <div class="mt-1 mb-0 text-muted small">
+                        <% unless mission.start_date.nil? %>
+                          <p><strong><i class="fa-regular fa-clock"></i></strong>  <%= mission.start_date.strftime('%a %d %B %Y')%> at <%= mission.start_date.strftime('%I:%M%p')%></p>
+                        <% end %>
+                      </div>
+                      <h6><strong>Mission description:</strong></h6>
+                      <p class="text-truncate mb-4 mb-md-0">
+                        <%= mission.description %>
+                      </p>
                     </div>
-                    <div class="mt-1 mb-0 text-muted small">
-                      <p><strong><i class="fa-regular fa-map"></i></strong> <%= mission.location %></p>
-                    </div>
-                    <div class="mt-1 mb-0 text-muted small">
-                      <% unless mission.start_date.nil? %>
-                        <p><strong><i class="fa-regular fa-clock"></i></strong>  <%= mission.start_date.strftime('%a %d %B %Y')%> at <%= mission.start_date.strftime('%I:%M%p')%></p>
-                      <% end %>
-                    </div>
-                    <h6><strong>Mission description:</strong></h6>
-                    <p class="text-truncate mb-4 mb-md-0">
-                      <%= mission.description %>
-                    </p>
-                  </div>
-                  <div class="col-md-6 col-lg-3 col-xl-3 border-sm-start-none border-start m-auto">
-                    <div class="mt-1 mb-4">
-                      <h6><strong>Status</strong></h6>
-                      <% if (mission.status == true) && ((mission.start_date < Date.today) unless mission.start_date.nil?) %>
+                    <div class="col-md-6 col-lg-3 col-xl-3 border-sm-start-none border-start m-auto">
+                      <div class="mt-1 mb-4">
+                        <h6><strong>Status</strong></h6>
+                        <% if (mission.status == true) && ((mission.start_date < Date.today) unless mission.start_date.nil?) %>
                           <h6 class="text-success">Mission done</h6>
                         <% elsif (mission.status == true) && ((mission.start_date > Date.today) unless mission.start_date.nil?) %>
                           <h6 class="text-alert"><i class="fa-sharp fa-solid fa-check"></i>  Mission confirmed</h6>
                         <% else %>
                           <h6 class="text-warning"><i class="fa-solid fa-users pe-2"></i> waiting for appliance</h6>
-                      <% end %>
+                        <% end %>
+                      </div>
+                      <div class="mt-1 mb-0">
+                          <h6><strong>Reward</strong></h6>
+                          <h6><strong><i class="fa-solid fa-money-bill"></i></strong>  <%= mission.reward_cents/100%> €</h6>
+                      </div>
                     </div>
-                    <div class="mt-1 mb-0">
-                        <h6><strong>Reward</strong></h6>
-                        <h6><strong><i class="fa-solid fa-money-bill"></i></strong>  <%= mission.reward_cents/100%> €</h6>
+                    <div class="col-md-12 col-lg-3 col-xl-3 mb-4 mb-lg-0 border-sm-start-none border-start d-flex flex-column justify-content-center align-items-center">
+                      <h6>Posted by <%= mission.user.first_name %></h6>
                     </div>
-                    <%# <div class="d-flex flex-column mt-4">
-                      <button class="btn btn-primary btn-sm" type="button">See Details</button>
-                    </div> %>
-                  </div>
-                  <div class="col-md-12 col-lg-3 col-xl-3 mb-4 mb-lg-0 border-sm-start-none border-start d-flex flex-column justify-content-center align-items-center">
-                    <h6>Posted by <%= mission.user.first_name %></h6>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        <% end %>
       <% end %>
     <% end %>
   <% end %>
