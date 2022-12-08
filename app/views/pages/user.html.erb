@@ -23,7 +23,7 @@
           <p class="pt-4 mt-4"><%= @user.description %></p>
           <% if @user.mission_candidates.joins(:mission).where(mission: {user: current_user}).count > 0 || current_user.mission_candidates.joins(:mission).where(mission: {user: @user}).count > 0 %>
             <% if @chatuser.empty? && @chatcurrentuser.empty? %>
-              <%= link_to chatrooms_path, class: "btn-orange btn-ane-block" do %>
+              <%= link_to chatrooms_path, class: "btn-orange btn" do %>
                 See messages <i class="fa-regular fa-comments"></i>
               <% end %>
             <% else %>
