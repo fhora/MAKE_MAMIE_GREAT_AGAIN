@@ -1,11 +1,11 @@
 <div class="container"
      data-controller="chatroom-display"
 >
-  <h1 class="py-4 text-center">CHATROOMS</h1>
+  <h1 class="py-4 text-center">My messages</h1>
   <div class="row" id="index-missions">
     <div class="col-6">
       <% @chatrooms.each do |chatroom| %>
-        <div class="row cards-missions bg-white p-3 mb-4"
+        <div class="row cards-missions bg-white p-3 mb-1"
           data-action="click->chatroom-display#removeDnone"
           data-chatroom-id="<%= chatroom.id %>"
         >
@@ -29,6 +29,9 @@
               <% end %>
             </div>
           </div>
+        </div>
+        <div class="mb-3 text-end">
+          <%= link_to "⇋ See mission", mission_path(chatroom.mission_candidate.mission), class:"yep" %>
         </div>
       <% end %>
     </div>
@@ -58,7 +61,7 @@
                 placeholder: "Message",
                 wrapper_html: {class: "flex-grow-1"}
               %>
-              <%= f.submit "Send", class: "btn btn-primary mb-3" %>
+              <%= f.submit "Send", class: "btn btn-orange mb-3" %>
             <% end %>
           </div>
         </div>
