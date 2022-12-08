@@ -3,7 +3,8 @@
     <p>There is no available missions currently</p>
   <% else %>
     <% missions.each do |mission| %>
-      <% unless mission.start_date < Time.now %>
+    <%# faire un array avec toutes les current_user.mission_candidates.map(&:mission_id).includes?(mission.id) %>
+      <% unless mission.start_date <= Time.now || current_user.mission_candidates.map(&:mission_id).include?(mission.id)%>
         <%= link_to mission_path(mission), class: "text-decoration-none" do %>
           <div class="row justify-content-center mb-5"  id="index-missions">
             <div class="col-md-12 col-xl-12">
