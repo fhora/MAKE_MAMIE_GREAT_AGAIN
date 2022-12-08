@@ -37,7 +37,7 @@
                         <% elsif (mission.status == true) && ((mission.start_date > Date.today) unless mission.start_date.nil?) %>
                           <h6 class="text-alert"><i class="fa-sharp fa-solid fa-check"></i>  Mission confirmed</h6>
                         <% else %>
-                          <h6 class="text-warning"><i class="fa-regular fa-clock"></i>...waiting for approval</h6>
+                          <h6 class="text-warning"><i class="fa-solid fa-users pe-2"></i> waiting for appliance</h6>
                       <% end %>
                     </div>
                     <div class="mt-1 mb-0">
