@@ -28,7 +28,7 @@
                 <p class="notif"><%= chatroom.messages.where(seen_date: nil).where.not(user: current_user).count %></p>
               <% end %>
             </div>
-          </div>
+          <% end %>
         </div>
         <div class="mb-3 text-end">
           <%= link_to "⇋ See mission", mission_path(chatroom.mission_candidate.mission), class:"yep" %>
@@ -52,7 +52,16 @@
                     <%= render "messages/message", message: message %>
                   </div>
                 </div>
-              <% end %>
+                <%= simple_form_for [chatroom, @message],
+                  html: { data: { action: "turbo:submit-end->chatroom-subscription#resetForm" }, class: "d-flex"} do |f| %>
+                  <%= f.input :content,
+                    label: false,
+                    placeholder: "Message",
+                    wrapper_html: {class: "flex-grow-1"}
+                  %>
+                  <%= f.submit "Send", class: "btn btn-primary mb-3" %>
+                <% end %>
+              </div>
             </div>
             <%= simple_form_for [chatroom, @message],
               html: { data: { action: "turbo:submit-end->chatroom-subscription#resetForm" }, class: "d-flex"} do |f| %>
@@ -65,7 +74,7 @@
             <% end %>
           </div>
         </div>
-      <% end %>
+      </div>
     </div>
   </div>
 </div>
