@@ -1,68 +1,71 @@
-<div class="container"
-     data-controller="chatroom-display"
->
-  <h1 class="py-4 text-center">CHATROOMS</h1>
-  <div class="row" id="index-missions">
-    <div class="col-6">
-      <% @chatrooms.each do |chatroom| %>
-        <div class="row cards-missions bg-white p-3 mb-4"
-          data-action="click->chatroom-display#removeDnone"
-          data-chatroom-id="<%= chatroom.id %>"
-        >
-          <div class="col-4">
-            <h4 style="color: #EE8231"><%= "#{current_user == chatroom.user ? chatroom.mission_candidate.user.fullname : chatroom.user.fullname}'s chat" %></h4>
-            <% if chatroom.messages.count > 0 %>
-              <p style="color: grey; opacity: 0.7"><%= chatroom.messages.last.user == current_user ? "You" : chatroom.messages.last.user.fullname %>: <%= chatroom.messages.last.content.split.first(3).join(" ") %>...</p>
-            <% end %>
-          </div>
-          <div class="col-4">
-            <p>Mission : <%= chatroom.mission_candidate.mission.title %></p>
-            <p><%= chatroom.mission_candidate.mission.start_date.strftime('%a %d %B %Y') %></p>
-          </div>
-          <div class="col-4">
-            <% if chatroom.messages.count > 0 && chatroom.messages.where.not(seen_date: nil).count > 0 %>
-              <p>Last seen: <%= time_ago_in_words(chatroom.messages.where.not(seen_date: nil).last.seen_date) %> ago</p>
-            <% end %>
-            <div style="position: relative; bottom: 80%; left: 105%">
-              <% if chatroom.messages.where(seen_date: nil).where.not(user: current_user).count != 0 %>
-                <p class="notif"><%= chatroom.messages.where(seen_date: nil).where.not(user: current_user).count %></p>
-              <% end %>
-            </div>
-          </div>
-        </div>
-      <% end %>
-    </div>
-    <div class="col-6">
-      <% @chatrooms.each do |chatroom| %>
-        <div data-controller="chatroom-subscription"
-          data-chatroom-subscription-chatroom-id-value="<%= chatroom.id %>"
-          data-chatroom-subscription-current-user-id-value="<%= current_user.id %>"
-        >
-          <div class="container chatroom d-none"
-              data-chatroom-display-target="chatrooms"
-              id="chatroom-<%= chatroom.id %>"
-          >
-            <div class="messages" style="background-color: white" data-chatroom-subscription-target="messages">
-              <% chatroom.messages.each do |message| %>
-                <div class="message-row d-flex <%= message.sender?(current_user) ? 'justify-content-end' : 'justify-content-start' %>">
-                  <div class="<%= message.sender?(current_user) ? 'sender-style' : 'receiver-style' %>">
-                    <%= render "messages/message", message: message %>
-                  </div>
+<div class="w-100 h-100">
+  <div class="d-flex grid grid-width">
+    <%= render "shared/navbar_dashboard" %>
+    <div class="col-8 grid-width m-auto p-3" data-controller="chatroom-display">
+      <h1 class="py-5 text-left">My messages</h1>
+      <div class="row" id="index-missions">
+        <div class="col-6">
+          <% @chatrooms.each do |chatroom| %>
+            <div class="row cards-missions bg-white p-3 mb-4"
+              data-action="click->chatroom-display#removeDnone"
+              data-chatroom-id="<%= chatroom.id %>"
+            >
+              <div class="col-4">
+                <h4 style="color: #EE8231"><%= "#{current_user == chatroom.user ? chatroom.mission_candidate.user.fullname : chatroom.user.fullname}'s chat" %></h4>
+                <% if chatroom.messages.count > 0 %>
+                  <p style="color: grey; opacity: 0.7"><%= chatroom.messages.last.user == current_user ? "You" : chatroom.messages.last.user.fullname %>: <%= chatroom.messages.last.content.split.first(3).join(" ") %>...</p>
+                <% end %>
+              </div>
+              <div class="col-4">
+                <p>Mission : <%= chatroom.mission_candidate.mission.title %></p>
+                <p><%= chatroom.mission_candidate.mission.start_date.strftime('%a %d %B %Y') %></p>
+              </div>
+              <div class="col-4">
+                <% if chatroom.messages.count > 0 && chatroom.messages.where.not(seen_date: nil).count > 0 %>
+                  <p>Last seen: <%= time_ago_in_words(chatroom.messages.where.not(seen_date: nil).last.seen_date) %> ago</p>
+                <% end %>
+                <div style="position: relative; bottom: 80%; left: 105%">
+                  <% if chatroom.messages.where(seen_date: nil).where.not(user: current_user).count != 0 %>
+                    <p class="notif"><%= chatroom.messages.where(seen_date: nil).where.not(user: current_user).count %></p>
+                  <% end %>
                 </div>
-              <% end %>
+              </div>
             </div>
-            <%= simple_form_for [chatroom, @message],
-              html: { data: { action: "turbo:submit-end->chatroom-subscription#resetForm" }, class: "d-flex"} do |f| %>
-              <%= f.input :content,
-                label: false,
-                placeholder: "Message",
-                wrapper_html: {class: "flex-grow-1"}
-              %>
-              <%= f.submit "Send", class: "btn btn-primary mb-3" %>
-            <% end %>
-          </div>
+          <% end %>
         </div>
-      <% end %>
+        <div class="col-6">
+          <% @chatrooms.each do |chatroom| %>
+            <div data-controller="chatroom-subscription"
+              data-chatroom-subscription-chatroom-id-value="<%= chatroom.id %>"
+              data-chatroom-subscription-current-user-id-value="<%= current_user.id %>"
+            >
+              <div class="container chatroom d-none"
+                  data-chatroom-display-target="chatrooms"
+                  id="chatroom-<%= chatroom.id %>"
+              >
+                <div class="messages" style="background-color: white" data-chatroom-subscription-target="messages">
+                  <% chatroom.messages.each do |message| %>
+                    <div class="message-row d-flex <%= message.sender?(current_user) ? 'justify-content-end' : 'justify-content-start' %>">
+                      <div class="<%= message.sender?(current_user) ? 'sender-style' : 'receiver-style' %>">
+                        <%= render "messages/message", message: message %>
+                      </div>
+                    </div>
+                  <% end %>
+                </div>
+                <%= simple_form_for [chatroom, @message],
+                  html: { data: { action: "turbo:submit-end->chatroom-subscription#resetForm" }, class: "d-flex"} do |f| %>
+                  <%= f.input :content,
+                    label: false,
+                    placeholder: "Message",
+                    wrapper_html: {class: "flex-grow-1"}
+                  %>
+                  <%= f.submit "Send", class: "btn btn-primary mb-3" %>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
     </div>
   </div>
 </div>

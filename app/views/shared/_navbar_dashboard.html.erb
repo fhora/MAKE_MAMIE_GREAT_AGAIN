@@ -1,4 +1,4 @@
-<aside class="nav-dashboard" style="width: 280px">
+<aside class="nav-dashboard float" style="width: 280px">
   <div class = "d-flex px-3 justify-content-center align-items-center">
     <div class="current-user d-flex" style="width: 100%">
       <% if current_user.photo.key.nil? %>
@@ -32,7 +32,7 @@
           </a>
       </li>
       <li class="nav-item mb-1">
-        <a class="dashnav-link <%= "active" if action_name == "chatrooms" %>" href="/chatrooms">
+        <a class="dashnav-link <%= "active" if action_name == "index" %>" href="/chatrooms">
           <i class="fa-solid fa-message"></i>
           Messages
         </a>
