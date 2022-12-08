@@ -7,7 +7,7 @@
     <div class="row" id="index-missions">
       <div class="col-6">
         <% @chatrooms.each do |chatroom| %>
-          <div class="row cards-missions bg-white p-3 mb-1"
+          <div class="row cards-missions bg-white p-3 mb-4"
             data-action="click->chatroom-display#removeDnone"
             data-chatroom-id="<%= chatroom.id %>"
           >
@@ -21,19 +21,17 @@
               <p>Mission : <%= chatroom.mission_candidate.mission.title %></p>
               <p><%= chatroom.mission_candidate.mission.start_date.strftime('%a %d %B %Y') %></p>
             </div>
-            <div class="col-4">
+            <div class="col-4 d-flex flex-column justify-content-between">
               <% if chatroom.messages.count > 0 && chatroom.messages.where.not(seen_date: nil).count > 0 %>
                 <p>Last seen: <%= time_ago_in_words(chatroom.messages.where.not(seen_date: nil).last.seen_date) %> ago</p>
               <% end %>
-              <div style="position: relative; bottom: 80%; left: 105%">
+              <div style="position: relative; bottom: 72%; left: 105%">
                 <% if chatroom.messages.where(seen_date: nil).where.not(user: current_user).count != 0 %>
                   <p class="notif"><%= chatroom.messages.where(seen_date: nil).where.not(user: current_user).count %></p>
                 <% end %>
               </div>
+            <%= link_to "⇋ See mission", mission_path(chatroom.mission_candidate.mission), class:"yep align-self-end" %>
             </div>
-          </div>
-          <div class="mb-3 text-end">
-            <%= link_to "⇋ See mission", mission_path(chatroom.mission_candidate.mission), class:"yep" %>
           </div>
         <% end %>
       </div>
