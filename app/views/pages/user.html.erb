@@ -1,35 +1,79 @@
 
 <div class="container py-5">
-  <h1><%= @user.fullname %></h1>
-  <p><%= @user.phone_number %> <span class="fs-5"><i class="fa-regular fa-envelope"></i> e-mail: <%= @user.email %></span></p>
-  <p><%= @user.description %></p>
-  <% if @user.mission_candidates.joins(:mission).where(mission: {user: current_user}).count > 0 || current_user.mission_candidates.joins(:mission).where(mission: {user: @user}).count > 0 %>
-    <% if @chatuser.empty? && @chatcurrentuser.empty? %>
-      <%= link_to chatrooms_path, class: "btn-orange btn-animate d-inline-block" do %>
-        See messages <i class="fa-regular fa-comments"></i>
-      <% end %>
-    <% else %>
-      <% if @chatuser.empty? %>
-        <%= simple_form_for(@chatroom) do |f| %>
-          <%= f.input :mission_candidate_id, input_html: { value: @chatcurrentuser.first.id }, as: :hidden %>
-          <%= f.submit "Send a message", class: "btn btn-ghost" %>
-        <% end %>
-      <% else %>
-        <%= simple_form_for(@chatroom) do |f| %>
-          <%= f.input :mission_candidate_id, input_html: { value: @chatuser.first.id }, as: :hidden %>
-          <%= f.submit "Send a message", class: "btn btn-ghost" %>
-        <% end %>
-      <% end %>
-    <% end %>
-  <% end %>
-  <div class="row div-width-80 align-items-start my-5 review-container">
+  <div class="row review-container">
     <div class="col-6 review-content-wrapper">
+      <div class="d-flex">
+        <div class="pe-5">
+          <h1><%= @user.fullname %></h1>
+          <% if @user.photo.key.nil? %>
+            <div class="avatar-xlarge default-user">
+              <%= image_tag "default-user-96.png" %>
+            </div>
+          <% else %>
+            <div class="avatar-xlarge">
+              <%= cl_image_tag @user.photo.key %>
+            </div>
+          <% end %>
+        </div>
+        <div>
+          <p class="p-2"><%= @user.phone_number %></p>
+          <p><span class="fs-5"><i class="fa-regular fa-envelope"></i> e-mail: <%= @user.email %></span></p>
+          <p><%= @user.description %></p>
+          <% if @user.mission_candidates.joins(:mission).where(mission: {user: current_user}).count > 0 || current_user.mission_candidates.joins(:mission).where(mission: {user: @user}).count > 0 %>
+            <% if @chatuser.empty? && @chatcurrentuser.empty? %>
+              <%= link_to chatrooms_path, class: "btn-orange btn-animate d-inline-block" do %>
+                See messages <i class="fa-regular fa-comments"></i>
+              <% end %>
+            <% else %>
+              <% if @chatuser.empty? %>
+                <%= simple_form_for(@chatroom) do |f| %>
+                  <%= f.input :mission_candidate_id, input_html: { value: @chatcurrentuser.first.id }, as: :hidden %>
+                  <%= f.submit "Send a message", class: "btn btn-ghost" %>
+                <% end %>
+              <% else %>
+                <%= simple_form_for(@chatroom) do |f| %>
+                  <%= f.input :mission_candidate_id, input_html: { value: @chatuser.first.id }, as: :hidden %>
+                  <%= f.submit "Send a message", class: "btn btn-ghost" %>
+                <% end %>
+              <% end %>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <% if @user != current_user %>
+      <div class="col-6">
+        <div class="review-form bg-white p-5">
+          <h3>Add your review</h3>
+          <%= simple_form_for [@user, @review] do |f| %>
+            <% unless @user.reviews.where(reviewer_id: current_user).size.zero? %>
+              <%= f.input :content, placeholder: 'Add your review here...', input_html: {disabled: true} %>
+              <%= f.input :reviewer_id, as: :hidden, input_html: { value: current_user.id }%>
+              <div class="d-flex justify-content-between align-item-center">
+                <%= f.input :rating, label: false, wrapper_html: { class: "d-flex" }, collection: (1..5).to_a, input_html: {disabled: true,data: {controller: "star-rating"}}%>
+                <%= f.submit "Submit review", class: "btn disabled" %>
+              </div>
+            <% else %>
+              <%= f.input :content, placeholder: 'Add your review here...' %>
+              <%= f.input :reviewer_id, as: :hidden, input_html: { value: current_user.id }%>
+              <div class="d-flex justify-content-between align-item-center">
+                <%= f.input :rating, label: false, wrapper_html: { class: "d-flex" }, collection: (1..5).to_a, input_html: {data: {controller: "star-rating"}}%>
+                <%= f.submit "Submit review", class: "btn btn-orange btn-animate" %>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  <div class="row">
+    <div class="col-6 mt-3">
       <h3>Reviews</h3>
       <% if @user.reviews.empty? %>
         <p>Be the first to post a review on <%= @user.first_name %>!</p>
       <% end %>
       <% @user.reviews.each do |review| %>
-        <div class="review-content py-4">
+        <div class="review-content p-3 bg-white">
           <p>
             <% review.rating.times do %>
               <i class="fa-solid fa-star"></i>
@@ -37,35 +81,10 @@
             <% (5 - review.rating).times do %>
               <i class="fa-regular fa-star"></i>
             <% end %>
-            - <%= time_ago_in_words(review.updated_at) %> ago</p>
+            - <%= time_ago_in_words(review.updated_at) %> ago
+          </p>
           <p><%= review.content %></p>
-        </div>
-      <%# <hr> %>
-      <% end %>
-    </div>
-
-      <% if @user != current_user %>
-        <div class="col-6">
-          <div class="review-form bg-white p-5">
-            <h3>Add your review</h3>
-            <%= simple_form_for [@user, @review] do |f| %>
-              <% unless @user.reviews.where(reviewer_id: current_user).size.zero? %>
-                <%= f.input :content, placeholder: 'Add your review here...', input_html: {disabled: true} %>
-                <%= f.input :reviewer_id, as: :hidden, input_html: { value: current_user.id }%>
-                <div class="d-flex justify-content-between align-item-center">
-                  <%= f.input :rating, label: false, wrapper_html: { class: "d-flex" }, collection: (1..5).to_a, input_html: {disabled: true,data: {controller: "star-rating"}}%>
-                  <%= f.submit "Submit review", class: "btn disabled" %>
-                </div>
-              <% else %>
-                <%= f.input :content, placeholder: 'Add your review here...' %>
-                <%= f.input :reviewer_id, as: :hidden, input_html: { value: current_user.id }%>
-                <div class="d-flex justify-content-between align-item-center">
-                  <%= f.input :rating, label: false, wrapper_html: { class: "d-flex" }, collection: (1..5).to_a, input_html: {data: {controller: "star-rating"}}%>
-                  <%= f.submit "Submit review", class: "btn btn-orange btn-animate" %>
-                </div>
-              <% end %>
-            <% end %>
-          </div>
+          <%= link_to "Posted by #{User.find(review.reviewer_id).fullname}", userpage_path(User.find(review.reviewer_id)) %>
         </div>
       <% end %>
     </div>

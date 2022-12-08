@@ -1,5 +1,11 @@
 .review-content-wrapper {
   min-height: 364px;
+  h3 {
+    margin-top: 70px;
+  }
+  .default-user {
+    box-shadow: none;
+  }
 }
 
 .review_rating {
@@ -8,6 +14,9 @@
 
   span {
     color: $orange;
+  }
+  .gl-star-rating--stars[class*=" s"] > span {
+    filter: brightness(0) saturate(100%) invert(69%) sepia(78%) saturate(3010%) hue-rotate(339deg) brightness(97%) contrast(91%);
   }
 }
 
@@ -20,6 +29,10 @@
 
   i {
     color: $orange;
+  }
+  a {
+    text-decoration: none;
+    color: $darker-orange;
   }
 }
 

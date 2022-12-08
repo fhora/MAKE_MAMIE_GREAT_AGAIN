@@ -15,8 +15,8 @@ class Mission < ApplicationRecord
 
   acts_as_taggable_on :categories
 
-  pg_search_scope :search_by_title,
-                  against: %i[title],
+  pg_search_scope :search_by_title_and_location,
+                  against: %i[title location],
                   using: {
                     tsearch: { prefix: true }
                   }
