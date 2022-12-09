@@ -47,8 +47,20 @@
                           <h6><strong><i class="fa-solid fa-money-bill"></i></strong>  <%= mission.reward_cents/100%> €</h6>
                       </div>
                     </div>
-                    <div class="col-md-12 col-lg-3 col-xl-3 mb-4 mb-lg-0 border-sm-start-none border-start d-flex flex-column justify-content-center align-items-center">
-                      <h6>Posted by <%= mission.user.first_name %></h6>
+                    <div class="col-md-12 col-lg-3 col-xl-3 mb-4 mb-lg-0 border-sm-start-none border-start d-flex align-items-center" style="padding: 7px 0">
+                      <div class="d-flex d-column px-2 mb-2 flex-grow">
+                        <figure class="avatar-circle-user m-1 ">
+                          <% if mission.user.photo.key.nil? %>
+                            <%= image_tag "default_avatar.png" %>
+                          <% else %>
+                              <%= cl_image_tag mission.user.photo.key %>
+                          <% end %>
+                        </figure>
+                        <div class="flex-grow-1 py-2 px-3">
+                          <h6><strong><%= mission.user.fullname %></strong></h6>
+                          <%= render '/missions/candidate_rating', instance: mission.user %>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>

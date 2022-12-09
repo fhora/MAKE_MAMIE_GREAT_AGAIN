@@ -1,0 +1,6 @@
+<p class="yellow-stars">
+ <% unless instance.reviews.empty? %>
+    <i class="fa-solid fa-star"></i>
+    <%= instance.average_rating.round(1) %>
+  <% end %>
+</p>
