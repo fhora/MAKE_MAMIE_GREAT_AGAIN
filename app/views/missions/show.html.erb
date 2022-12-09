@@ -18,7 +18,7 @@
             <%# quand un user est validé %>
             <% if @mission.status == true %>
               <% @mission.mission_candidates.where(mission_id: @mission.id).order(:status).each do |candidate| %>
-                <div class="card-container d-flex gap-4 border p-3 <%= candidate.status == "Declined" ? "trash-candidate" : "bg-white" %>">
+                <div class="card-container d-flex gap-4 border p-3 <%= candidate.status == "Declined" ? "trash-candidate pe-none" : "bg-white" %>">
                   <%# partial %>
                   <%= render 'candidates', mission_candidate: candidate %>
                 </div>
@@ -82,8 +82,6 @@
               <% if policy(@mission_candidate).new? %>
                 <% if @mission.mission_candidates.none? {|candidate| candidate.user == current_user} %>
                   <%= link_to "Apply to this mission", mission_mission_candidates_path(@mission), data: { turbo_method: :post }, class: "btn btn-orange" %>
-                <% else %>
-                  <p style="color:red;font-weight:bolder;font-size:20px;">You already applied for this mission</p>
                 <% end %>
               <% end %>
             <%#  %>
@@ -104,18 +102,6 @@
           <div class="p-4 bg-white border-description">
             <div class="d-flex align-items-center gap-3">
               <h1 class="pt-2"><%= @mission.title.capitalize %></h1>
-            <%# peut être retiré ? %>
-              <% unless policy(@mission_candidate).new? %>
-                <div class="ms-auto d-flex gap-3">
-                  <%= link_to edit_mission_path(@mission), class:"btn btn-orange" do %>
-                    <i class="fas fa-edit"></i>
-                  <% end %>
-                  <%= button_to @mission, method: :delete do %>
-                    <i class="far fa-trash-alt"></i>
-                  <% end %>
-                </div>
-              <% end %>
-            <%#  %>
             </div>
             <div class="d-flex align-items-center img-wrapper">
               <figure class="avatar-circle-user">
@@ -139,8 +125,6 @@
             <% if policy(@mission_candidate).new? %>
               <% if @mission.mission_candidates.none? {|candidate| candidate.user == current_user} %>
                 <%= link_to "Apply to this mission", mission_mission_candidates_path(@mission), data: { turbo_method: :post }, class: "btn btn-orange" %>
-              <% else %>
-                <p style="color:red;font-weight:bolder;font-size:20px;">You already applied for this mission</p>
               <% end %>
             <% end %>
           <%#  %>
@@ -156,23 +140,27 @@
           <div class="mission-candidates">
             <% if @mission.status == true %>
               <% @mission.mission_candidates.where(mission_id: @mission.id).order(:status).each do |candidate| %>
-                <div class="card-container d-flex gap-4 border p-3 <%= candidate.status == "Declined" ? "trash-candidate" : "bg-white" %>">
+                <div class="card-container d-flex gap-4 border p-3 <%= candidate.status == "Declined" ? "trash-candidate pe-none" : "bg-white" %>">
                   <%# partial %>
                   <%= render 'candidates', mission_candidate: candidate %>
                 </div>
               <% end %>
             <% else %>
-              <% @mission.mission_candidates.where(mission_id: @mission.id, user_id: current_user.id).each do |candidate| %>
-                <div class="card-container d-flex gap-4 border p-3 bg-white">
-                  <%# partial %>
-                  <%= render 'candidates', mission_candidate: candidate %>
-                </div>
-              <% end %>
-              <% @mission.mission_candidates.where(mission_id: @mission.id).where.not(user_id: current_user.id).each do |candidate| %>
-                <div class="card-container pe-none d-flex gap-4 border p-3 trash-candidate">
-                  <%# partial %>
-                  <%= render 'candidates', mission_candidate: candidate %>
-                </div>
+              <% if @mission.mission_candidates.where(mission_id: @mission.id).empty? %>
+                <p>Be the first to apply for this mission.</p>
+              <% else %>
+                <% @mission.mission_candidates.where(mission_id: @mission.id, user_id: current_user.id).each do |candidate| %>
+                  <div class="card-container d-flex gap-4 border p-3 bg-white">
+                    <%# partial %>
+                    <%= render 'candidates', mission_candidate: candidate %>
+                  </div>
+                <% end %>
+                <% @mission.mission_candidates.where(mission_id: @mission.id).where.not(user_id: current_user.id).each do |candidate| %>
+                  <div class="card-container pe-none d-flex gap-4 border p-3 trash-candidate">
+                    <%# partial %>
+                    <%= render 'candidates', mission_candidate: candidate %>
+                  </div>
+                <% end %>
               <% end %>
             <% end %>
           </div>

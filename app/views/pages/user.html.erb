@@ -3,10 +3,9 @@
   <div class="row review-container">
     <div class="col-6 review-content-wrapper">
       <div class="d-flex">
-        <div class="pe-5">
-          <h1><%= @user.fullname %></h1>
+        <div class="pe-5 text-center">
           <% if @user.photo.key.nil? %>
-            <div class="avatar-xlarge default-user">
+            <div class="avatar-xlarge default-user mb-4">
               <%= image_tag "default-user-96.png" %>
             </div>
           <% else %>
@@ -14,14 +13,17 @@
               <%= cl_image_tag @user.photo.key %>
             </div>
           <% end %>
+          <% if @user.phone_number.nil? == false %>
+            <p class="text-center"><i class="fa-solid fa-phone" style="color: rgb(238, 130, 49)"></i> <%= @user.phone_number %></p>
+          <% end %>
+          <p class="text-center"><i class="fa-regular fa-envelope" style="color: rgb(238, 130, 49)"></i> <%= @user.email %></p>
         </div>
         <div>
-          <p class="p-2"><%= @user.phone_number %></p>
-          <p><span class="fs-5"><i class="fa-regular fa-envelope"></i> e-mail: <%= @user.email %></span></p>
-          <p><%= @user.description %></p>
+          <h1 class="mt-4"><%= @user.fullname %></h1>
+          <p class="pt-4 mt-4"><%= @user.description %></p>
           <% if @user.mission_candidates.joins(:mission).where(mission: {user: current_user}).count > 0 || current_user.mission_candidates.joins(:mission).where(mission: {user: @user}).count > 0 %>
             <% if @chatuser.empty? && @chatcurrentuser.empty? %>
-              <%= link_to chatrooms_path, class: "btn-orange btn-animate d-inline-block" do %>
+              <%= link_to chatrooms_path, class: "btn-orange btn" do %>
                 See messages <i class="fa-regular fa-comments"></i>
               <% end %>
             <% else %>

@@ -7,6 +7,9 @@ import { application } from "./application"
 import AddressAutocompleteController from "./address_autocomplete_controller"
 application.register("address-autocomplete", AddressAutocompleteController)
 
+import ApplyAlertController from "./apply_alert_controller"
+application.register("apply-alert", ApplyAlertController)
+
 import ChatroomDisplayController from "./chatroom_display_controller"
 application.register("chatroom-display", ChatroomDisplayController)
 
@@ -27,4 +30,3 @@ application.register("search-missions", SearchMissionsController)
 
 import StarRatingController from "./star_rating_controller"
 application.register("star-rating", StarRatingController)
-
