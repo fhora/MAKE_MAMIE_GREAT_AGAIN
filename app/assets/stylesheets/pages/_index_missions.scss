@@ -44,6 +44,7 @@
     box-shadow: $orange 0px 2px 8px 0px;
     border-radius: 4px;
     border: none;
+    height: 190px;
 
     h4 {
       color: $dark-grey;
@@ -56,5 +57,13 @@
     figure {
       margin-bottom: 0;
     }
+    p{
+      margin-bottom: 0 !important;
+    }
   }
+}
+.vertical-scroll {
+  overflow-y: scroll;
+  flex-wrap: nowrap;
+
 }

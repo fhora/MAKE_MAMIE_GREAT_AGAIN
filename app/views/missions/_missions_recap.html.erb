@@ -5,27 +5,31 @@
         <div class="card shadow-0 cards-missions">
           <div class="card-body ">
             <div class="row">
-              <div class="col-md-6 col-lg-6 col-xl-6">
+              <div class="col-md-6 col-lg-6 col-xl-6 border-end border-sm-end-none">
                 <div class="bg-image hover-zoom ripple rounded ripple-surface">
                   <figure class="d-flex justify-content-beetwen align-items-center  m-auto" >
                     <h4 style="width: 100%"><strong><%= mission.title %></strong></h4>
-                    <i class="fa-solid fa-book-open fs-1" style= "align-self: self-start"></i>
+                    <%if mission.category_list.first.nil? %>
+                      <i class="fa-solid fa-sliders fs-4"></i>
+                    <% else %>
+                      <i class="<%= find_icon(mission.category_list.first)%> fs-4"></i>
+                    <% end %>
                   </figure>
                 </div>
                 <div class="mt-1 mb-0 text-muted small">
                   <p><strong><i class="fa-regular fa-map"></i></strong> <%= mission.location %></p>
                 </div>
-                <div class="mt-1 mb-0 text-muted small">
+                <div class="mt-1 mb-3 text-muted small">
                   <% unless mission.start_date.nil? %>
                     <p><strong><i class="fa-regular fa-clock"></i></strong>  <%= mission.start_date.strftime('%a %d %B %Y')%> at <%= mission.start_date.strftime('%I:%M%p')%></p>
                   <% end %>
                 </div>
-                <h6><strong>Mission description:</strong></h6>
-                <p class="text mb-4 mb-md-0">
+                <h6 class="p"><strong>Mission description:</strong></h6>
+                <p class="text-truncatemb-4 mb-md-0">
                   <%= mission.description %>
                 </p>
               </div>
-              <div class="col-md-6 col-lg-3 col-xl-3 border-sm-start-none border-start m-auto">
+              <div class="col-md-6 col-lg-3 col-xl-3">
                 <div class="mt-1 mb-4">
                   <h6><strong>Status</strong></h6>
                   <% if (mission.status == true) && ((mission.start_date < Date.today) unless mission.start_date.nil?) %>
@@ -41,8 +45,58 @@
                     <h6><strong><i class="fa-solid fa-money-bill"></i></strong>  <%= mission.reward_cents/100%> €</h6>
                 </div>
               </div>
-               <div class="col-md-12 col-lg-3 col-xl-3 mb-4 mb-lg-0 border-sm-start-none border-start d-flex  justify-content-center align-items-center">
-                <h6>Posted by <%= mission.user.first_name %></h6>
+              <div class="col-md-12 col-lg-3 col-xl-3 mb-4 mb-lg-0 border-sm-start-none border-start" style="padding: 7px 0">
+                <h6 class="px-2"><strong>Candidates (<%= mission.mission_candidates.count %>)</strong></h6>
+                <div class="d-flex flex-column vertical-scroll" style="height: 130px">
+                  <% if mission.status == true %>
+                    <% mission.mission_candidates.where(mission_id:mission.id).order(:status).each do |candidate| %>
+                      <div class="d-flex d-column shadow-sm position-relative px-2 mb-2">
+                        <figure class="avatar-circle-user m-1 <%= candidate.status == "Declined" ? "trash-candidate" : "bg-white" %>">
+                          <% if candidate.user.photo.key.nil? %>
+                           <%= image_tag "default_avatar.png" %>
+                          <% else %>
+                              <%= cl_image_tag candidate.user.photo.key %>
+                          <% end %>
+                        </figure>
+                        <div class="flex-grow-1 py-2 px-3">
+                          <h6><strong><%= candidate.user.fullname %></strong></h6>
+                          <%= render '/missions/candidate_rating', instance: candidate.user %>
+                        </div>
+                      </div>
+                    <% end %>
+                  <% else %>
+                    <% mission.mission_candidates.where(mission_id: mission.id, user_id: current_user.id).each do |candidate| %>
+                      <div class="d-flex d-column shadow-sm position-relative px-2 mb-2 ">
+                        <figure class="avatar-circle-user m-1 <%= candidate.status == "Declined" ? "trash-candidate" : "bg-white" %>">
+                          <% if candidate.user.photo.key.nil? %>
+                           <%= image_tag "default_avatar.png" %>
+                          <% else %>
+                              <%= cl_image_tag candidate.user.photo.key %>
+                          <% end %>
+                        </figure>
+                        <div class="flex-grow-1 py-2 px-3">
+                          <h6><strong><%= candidate.user.fullname %></strong></h6>
+                          <%= render '/missions/candidate_rating', instance: candidate.user %>
+                        </div>
+                      </div>
+                    <% end %>
+                    <% mission.mission_candidates.where(mission_id: mission.id).where.not(user_id: current_user.id).each do |candidate| %>
+                      <div class="d-flex d-column shadow-sm position-relative px-2 mb-2">
+                        <figure class="avatar-circle-user m-1 <%= candidate.status == "Declined" ? "trash-candidate" : "bg-white" %>">
+                          <% if candidate.user.photo.key.nil? %>
+                           <%= image_tag "default_avatar.png" %>
+                          <% else %>
+                              <%= cl_image_tag candidate.user.photo.key %>
+                          <% end %>
+                        </figure>
+                        <div class="flex-grow-1 py-2 px-3">
+                          <h6><strong><%= candidate.user.fullname %></strong></h6>
+                          <%= render '/missions/candidate_rating', instance: candidate.user %>
+                        </div>
+                      </div>
+                    <% end %>
+                  <% end %>
+                </div>
               </div>
             </div>
           </div>
