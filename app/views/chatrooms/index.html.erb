@@ -7,30 +7,49 @@
     <div class="row" id="index-missions">
       <div class="col-6">
         <% @chatrooms.each do |chatroom| %>
-          <div class="row cards-missions bg-white p-3 mb-4"
+          <div class="cards-missions bg-white p-3 mb-4"
             data-action="click->chatroom-display#removeDnone"
             data-chatroom-id="<%= chatroom.id %>"
           >
-            <div class="col-4">
-              <h4 style="color: #EE8231"><%= "#{current_user == chatroom.user ? chatroom.mission_candidate.user.fullname : chatroom.user.fullname}'s chat" %></h4>
-              <% if chatroom.messages.count > 0 %>
-                <p style="color: grey; opacity: 0.7"><%= chatroom.messages.last.user == current_user ? "You" : chatroom.messages.last.user.fullname %>: <%= chatroom.messages.last.content.split.first(3).join(" ") %>...</p>
-              <% end %>
+            <div class="row mb-2">
+              <div class="col-3">
+                <figure class="avatar-circle-user mx-auto">
+                <% if current_user == chatroom.mission_candidate.mission.user %>
+                  <% if MissionCandidate.find(chatroom.mission_candidate_id).user.photo.key.nil? %>
+                    <img src="https://media.istockphoto.com/id/1337144146/fr/vectoriel/vecteur-dic%C3%B4ne-de-profil-davatar-par-d%C3%A9faut.jpg?b=1&s=170667a&w=0&k=20&c=eYsURDWBMsbvhjRxVQ8-pgC0q4b04DSYbCMnY5OlH14=" />
+                  <% else %>
+                      <%= cl_image_tag MissionCandidate.find(chatroom.mission_candidate_id).user.photo.key  %>
+                  <% end %>
+                <% else %>
+                  <% if chatroom.mission_candidate.mission.user.photo.key.nil? %>
+                    <img src="https://media.istockphoto.com/id/1337144146/fr/vectoriel/vecteur-dic%C3%B4ne-de-profil-davatar-par-d%C3%A9faut.jpg?b=1&s=170667a&w=0&k=20&c=eYsURDWBMsbvhjRxVQ8-pgC0q4b04DSYbCMnY5OlH14=" />
+                  <% else %>
+                      <%= cl_image_tag MissionCandidate.find(chatroom.mission_candidate_id).user.photo.key  %>
+                  <% end %>
+                <% end %>
+                </figure>
+                  <p style="margin-inline: auto; width: fit-content;"><%= "#{current_user == chatroom.user ? chatroom.mission_candidate.user.first_name.capitalize : chatroom.user.first_name.capitalize}" %></p>
+                  <%= link_to mission_path(chatroom.mission_candidate.mission), class:"yep align-self-end mt-auto", style: "color:#EE8231; font-size: 0.9rem;" do %>
+                    ⇋ <span style="text-decoration: underline;">Mission</span>
+                  <% end %>
+              </div>
+              <div class="col-8">
+                <h4 style="color: #EE8231" class="text-truncate"><%= chatroom.mission_candidate.mission.title %></h4>
+                <p class="mb-0"><%= chatroom.mission_candidate.mission.start_date.strftime('%a %d %B %Y') %></p>
+                <% if chatroom.messages.count > 0 %>
+                  <p style="color: grey; opacity: 0.7; margin-bottom:0;word-wrap: break-word;"> Last message: <%= chatroom.messages.last.content.split.first(3).join(" ").truncate(50) %>...</p>
+                <% end %>
+                <% if chatroom.messages.count > 0 && chatroom.messages.where.not(seen_date: nil).count > 0 %>
+                  <p class="mb-0 text-end" style="font-style: italic; font-size: .8rem;">Last seen: <%= time_ago_in_words(chatroom.messages.where.not(seen_date: nil).last.seen_date) %> ago</p>
+                <% end %>
+              </div>
             </div>
-            <div class="col-4">
-              <p>Mission : <%= chatroom.mission_candidate.mission.title %></p>
-              <p><%= chatroom.mission_candidate.mission.start_date.strftime('%a %d %B %Y') %></p>
-            </div>
-            <div class="col-4 d-flex flex-column justify-content-between">
-              <% if chatroom.messages.count > 0 && chatroom.messages.where.not(seen_date: nil).count > 0 %>
-                <p>Last seen: <%= time_ago_in_words(chatroom.messages.where.not(seen_date: nil).last.seen_date) %> ago</p>
-              <% end %>
-              <div style="position: relative; bottom: 72%; left: 105%">
+            <div class="d-flex justify-content-between" style="position: absolute">
+              <div style="position: relative; bottom: 161px; left: 425px;">
                 <% if chatroom.messages.where(seen_date: nil).where.not(user: current_user).count != 0 %>
                   <p class="notif"><%= chatroom.messages.where(seen_date: nil).where.not(user: current_user).count %></p>
                 <% end %>
               </div>
-            <%= link_to "⇋ See mission", mission_path(chatroom.mission_candidate.mission), class:"yep align-self-end" %>
             </div>
           </div>
         <% end %>
