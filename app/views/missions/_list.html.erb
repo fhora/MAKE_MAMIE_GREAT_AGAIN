@@ -15,7 +15,11 @@
                       <div class="bg-image hover-zoom ripple rounded ripple-surface">
                         <figure class="d-flex justify-content-beetwen align-items-center  m-auto" >
                           <h4 style="width: 100%"><strong><%= mission.title %></strong></h4>
-                          <i class="fa-solid fa-book-open fs-1" style= "align-self: self-start"></i>
+                          <%if mission.category_list.first.nil? %>
+                            <i class="fa-solid fa-sliders fs-4"></i>
+                          <% else %>
+                            <i class="<%= find_icon(mission.category_list.first)%> fs-4"></i>
+                          <% end %>
                         </figure>
                       </div>
                       <div class="mt-1 mb-0 text-muted small">
