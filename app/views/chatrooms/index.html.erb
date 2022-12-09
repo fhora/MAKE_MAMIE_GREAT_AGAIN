@@ -7,13 +7,13 @@
     <div class="row" id="index-missions">
       <div class="col-6">
         <% @chatrooms.each do |chatroom| %>
-          <div class="cards-missions bg-white p-3 mb-4"
+          <div class="cards-chat bg-white p-3 mb-4" style="height:auto;"
             data-action="click->chatroom-display#removeDnone"
             data-chatroom-id="<%= chatroom.id %>"
           >
             <div class="row mb-2">
               <div class="col-3">
-                <figure class="avatar-circle-user mx-auto">
+                <figure class="avatar-circle-user mx-auto mb-0">
                 <% if current_user == chatroom.mission_candidate.mission.user %>
                   <% if MissionCandidate.find(chatroom.mission_candidate_id).user.photo.key.nil? %>
                     <img src="https://media.istockphoto.com/id/1337144146/fr/vectoriel/vecteur-dic%C3%B4ne-de-profil-davatar-par-d%C3%A9faut.jpg?b=1&s=170667a&w=0&k=20&c=eYsURDWBMsbvhjRxVQ8-pgC0q4b04DSYbCMnY5OlH14=" />
@@ -28,7 +28,7 @@
                   <% end %>
                 <% end %>
                 </figure>
-                  <p style="margin-inline: auto; width: fit-content;"><%= "#{current_user == chatroom.user ? chatroom.mission_candidate.user.first_name.capitalize : chatroom.user.first_name.capitalize}" %></p>
+                  <p style="margin-inline: auto; width: fit-content; margin-bottom:0;"><%= "#{current_user == chatroom.user ? chatroom.mission_candidate.user.first_name.capitalize : chatroom.user.first_name.capitalize}" %></p>
                   <%= link_to mission_path(chatroom.mission_candidate.mission), class:"yep align-self-end mt-auto", style: "color:#EE8231; font-size: 0.9rem;" do %>
                     ⇋ <span style="text-decoration: underline;">Mission</span>
                   <% end %>
@@ -45,7 +45,7 @@
               </div>
             </div>
             <div class="d-flex justify-content-between" style="position: absolute">
-              <div style="position: relative; bottom: 161px; left: 425px;">
+              <div style="position: relative; bottom: 148px; left: 425px;">
                 <% if chatroom.messages.where(seen_date: nil).where.not(user: current_user).count != 0 %>
                   <p class="notif"><%= chatroom.messages.where(seen_date: nil).where.not(user: current_user).count %></p>
                 <% end %>
@@ -91,4 +91,3 @@
     </div>
   </div>
 </div>
-
