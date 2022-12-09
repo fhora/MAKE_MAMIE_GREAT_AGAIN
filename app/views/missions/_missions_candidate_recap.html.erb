@@ -8,7 +8,7 @@
               <div class="col-md-6 col-lg-6 col-xl-6 border-end border-sm-end-none">
                 <div class="bg-image hover-zoom ripple rounded ripple-surface">
                   <figure class="d-flex justify-content-beetwen align-items-center  m-auto" >
-                    <h4 style="width: 100%"><strong><%= mission.title %></strong></h4>
+                    <h4 style="width: 100%"><strong><%= mission.title.truncate(30) %></strong></h4>
                     <%if mission.category_list.first.nil? %>
                       <i class="fa-solid fa-sliders fs-4"></i>
                     <% else %>
