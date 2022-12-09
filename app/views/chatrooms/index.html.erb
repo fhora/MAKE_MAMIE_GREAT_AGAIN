@@ -15,16 +15,16 @@
               <div class="col-3">
                 <figure class="avatar-circle-user mx-auto mb-0">
                 <% if current_user == chatroom.mission_candidate.mission.user %>
-                  <% if MissionCandidate.find(chatroom.mission_candidate_id).user.photo.key.nil? %>
+                  <% if chatroom.mission_candidate.user.photo.key.nil? %>
                     <img src="https://media.istockphoto.com/id/1337144146/fr/vectoriel/vecteur-dic%C3%B4ne-de-profil-davatar-par-d%C3%A9faut.jpg?b=1&s=170667a&w=0&k=20&c=eYsURDWBMsbvhjRxVQ8-pgC0q4b04DSYbCMnY5OlH14=" />
                   <% else %>
-                      <%= cl_image_tag MissionCandidate.find(chatroom.mission_candidate_id).user.photo.key  %>
+                      <%= cl_image_tag chatroom.mission_candidate.user.photo.key  %>
                   <% end %>
                 <% else %>
                   <% if chatroom.mission_candidate.mission.user.photo.key.nil? %>
                     <img src="https://media.istockphoto.com/id/1337144146/fr/vectoriel/vecteur-dic%C3%B4ne-de-profil-davatar-par-d%C3%A9faut.jpg?b=1&s=170667a&w=0&k=20&c=eYsURDWBMsbvhjRxVQ8-pgC0q4b04DSYbCMnY5OlH14=" />
                   <% else %>
-                      <%= cl_image_tag MissionCandidate.find(chatroom.mission_candidate_id).user.photo.key  %>
+                      <%= cl_image_tag chatroom.mission_candidate.mission.user.photo.key  %>
                   <% end %>
                 <% end %>
                 </figure>
